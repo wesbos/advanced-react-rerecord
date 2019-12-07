@@ -9,17 +9,19 @@ const CURRENT_USER_QUERY = gql`
       email
       name
       permissions
-      orders {
-        id
-      }
+      # orders {
+      #   id
+      # }
       cart {
         id
         quantity
         item {
           id
           price
-          image
-          title
+          image {
+            publicUrlTransformed
+          }
+          name
           description
         }
       }
@@ -29,7 +31,7 @@ const CURRENT_USER_QUERY = gql`
 
 const User = props => (
   <Query {...props} query={CURRENT_USER_QUERY}>
-    {payload => props.children(payload)}
+    <p>Heyyy</p>
   </Query>
 );
 
