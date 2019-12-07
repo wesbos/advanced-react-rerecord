@@ -20,10 +20,12 @@ const SINGLE_ORDER_QUERY = gql`
       }
       items {
         id
-        title
+        name
         description
         price
-        image
+        image {
+          publicUrlTransformed
+        }
         quantity
       }
     }
@@ -34,13 +36,14 @@ class Order extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
   };
+
   render() {
     return (
       <Query query={SINGLE_ORDER_QUERY} variables={{ id: this.props.id }}>
         {({ data, error, loading }) => {
           if (error) return <Error error={error} />;
           if (loading) return <p>Loading...</p>;
-          const order = data.order;
+          const { order } = data;
           return (
             <OrderStyles data-test="order">
               <Head>
@@ -56,7 +59,11 @@ class Order extends React.Component {
               </p>
               <p>
                 <span>Date</span>
-                <span>{format(order.createdAt, 'MMMM d, YYYY h:mm a', { awareOfUnicodeTokens: true })}</span>
+                <span>
+                  {format(order.createdAt, 'MMMM d, YYYY h:mm a', {
+                    awareOfUnicodeTokens: true,
+                  })}
+                </span>
               </p>
               <p>
                 <span>Order Total</span>
@@ -71,7 +78,7 @@ class Order extends React.Component {
                   <div className="order-item" key={item.id}>
                     <img src={item.image} alt={item.title} />
                     <div className="item-details">
-                      <h2>{item.title}</h2>
+                      <h2>{item.name}</h2>
                       <p>Qty: {item.quantity}</p>
                       <p>Each: {formatMoney(item.price)}</p>
                       <p>SubTotal: {formatMoney(item.price * item.quantity)}</p>

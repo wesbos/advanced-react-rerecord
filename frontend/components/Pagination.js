@@ -31,7 +31,6 @@ function Pagination(props) {
         </title>
       </Head>
       <Link
-        prefetch
         href={{
           pathname: 'items',
           query: { page: page - 1 },
@@ -47,7 +46,6 @@ function Pagination(props) {
       </p>
       <p>{count} Items Total</p>
       <Link
-        prefetch
         href={{
           pathname: 'items',
           query: { page: page + 1 },

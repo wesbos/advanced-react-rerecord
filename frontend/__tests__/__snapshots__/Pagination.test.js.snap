@@ -17,7 +17,6 @@ exports[`<Pagination/> renders pagination for 18 items 1`] = `
         },
       }
     }
-    prefetch={true}
   >
     <a
       aria-disabled={true}
@@ -29,7 +28,7 @@ exports[`<Pagination/> renders pagination for 18 items 1`] = `
     </a>
   </Link>
   <p>
-    Page 
+    Page
     1
      of
     <span
@@ -52,7 +51,6 @@ exports[`<Pagination/> renders pagination for 18 items 1`] = `
         },
       }
     }
-    prefetch={true}
   >
     <a
       aria-disabled={false}

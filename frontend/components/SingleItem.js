@@ -30,7 +30,7 @@ const SINGLE_ITEM_QUERY = gql`
       id
       name
       description
-      largeImage {
+      image {
         publicUrlTransformed
       }
     }
@@ -48,11 +48,11 @@ function SingleItem({ id }) {
   return (
     <SingleItemStyles>
       <Head>
-        <title>Sick Fits | {Item.title}</title>
+        <title>Sick Fits | {Item.name}</title>
       </Head>
-      <img src={Item.largeImage} alt={Item.title} />
+      <img src={Item.image.publicUrlTransformed} alt={Item.name} />
       <div className="details">
-        <h2>Viewing {Item.title}</h2>
+        <h2>Viewing {Item.name}</h2>
         <p>{Item.description}</p>
       </div>
     </SingleItemStyles>

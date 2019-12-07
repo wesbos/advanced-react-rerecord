@@ -30,9 +30,13 @@ const CartItem = ({ cartItem }) => {
     );
   return (
     <CartItemStyles>
-      <img width="100" src={cartItem.item.image} alt={cartItem.item.title} />
+      <img
+        width="100"
+        src={cartItem.item.image}
+        alt={cartItem.item.tinametle}
+      />
       <div className="cart-item-details">
-        <h3>{cartItem.item.title}</h3>
+        <h3>{cartItem.item.name}</h3>
         <p>
           {formatMoney(cartItem.item.price * cartItem.quantity)}
           {' - '}
