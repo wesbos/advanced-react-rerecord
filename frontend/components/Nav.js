@@ -9,7 +9,7 @@ import CartCount from './CartCount';
 import Signout from './Signout';
 
 function Nav() {
-  const { data: { me } = {} } = useQuery(CURRENT_USER_QUERY);
+  const { data: { authenticatedUser: me } = {} } = useQuery(CURRENT_USER_QUERY);
   return (
     <NavStyles data-test="nav">
       <Link href="/items">

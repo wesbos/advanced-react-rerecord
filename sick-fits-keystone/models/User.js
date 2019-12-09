@@ -21,7 +21,7 @@ module.exports = {
     },
     cart: {
       type: Relationship,
-      ref: 'CartItem',
+      ref: 'CartItem.user',
       many: true,
     },
     permissions: {
@@ -40,12 +40,12 @@ module.exports = {
     resetTokenExpiry: { type: Text, isRequired: true },
   },
   // To create an initial user you can temporarily remove access controls
-  access: {
-    read: access.userIsAdminOrOwner,
-    update: access.userIsAdminOrOwner,
-    create: access.userIsAdmin,
-    delete: access.userIsAdmin,
-    auth: true,
-  },
+  // access: {
+  //   read: access.userIsAdminOrOwner,
+  //   update: access.userIsAdminOrOwner,
+  //   create: access.userIsAdmin,
+  //   delete: access.userIsAdmin,
+  //   auth: true,
+  // },
   plugins: [atTracking(), byTracking()],
 };

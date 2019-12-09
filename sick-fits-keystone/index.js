@@ -16,6 +16,8 @@ const Order = require('./models/Order');
 
 const PROJECT_NAME = 'sick-fits-keystone';
 
+const { addToCart } = require('./mutations');
+
 const keystone = new Keystone({
   name: PROJECT_NAME,
   adapter: new Adapter(),
@@ -41,17 +43,21 @@ keystone.extendGraphQLSchema({
       schema: 'double(x: Int): Int',
       resolver: (_, { x }) => 2 * x,
     },
-    {
-      schema: 'me: User',
-      resolver(parent, args, ctx, info) {
-        return ctx.authedItem;
-      },
-    },
+    // {
+    //   schema: 'me: User',
+    //   resolver(parent, args, ctx, info) {
+    //     return ctx.authedItem;
+    //   },
+    // },
   ],
   mutations: [
     {
       schema: 'double(x: Int): Int',
       resolver: (_, { x }) => 2 * x,
+    },
+    {
+      schema: 'addToCart(id: ID): CartItem',
+      resolver: addToCart,
     },
   ],
 });

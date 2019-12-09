@@ -7,10 +7,12 @@ import { CURRENT_USER_QUERY } from './User';
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {
-    signin(email: $email, password: $password) {
-      id
-      email
-      name
+    authenticateUserWithPassword(email: $email, password: $password) {
+      item {
+        id
+        email
+        name
+      }
     }
   }
 `;
@@ -21,9 +23,11 @@ class Signin extends Component {
     password: '',
     email: '',
   };
+
   saveToState = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   render() {
     return (
       <Mutation
@@ -36,8 +40,9 @@ class Signin extends Component {
             method="post"
             onSubmit={async e => {
               e.preventDefault();
-              await signup();
-              this.setState({ name: '', email: '', password: '' });
+              const res = await signup();
+              console.log(res);
+              this.setState({ email: '', password: '' });
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
