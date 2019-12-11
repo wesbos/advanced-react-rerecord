@@ -32,8 +32,8 @@ const CartItem = ({ cartItem }) => {
     <CartItemStyles>
       <img
         width="100"
-        src={cartItem.item.image}
-        alt={cartItem.item.tinametle}
+        src={cartItem.item.image.publicUrlTransformed}
+        alt={cartItem.item.name}
       />
       <div className="cart-item-details">
         <h3>{cartItem.item.name}</h3>

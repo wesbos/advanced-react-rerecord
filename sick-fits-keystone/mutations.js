@@ -1,6 +1,10 @@
-exports.addToCart = async function addToCart(parent, args, ctx, info) {
-  const { keystone } = require('./index');
-
+exports.addToCart = async function addToCart(
+  parent,
+  args,
+  ctx,
+  info,
+  { query }
+) {
   // 1. Make sure they are signed in
   const { id: userId } = ctx.authedItem;
   if (!userId) {
@@ -9,7 +13,7 @@ exports.addToCart = async function addToCart(parent, args, ctx, info) {
   // 2. Query the users current cart
   const {
     data: { allCartItems },
-  } = await keystone.executeQuery(`
+  } = await query(`
     query {
       allCartItems(where: {
           user: { id: "${userId}" },
@@ -28,7 +32,8 @@ exports.addToCart = async function addToCart(parent, args, ctx, info) {
     console.log(
       `There are already ${existingCartItem.quantity} if these items in their cart`
     );
-    const res = await keystone.executeQuery(`
+    const res = await query(
+      `
       mutation {
         updateCartItem(
           id: "${existingCartItem.id}",
@@ -38,7 +43,9 @@ exports.addToCart = async function addToCart(parent, args, ctx, info) {
           quantity
         }
       }
-    `);
+    `,
+      { context: ctx }
+    );
     return res.data.updateCartItem;
   }
   // 4. If its not, create a fresh CartItem for that user!
@@ -57,7 +64,7 @@ exports.addToCart = async function addToCart(parent, args, ctx, info) {
       }
     }
   `;
-  const res = await keystone.executeQuery(CREATE_CART_ITEM_MUTATION, {
+  const res = await query(CREATE_CART_ITEM_MUTATION, {
     context: ctx,
   });
   return res.data.createCartItem;

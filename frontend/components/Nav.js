@@ -2,14 +2,14 @@ import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 import { useQuery } from '@apollo/react-hooks';
 import { TOGGLE_CART_MUTATION } from './Cart';
-import { CURRENT_USER_QUERY } from './User';
+import { useUser } from './User';
 import NavStyles from './styles/NavStyles';
 
 import CartCount from './CartCount';
 import Signout from './Signout';
 
 function Nav() {
-  const { data: { authenticatedUser: me } = {} } = useQuery(CURRENT_USER_QUERY);
+  const me = useUser();
   return (
     <NavStyles data-test="nav">
       <Link href="/items">

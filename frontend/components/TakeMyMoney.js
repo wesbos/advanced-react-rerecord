@@ -43,6 +43,7 @@ class TakeMyMoney extends React.Component {
       query: { id: order.data.createOrder.id },
     });
   };
+
   render() {
     return (
       <User>
@@ -58,7 +59,9 @@ class TakeMyMoney extends React.Component {
                   amount={calcTotalPrice(me.cart)}
                   name="Sick Fits"
                   description={`Order of ${totalItems(me.cart)} items!`}
-                  image={me.cart.length && me.cart[0].item && me.cart[0].item.image}
+                  image={
+                    me.cart.length && me.cart[0].item && me.cart[0].item.image
+                  }
                   stripeKey="pk_test_Vtknn6vSdcZWSG2JWvEiWSqC"
                   currency="USD"
                   email={me.email}

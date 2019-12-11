@@ -1,6 +1,7 @@
-import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
+import { useQuery } from '@apollo/react-hooks';
+import { useState, useEffect } from 'react';
 
 const CURRENT_USER_QUERY = gql`
   query {
@@ -29,15 +30,14 @@ const CURRENT_USER_QUERY = gql`
   }
 `;
 
-const User = props => (
-  <Query {...props} query={CURRENT_USER_QUERY}>
-    <p>Heyyy</p>
-  </Query>
-);
+// TODO is this a valid hook? Do I need an effect?
+function useUser() {
+  const { data } = useQuery(CURRENT_USER_QUERY);
+  if (data) {
+    return data.authenticatedUser;
+  }
+  return null;
+}
 
-User.propTypes = {
-  children: PropTypes.func.isRequired,
-};
-
-export default User;
-export { CURRENT_USER_QUERY };
+export default <p>Hey</p>;
+export { CURRENT_USER_QUERY, useUser };
