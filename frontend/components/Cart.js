@@ -58,9 +58,9 @@ function Cart() {
       <footer>
         <p>{formatMoney(calcTotalPrice(me.cart))}</p>
         {me.cart.length && (
-          <SickButton>Checkout</SickButton>
-          // <TakeMyMoney>
-          // </TakeMyMoney>
+          <TakeMyMoney>
+            <SickButton>Checkout</SickButton>
+          </TakeMyMoney>
         )}
       </footer>
     </CartStyles>
