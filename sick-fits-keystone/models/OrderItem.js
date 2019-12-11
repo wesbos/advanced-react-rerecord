@@ -1,7 +1,12 @@
-const { byTracking, atTracking } = require('@keystonejs/list-plugins');
+const { Integer, Text } = require('@keystonejs/fields');
 const Item = require('./Item');
 
 // OrderItem shares all the same fields as Item, so we jsut copy it
 module.exports = {
-  ...Item,
+  fields: {
+    ...Item.fields,
+    quantity: { type: Integer, isRequired: true },
+    image: { type: Text },
+  },
+  plugins: [...Item.plugins],
 };

@@ -10,14 +10,14 @@ import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY, useUser } from './User';
 
 const CREATE_ORDER_MUTATION = gql`
-  mutation createOrder($token: String!) {
-    createOrder(token: $token) {
+  mutation checkout($token: String!) {
+    checkout(token: $token) {
       id
       charge
       total
       items {
         id
-        title
+        name
       }
     }
   }
@@ -27,10 +27,10 @@ function totalItems(cart) {
   return cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0);
 }
 
-async function onToken(res, createOrder) {
+async function onToken(res, checkout) {
   NProgress.start();
   // manually call the mutation once we have the stripe token
-  const order = await createOrder({
+  const order = await checkout({
     variables: {
       token: res.id,
     },
@@ -39,13 +39,13 @@ async function onToken(res, createOrder) {
   });
   Router.push({
     pathname: '/order',
-    query: { id: order.data.createOrder.id },
+    query: { id: order.data.checkout.id },
   });
 }
 
 function TakeMyMoney({ children }) {
   const me = useUser();
-  const [createOrder, { loading }] = useMutation(CREATE_ORDER_MUTATION, {
+  const [checkout, { loading }] = useMutation(CREATE_ORDER_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   });
   if (loading) return null;
@@ -62,7 +62,7 @@ function TakeMyMoney({ children }) {
       stripeKey="pk_test_Vtknn6vSdcZWSG2JWvEiWSqC"
       currency="USD"
       email={me.email}
-      token={res => onToken(res, createOrder)}
+      token={res => onToken(res, checkout)}
     >
       {children}
     </StripeCheckout>

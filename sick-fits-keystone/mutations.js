@@ -1,3 +1,5 @@
+const stripe = require('./stripe');
+
 exports.addToCart = async function addToCart(
   parent,
   args,
@@ -70,7 +72,7 @@ exports.addToCart = async function addToCart(
   return res.data.createCartItem;
 };
 
-exports.createOrder = async function addToCart(
+exports.checkout = async function addToCart(
   parent,
   args,
   ctx,
@@ -78,22 +80,28 @@ exports.createOrder = async function addToCart(
   { query }
 ) {
   // 1. Query the current user and make sure they are signed in
-  const { userId } = ctx.request;
+  const { id: userId } = ctx.authedItem;
   if (!userId) throw new Error('You must be signed in to complete this order.');
-  const user = await ctx.db.query.user(
-    { where: { id: userId } },
-    `{
-      id
-      name
-      email
-      cart {
+  console.log(userId);
+
+  const {
+    data: { User },
+  } = await query(`
+    query {
+      User(where: { id: "5de9a29642ca551f24c596ba" }) {
         id
-        quantity
-        item { title price id description image largeImage }
-      }}`
-  );
+        name
+        email
+        cart {
+          id
+          quantity
+          item { name price id description image { publicUrlTransformed } }
+        }
+      }
+    }
+  `);
   // 2. recalculate the total for the price
-  const amount = user.cart.reduce(
+  const amount = User.cart.reduce(
     (tally, cartItem) => tally + cartItem.item.price * cartItem.quantity,
     0
   );
@@ -104,34 +112,55 @@ exports.createOrder = async function addToCart(
     currency: 'USD',
     source: args.token,
   });
+  // console.log(charge);
   // 4. Convert the CartItems to OrderItems
-  const orderItems = user.cart.map(cartItem => {
+  const orderItems = User.cart.map(cartItem => {
     const orderItem = {
       ...cartItem.item,
       quantity: cartItem.quantity,
+      // TODO is this line needed?
       user: { connect: { id: userId } },
+      image: cartItem.item.image.publicUrlTransformed,
     };
     delete orderItem.id;
+    delete orderItem.user;
     return orderItem;
   });
 
   // 5. create the Order
-  const order = await ctx.db.mutation.createOrder({
-    data: {
-      total: charge.amount,
-      charge: charge.id,
-      items: { create: orderItems },
-      user: { connect: { id: userId } },
-    },
-  });
+  console.log('Creating the order');
+  const order = await query(
+    `
+      mutation createOrder($orderItems: [OrderItemCreateInput]) {
+        createOrder(
+          data: {
+            total: ${charge.amount},
+            charge: "${charge.id}",
+            items: { create: $orderItems },
+            user: { connect: { id: "${userId}" } },
+          }
+          ) {
+            id
+          }
+        }
+        `,
+    { variables: { orderItems } }
+  );
+
   // 6. Clean up - clear the users cart, delete cartItems
-  const cartItemIds = user.cart.map(cartItem => cartItem.id);
-  await ctx.db.mutation.deleteManyCartItems({
-    where: {
-      id_in: cartItemIds,
-    },
-  });
+  const cartItemIds = User.cart.map(cartItem => cartItem.id);
+  console.log(cartItemIds);
+  const deleteResponse = await query(
+    `
+    mutation deleteCartItems($ids: [ID!]) {
+      deleteCartItems(ids: $ids) {
+        id
+      }
+    }
+  `,
+    { variables: { ids: cartItemIds } }
+  );
+  console.log(deleteResponse);
   // 7. Return the Order to the client
-  return order;
-},
+  return order.data.createOrder;
 };

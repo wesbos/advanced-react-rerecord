@@ -14,14 +14,14 @@ module.exports = {
     total: { type: Integer },
     items: {
       type: Relationship,
-      ref: 'Item',
+      ref: 'OrderItem',
       many: true,
     },
     user: {
       type: Relationship,
       ref: 'User',
     },
-    charge: { type: Text, access: false },
+    charge: { type: Text },
     // TODO: Wait for virtual fields to be published
     // display_charge: {
     //   type: Virtual,

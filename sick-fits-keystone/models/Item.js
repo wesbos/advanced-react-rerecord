@@ -23,7 +23,7 @@ module.exports = {
     image: { type: CloudinaryImage, adapter: cloudinaryAdapter },
     largeImage: { type: CloudinaryImage, adapter: cloudinaryAdapter },
     price: { type: Integer },
-    seller: {
+    user: {
       type: Relationship,
       ref: 'User',
     },

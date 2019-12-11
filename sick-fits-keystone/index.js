@@ -16,7 +16,7 @@ const Order = require('./models/Order');
 
 const PROJECT_NAME = 'sick-fits-keystone';
 
-const { addToCart, createOrder } = require('./mutations');
+const { addToCart, checkout } = require('./mutations');
 
 const keystone = new Keystone({
   name: PROJECT_NAME,
@@ -60,8 +60,8 @@ keystone.extendGraphQLSchema({
       resolver: addToCart,
     },
     {
-      schema: 'createOrder($token: String!): Order',
-      resolver: createOrder,
+      schema: 'checkout(token: String!): Order',
+      resolver: checkout,
     },
   ],
 });
