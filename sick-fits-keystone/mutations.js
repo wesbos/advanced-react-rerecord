@@ -1,12 +1,6 @@
-const stripe = require('./stripe');
+import stripe from './stripe';
 
-exports.addToCart = async function addToCart(
-  parent,
-  args,
-  ctx,
-  info,
-  { query }
-) {
+export async function addToCart(parent, args, ctx, info, { query }) {
   // 1. Make sure they are signed in
   const { id: userId } = ctx.authedItem;
   if (!userId) {
@@ -70,15 +64,9 @@ exports.addToCart = async function addToCart(
     context: ctx,
   });
   return res.data.createCartItem;
-};
+}
 
-exports.checkout = async function addToCart(
-  parent,
-  args,
-  ctx,
-  info,
-  { query }
-) {
+export async function checkout(parent, args, ctx, info, { query }) {
   // 1. Query the current user and make sure they are signed in
   const { id: userId } = ctx.authedItem;
   if (!userId) throw new Error('You must be signed in to complete this order.');
@@ -163,4 +151,4 @@ exports.checkout = async function addToCart(
   console.log(deleteResponse);
   // 7. Return the Order to the client
   return order.data.createOrder;
-};
+}

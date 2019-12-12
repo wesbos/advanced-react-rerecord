@@ -1,8 +1,8 @@
-const { Integer, Relationship } = require('@keystonejs/fields');
-const { graphql } = require('graphql');
-const { byTracking, atTracking } = require('@keystonejs/list-plugins');
+import { Integer, Relationship } from '@keystonejs/fields';
+import { graphql } from 'graphql';
+import { byTracking, atTracking } from '@keystonejs/list-plugins';
 
-module.exports = {
+export default {
   // labelResolver: cartItem => `🛒 ${cartItem.item.name}`,
   labelResolver: async (cartItem, args, context, { schema }) => {
     console.log(cartItem);

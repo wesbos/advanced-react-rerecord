@@ -1,13 +1,12 @@
-const {
+import {
   Text,
   CloudinaryImage,
   Integer,
   Relationship,
-} = require('@keystonejs/fields');
+} from '@keystonejs/fields';
 
-const { Wysiwyg } = require('@keystonejs/fields-wysiwyg-tinymce');
-const { CloudinaryAdapter } = require('@keystonejs/file-adapters');
-const { byTracking, atTracking } = require('@keystonejs/list-plugins');
+import { CloudinaryAdapter } from '@keystonejs/file-adapters';
+import { byTracking, atTracking } from '@keystonejs/list-plugins';
 
 const cloudinaryAdapter = new CloudinaryAdapter({
   cloudName: process.env.CLOUDINARY_CLOUD_NAME,
@@ -16,7 +15,7 @@ const cloudinaryAdapter = new CloudinaryAdapter({
   folder: 'sick-fits-keystone',
 });
 
-module.exports = {
+export default {
   fields: {
     name: { type: Text, isRequired: true },
     description: { type: Text, isMultiline: true },

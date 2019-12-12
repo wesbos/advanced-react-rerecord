@@ -1,14 +1,14 @@
-const {
+import {
   Text,
   Select,
   Password,
   Checkbox,
   Relationship,
-} = require('@keystonejs/fields');
-const { byTracking, atTracking } = require('@keystonejs/list-plugins');
-const access = require('../utils/access');
+} from '@keystonejs/fields';
+import { byTracking, atTracking } from '@keystonejs/list-plugins';
+import { userIsAdminOrOwner, userIsAdmin } from '../utils/access';
 
-module.exports = {
+export default {
   fields: {
     name: { type: Text },
     email: {
@@ -41,10 +41,10 @@ module.exports = {
   },
   // To create an initial user you can temporarily remove access controls
   // access: {
-  //   read: access.userIsAdminOrOwner,
-  //   update: access.userIsAdminOrOwner,
-  //   create: access.userIsAdmin,
-  //   delete: access.userIsAdmin,
+  //   read: userIsAdminOrOwner,
+  //   update: userIsAdminOrOwner,
+  //   create: userIsAdmin,
+  //   delete: userIsAdmin,
   //   auth: true,
   // },
   plugins: [atTracking(), byTracking()],

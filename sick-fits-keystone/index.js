@@ -1,22 +1,21 @@
-require('dotenv').config();
-const { Keystone } = require('@keystonejs/keystone');
-const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
+import 'dotenv/config';
+import { Keystone } from '@keystonejs/keystone';
+import Auth from '@keystonejs/auth-password';
+import { GraphQLApp } from '@keystonejs/app-graphql';
+import { AdminUIApp } from '@keystonejs/app-admin-ui';
+import { MongooseAdapter as Adapter } from '@keystonejs/adapter-mongoose';
+import expressSession from 'express-session';
+import MongoStoreMaker from 'connect-mongo';
+import Item from './models/Item';
+import User from './models/User';
+import CartItem from './models/CartItem';
+import OrderItem from './models/OrderItem';
+import Order from './models/Order';
+import { addToCart, checkout } from './mutations';
 
-const { GraphQLApp } = require('@keystonejs/app-graphql');
-const { AdminUIApp } = require('@keystonejs/app-admin-ui');
-const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
-const expressSession = require('express-session');
-const MongoStore = require('connect-mongo')(expressSession);
-
-const Item = require('./models/Item');
-const User = require('./models/User');
-const CartItem = require('./models/CartItem');
-const OrderItem = require('./models/OrderItem');
-const Order = require('./models/Order');
+const MongoStore = MongoStoreMaker(expressSession);
 
 const PROJECT_NAME = 'sick-fits-keystone';
-
-const { addToCart, checkout } = require('./mutations');
 
 const keystone = new Keystone({
   name: PROJECT_NAME,
@@ -32,7 +31,7 @@ keystone.createList('OrderItem', OrderItem);
 keystone.createList('Order', Order);
 
 const authStrategy = keystone.createAuthStrategy({
-  type: PasswordAuthStrategy,
+  type: Auth.PasswordAuthStrategy,
   list: 'User',
 });
 
@@ -66,11 +65,9 @@ keystone.extendGraphQLSchema({
   ],
 });
 
-module.exports = {
-  keystone,
-  apps: [
-    new GraphQLApp(),
-    // To create an initial user you can temporarily remove the authStrategy below
-    new AdminUIApp({ enableDefaultRoute: true, authStrategy }),
-  ],
-};
+const apps = [
+  new GraphQLApp(),
+  // To create an initial user you can temporarily remove the authStrategy below
+  new AdminUIApp({ enableDefaultRoute: true, authStrategy }),
+];
+export { keystone, apps };

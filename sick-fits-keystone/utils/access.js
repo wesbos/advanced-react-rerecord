@@ -8,10 +8,9 @@ const userOwnsItem = ({ authentication: { item: user } }) => {
   return { id: user.id };
 };
 const userIsAdminOrOwner = auth => {
-  const isAdmin = access.userIsAdmin(auth);
-  const isOwner = access.userOwnsItem(auth);
+  const isAdmin = userIsAdmin(auth);
+  const isOwner = userOwnsItem(auth);
   return isAdmin || isOwner;
 };
-const access = { userIsAdmin, userOwnsItem, userIsAdminOrOwner };
 
-module.exports = access;
+export { userIsAdmin, userOwnsItem, userIsAdminOrOwner };

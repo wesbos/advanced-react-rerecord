@@ -1,5 +1,5 @@
 {
-  "name": "@keystonejs/example-projects-starter",
+  "name": "sick-fits-keystone",
   "description": "An example KeystoneJS project with a User list and Authentication.",
   "private": true,
   "version": "5.0.0",
@@ -9,7 +9,7 @@
     "node": ">=8.4.0"
   },
   "scripts": {
-    "devWHAT": "nodemon --exec cross-env NODE_ENV=development DISABLE_LOGGING=true node --inspect-brk `which keystone` dev",
+    "devWHAT": "nodemon --exec cross-env NODE_ENV=development DISABLE_LOGGING=true node -r esm --inspect `which keystone` dev",
     "dev": "nodemon --exec cross-env NODE_ENV=development DISABLE_LOGGING=true keystone dev",
     "build": "cross-env NODE_ENV=production keystone build",
     "start": "cross-env NODE_ENV=production keystone start"
@@ -28,6 +28,8 @@
     "connect-mongo": "^3.2.0",
     "cross-env": "^5.2.0",
     "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
     "express-session": "^1.17.0",
     "graphql": "^14.5.8",
     "graphql-fields": "^2.0.3",

@@ -1,14 +1,8 @@
-const {
-  Text,
-  Integer,
-  Relationship,
-  DateTime,
-  Virtual,
-} = require('@keystonejs/fields');
+import { Text, Integer, Relationship, DateTime } from '@keystonejs/fields';
 
-const { byTracking, atTracking } = require('@keystonejs/list-plugins');
+import { byTracking, atTracking } from '@keystonejs/list-plugins';
 
-module.exports = {
+export default {
   labelResolver: item => `Sale ${item.length}`,
   fields: {
     total: { type: Integer },
