@@ -2,6 +2,7 @@ import App from 'next/app';
 import { ApolloProvider } from 'react-apollo';
 import Page from '../components/Page';
 import withData from '../lib/withData';
+import { CartStateProvider } from '../components/LocalState';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -19,9 +20,11 @@ class MyApp extends App {
 
     return (
       <ApolloProvider client={apollo}>
-        <Page>
-          <Component {...pageProps} />
-        </Page>
+        <CartStateProvider value={{ cartOpen: true }}>
+          <Page>
+            <Component {...pageProps} />
+          </Page>
+        </CartStateProvider>
       </ApolloProvider>
     );
   }

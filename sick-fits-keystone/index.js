@@ -38,10 +38,6 @@ const authStrategy = keystone.createAuthStrategy({
 keystone.extendGraphQLSchema({
   types: [{ type: 'type FooBar { foo: Int, bar: Float }' }],
   queries: [
-    {
-      schema: 'double(x: Int): Int',
-      resolver: (_, { x }) => 2 * x,
-    },
     // {
     //   schema: 'me: User',
     //   resolver(parent, args, ctx, info) {
@@ -50,10 +46,6 @@ keystone.extendGraphQLSchema({
     // },
   ],
   mutations: [
-    {
-      schema: 'double(x: Int): Int',
-      resolver: (_, { x }) => 2 * x,
-    },
     {
       schema: 'addToCart(id: ID): CartItem',
       resolver: addToCart,
