@@ -11,7 +11,7 @@ import User from './models/User';
 import CartItem from './models/CartItem';
 import OrderItem from './models/OrderItem';
 import Order from './models/Order';
-import { addToCart, checkout } from './mutations';
+import { addToCart, checkout, requestReset, resetPassword } from './mutations';
 
 const MongoStore = MongoStoreMaker(expressSession);
 
@@ -36,7 +36,7 @@ const authStrategy = keystone.createAuthStrategy({
 });
 
 keystone.extendGraphQLSchema({
-  types: [{ type: 'type FooBar { foo: Int, bar: Float }' }],
+  types: [{ type: 'type Message { message: String }' }],
   queries: [
     // {
     //   schema: 'me: User',
@@ -53,6 +53,16 @@ keystone.extendGraphQLSchema({
     {
       schema: 'checkout(token: String!): Order',
       resolver: checkout,
+    },
+    {
+      schema: 'requestReset(email: String!): Message',
+      resolver: requestReset,
+    },
+    // TODO: This should return a message, not a user
+    {
+      schema:
+        'resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User',
+      resolver: resetPassword,
     },
   ],
 });

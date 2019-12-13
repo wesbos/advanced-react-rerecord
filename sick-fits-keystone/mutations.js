@@ -1,4 +1,7 @@
+import { promisify } from 'util';
+import { randomBytes } from 'crypto';
 import stripe from './stripe';
+import { transport, makeANiceEmail } from './src/mail';
 
 export async function addToCart(parent, args, ctx, info, { query }) {
   // 1. Make sure they are signed in
@@ -151,4 +154,99 @@ export async function checkout(parent, args, ctx, info, { query }) {
   console.log(deleteResponse);
   // 7. Return the Order to the client
   return order.data.createOrder;
+}
+
+export async function requestReset(parent, args, ctx, info, { query }) {
+  // 1. Check if this is a real user
+  const response = await query(
+    `query {
+      allUsers(where: { email: "${args.email}" }) {
+        email
+        id
+      }
+    }`
+  );
+
+  const [user] = response.data.allUsers;
+  if (!user) {
+    throw new Error(`No such user found for email ${args.email}`);
+  }
+  // 2. Set a reset token and expiry on that user
+  const resetToken = (await promisify(randomBytes)(20)).toString('hex');
+  const resetTokenExpiry = new Date(Date.now() + 3600000); // 1 hour from now
+  const updateResponse = await query(`mutation {
+    updateUser(
+      id: "${user.id}",
+      data: { resetToken: "${resetToken}", resetTokenExpiry: "${resetTokenExpiry}" },
+    ) {
+      email
+      resetToken
+      resetTokenExpiry
+    }
+  }`);
+
+  // 3. Email them that reset token
+  const mailRes = await transport.sendMail({
+    from: 'wes@wesbos.com',
+    to: user.email,
+    subject: 'Your Password Reset Token',
+    html: makeANiceEmail(`Your Password Reset Token is here!
+      \n\n
+      <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
+  });
+
+  // 4. Return the message
+  return { message: 'Check your email son!' };
+}
+
+export async function resetPassword(parent, args, ctx, info, { query }) {
+  // 1. check if the passwords match
+  if (args.password !== args.confirmPassword) {
+    throw new Error("Yo Passwords don't match!");
+  }
+  // 2. check if its a legit reset token
+  // 3. Check if its expired
+  const userResponse = await query(`query {
+    allUsers(where: {
+      resetToken: "${args.resetToken}",
+      resetTokenExpiry_gte: ${Date.now() - 3600000},
+    }) {
+      id
+    }
+  }`);
+  console.log(userResponse);
+  return;
+  const [user] = await ctx.db.query.users({
+    where: {},
+  });
+  if (!user) {
+    throw new Error('This token is either invalid or expired!');
+  }
+  // // 4. Hash their new password
+  // const password = await bcrypt.hash(args.password, 10);
+  // 5. Save the new password to the user and remove old resetToken fields
+  // const updatedUserResponse = query(`
+  //   mutation {
+  //     updateUser(
+  //       id: "${}"
+  //     )
+  //   }
+  // `);
+  const updatedUser = await ctx.db.mutation.updateUser({
+    where: { email: user.email },
+    data: {
+      password,
+      resetToken: null,
+      resetTokenExpiry: null,
+    },
+  });
+  // 6. Generate JWT
+  const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET);
+  // 7. Set the JWT cookie
+  ctx.response.cookie('token', token, {
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 365,
+  });
+  // 8. return the new user
+  return updatedUser;
 }

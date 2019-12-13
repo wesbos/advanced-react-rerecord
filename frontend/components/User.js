@@ -30,13 +30,11 @@ const CURRENT_USER_QUERY = gql`
   }
 `;
 
-// TODO is this a valid hook? Do I need an effect?
 function useUser() {
   const { data } = useQuery(CURRENT_USER_QUERY);
   if (data) {
     return data.authenticatedUser;
   }
-  return null;
 }
 
 export default <p>Hey</p>;

@@ -4,6 +4,8 @@ import {
   Password,
   Checkbox,
   Relationship,
+  Integer,
+  DateTime,
 } from '@keystonejs/fields';
 import { byTracking, atTracking } from '@keystonejs/list-plugins';
 import { userIsAdminOrOwner, userIsAdmin } from '../utils/access';
@@ -36,8 +38,8 @@ export default {
         'PERMISSIONUPDATE',
       ],
     },
-    resetToken: { type: Text, isRequired: true },
-    resetTokenExpiry: { type: Text, isRequired: true },
+    resetToken: { type: Text },
+    resetTokenExpiry: { type: DateTime },
   },
   // To create an initial user you can temporarily remove access controls
   // access: {

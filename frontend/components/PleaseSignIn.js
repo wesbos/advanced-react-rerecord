@@ -15,7 +15,6 @@ function PleaseSignIn(props) {
       </div>
     );
   }
-  return props.children;
 }
 
 export default PleaseSignIn;

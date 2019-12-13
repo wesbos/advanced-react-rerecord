@@ -42,7 +42,7 @@ function Pagination(props) {
       </Link>
       <p>
         Page {props.page} of
-        <span className="totalPages">{pages}</span>!
+        <span className="totalPages">{pages}</span>
       </p>
       <p>{count} Items Total</p>
       <Link

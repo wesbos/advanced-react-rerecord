@@ -20,7 +20,7 @@ class MyApp extends App {
 
     return (
       <ApolloProvider client={apollo}>
-        <CartStateProvider value={{ cartOpen: true }}>
+        <CartStateProvider>
           <Page>
             <Component {...pageProps} />
           </Page>
