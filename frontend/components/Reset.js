@@ -7,11 +7,17 @@ import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';
 
 const RESET_MUTATION = gql`
-  mutation RESET_MUTATION($resetToken: String!, $password: String!, $confirmPassword: String!) {
-    resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
-      id
-      email
-      name
+  mutation RESET_MUTATION(
+    $resetToken: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    resetPassword(
+      resetToken: $resetToken
+      password: $password
+      confirmPassword: $confirmPassword
+    ) {
+      message
     }
   }
 `;
@@ -20,13 +26,16 @@ class Reset extends Component {
   static propTypes = {
     resetToken: PropTypes.string.isRequired,
   };
+
   state = {
     password: '',
     confirmPassword: '',
   };
+
   saveToState = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   render() {
     return (
       <Mutation
@@ -38,13 +47,14 @@ class Reset extends Component {
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
-        {(reset, { error, loading, called }) => (
+        {(reset, { error, loading }) => (
           <Form
             method="post"
             onSubmit={async e => {
               e.preventDefault();
-              await reset();
-              this.setState({ password: '', confirmPassword: '' });
+              const res = await reset();
+              console.log(res);
+              // this.setState({ password: '', confirmPassword: '' });
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
@@ -58,6 +68,7 @@ class Reset extends Component {
                   placeholder="password"
                   value={this.state.password}
                   onChange={this.saveToState}
+                  required
                 />
               </label>
 
@@ -69,6 +80,7 @@ class Reset extends Component {
                   placeholder="confirmPassword"
                   value={this.state.confirmPassword}
                   onChange={this.saveToState}
+                  required
                 />
               </label>
 

@@ -73,7 +73,6 @@ export async function checkout(parent, args, ctx, info, { query }) {
   // 1. Query the current user and make sure they are signed in
   const { id: userId } = ctx.authedItem;
   if (!userId) throw new Error('You must be signed in to complete this order.');
-  console.log(userId);
 
   const {
     data: { User },
@@ -151,7 +150,6 @@ export async function checkout(parent, args, ctx, info, { query }) {
   `,
     { variables: { ids: cartItemIds } }
   );
-  console.log(deleteResponse);
   // 7. Return the Order to the client
   return order.data.createOrder;
 }
@@ -200,38 +198,60 @@ export async function requestReset(parent, args, ctx, info, { query }) {
 }
 
 export async function resetPassword(parent, args, ctx, info, { query }) {
+  console.log(args);
   // 1. check if the passwords match
+  console.info('1. Checking is passwords match');
   if (args.password !== args.confirmPassword) {
     throw new Error("Yo Passwords don't match!");
   }
   // 2. check if its a legit reset token
-  // 3. Check if its expired
+  console.info('1. Checking if legit token');
   const userResponse = await query(`query {
     allUsers(where: {
       resetToken: "${args.resetToken}",
-      resetTokenExpiry_gte: ${Date.now() - 3600000},
     }) {
       id
+      resetTokenExpiry
     }
   }`);
-  console.log(userResponse);
-  return;
-  const [user] = await ctx.db.query.users({
-    where: {},
-  });
+  const [user] = userResponse.data.allUsers;
   if (!user) {
-    throw new Error('This token is either invalid or expired!');
+    throw new Error('This token is invalid.');
   }
-  // // 4. Hash their new password
-  // const password = await bcrypt.hash(args.password, 10);
-  // 5. Save the new password to the user and remove old resetToken fields
-  // const updatedUserResponse = query(`
-  //   mutation {
-  //     updateUser(
-  //       id: "${}"
-  //     )
-  //   }
-  // `);
+  // 3. Check if its expired
+  console.info('check if expired');
+  const now = Date.now();
+  const expiry = new Date(user.resetTokenExpiry).getTime();
+  if (now - expiry > 3600000) {
+    throw new Error('This token is expired');
+  }
+  // 4. Save the new password to the user and remove old resetToken fields
+  console.log(`4. Saving new password`);
+  const updatedUserResponse = await query(`
+    mutation {
+      updateUser(
+        id: "${user.id}",
+        data: {
+          password: "${args.password}",
+          resetToken: null,
+          resetTokenExpiry: null,
+        }
+      ) {
+        password_is_set
+        name
+      }
+    }
+  `);
+  const { errors, data } = updatedUserResponse;
+  // TODO: Is this okay? I'd like to throw just the error if possible
+  // this shows me things like "[password:minLength:User:password] Value must be at least 8 characters long. \n\nGraphQL request:3:7\n2 |     mutation {\n3 |       updateUser(\n  |       ^\n4 |         id: \"5de9a29642ca551f24c596ba\
+  if (errors) {
+    throw new Error(errors);
+  }
+  console.info('Sending success response');
+  return {
+    message: 'Your password has been reset',
+  };
   const updatedUser = await ctx.db.mutation.updateUser({
     where: { email: user.email },
     data: {

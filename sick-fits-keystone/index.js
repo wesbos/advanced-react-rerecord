@@ -58,10 +58,9 @@ keystone.extendGraphQLSchema({
       schema: 'requestReset(email: String!): Message',
       resolver: requestReset,
     },
-    // TODO: This should return a message, not a user
     {
       schema:
-        'resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User',
+        'resetPassword(resetToken: String!, password: String!, confirmPassword: String!): Message',
       resolver: resetPassword,
     },
   ],

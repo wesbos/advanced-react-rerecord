@@ -39,8 +39,8 @@ export default {
         'PERMISSIONUPDATE',
       ],
     },
-    resetToken: { type: Text },
-    resetTokenExpiry: { type: DateTimeUtc },
+    resetToken: { type: Text, unique: true },
+    resetTokenExpiry: { type: DateTimeUtc, unique: true },
   },
   // To create an initial user you can temporarily remove access controls
   // access: {
