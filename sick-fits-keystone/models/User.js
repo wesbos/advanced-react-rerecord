@@ -8,6 +8,7 @@ import {
   DateTime,
 } from '@keystonejs/fields';
 import { byTracking, atTracking } from '@keystonejs/list-plugins';
+import { DateTimeUtc } from '@keystonejs/fields-datetime-utc';
 import { userIsAdminOrOwner, userIsAdmin } from '../utils/access';
 
 export default {
@@ -39,7 +40,7 @@ export default {
       ],
     },
     resetToken: { type: Text },
-    resetTokenExpiry: { type: DateTime },
+    resetTokenExpiry: { type: DateTimeUtc },
   },
   // To create an initial user you can temporarily remove access controls
   // access: {
