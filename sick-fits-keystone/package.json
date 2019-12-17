@@ -9,8 +9,7 @@
     "node": ">=8.4.0"
   },
   "scripts": {
-    "devWHAT": "nodemon --exec cross-env NODE_ENV=development DISABLE_LOGGING=true node -r esm --inspect `which keystone` dev",
-    "dev": "nodemon --exec cross-env NODE_ENV=development DISABLE_LOGGING=true keystone dev",
+    "dev": "nodemon --exec cross-env NODE_ENV=development DISABLE_LOGGING=true node -r esm --inspect `which keystone` dev",
     "build": "cross-env NODE_ENV=production keystone build",
     "start": "cross-env NODE_ENV=production keystone start"
   },
