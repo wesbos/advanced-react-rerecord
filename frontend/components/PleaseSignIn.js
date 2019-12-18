@@ -1,8 +1,9 @@
 import { Query } from 'react-apollo';
+import { Children } from 'react';
 import { useUser } from './User';
 import Signin from './Signin';
 
-function PleaseSignIn(props) {
+function PleaseSignIn({ children }) {
   const me = useUser();
   // TODO loading???
   const loading = false;
@@ -15,6 +16,7 @@ function PleaseSignIn(props) {
       </div>
     );
   }
+  return children();
 }
 
 export default PleaseSignIn;

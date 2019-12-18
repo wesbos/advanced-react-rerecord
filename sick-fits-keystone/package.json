@@ -27,6 +27,7 @@
     "@keystonejs/keystone": "^5.0.0",
     "@keystonejs/list-plugins": "^5.0.0",
     "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
     "cross-env": "^5.2.0",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",

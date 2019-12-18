@@ -1,9 +1,9 @@
 import withApollo from 'next-with-apollo';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
+import { createUploadLink } from 'apollo-upload-client';
 import { endpoint, prodEndpoint } from '../config';
 
 function createClient({ headers, initialState }) {
@@ -18,16 +18,15 @@ function createClient({ headers, initialState }) {
           );
         if (networkError) console.log(`[Network error]: ${networkError}`);
       }),
-      new HttpLink({
+      // this uses apollo-link-http under the hood, so all the options here come from that package
+      createUploadLink({
         uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
-        request: operation => {
-          operation.setContext({
-            fetchOptions: {
-              credentials: 'include',
-            },
-            headers,
-          });
-        },
+        // TODO: I don't think we need this
+        // fetchOptions: {
+        //   credentials: 'include',
+        // },
+        // pass the headers along from this request. This enables SSR with logged in state
+        headers,
       }),
     ]),
     cache: new InMemoryCache().restore(initialState || {}),
