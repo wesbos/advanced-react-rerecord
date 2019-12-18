@@ -2,7 +2,7 @@ import Reset from '../components/Reset';
 
 const ResetPage = props => (
   <div>
-    <p>Reset Your Password {props.query.resetToken}</p>
+    <p>Reset Your Password</p>
     <Reset resetToken={props.query.resetToken} />
   </div>
 );
