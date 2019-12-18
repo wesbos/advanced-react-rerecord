@@ -70,7 +70,9 @@ keystone.extendGraphQLSchema({
 const apps = [
   new GraphQLApp({
     apollo: {
-      cors: cors(),
+      options: {
+        cors: cors(),
+      },
     },
   }),
   // To create an initial user you can temporarily remove the authStrategy below
