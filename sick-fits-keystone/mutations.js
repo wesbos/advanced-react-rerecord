@@ -252,21 +252,4 @@ export async function resetPassword(parent, args, ctx, info, { query }) {
   return {
     message: 'Your password has been reset',
   };
-  const updatedUser = await ctx.db.mutation.updateUser({
-    where: { email: user.email },
-    data: {
-      password,
-      resetToken: null,
-      resetTokenExpiry: null,
-    },
-  });
-  // 6. Generate JWT
-  const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET);
-  // 7. Set the JWT cookie
-  ctx.response.cookie('token', token, {
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 365,
-  });
-  // 8. return the new user
-  return updatedUser;
 }
