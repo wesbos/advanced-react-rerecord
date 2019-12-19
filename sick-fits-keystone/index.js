@@ -6,7 +6,6 @@ import { AdminUIApp } from '@keystonejs/app-admin-ui';
 import { MongooseAdapter as Adapter } from '@keystonejs/adapter-mongoose';
 import expressSession from 'express-session';
 import MongoStoreMaker from 'connect-mongo';
-import cors from 'cors';
 import Item from './models/Item';
 import User from './models/User';
 import CartItem from './models/CartItem';
@@ -68,14 +67,12 @@ keystone.extendGraphQLSchema({
 });
 
 const apps = [
-  new GraphQLApp({
-    apollo: {
-      options: {
-        cors: cors(),
-      },
-    },
-  }),
+  new GraphQLApp(),
   // To create an initial user you can temporarily remove the authStrategy below
   new AdminUIApp({ enableDefaultRoute: true, authStrategy }),
 ];
+
+const cors = {
+  origin: '*',
+};
 export { keystone, apps };

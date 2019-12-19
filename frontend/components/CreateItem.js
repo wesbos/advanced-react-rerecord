@@ -30,10 +30,10 @@ const CREATE_ITEM_MUTATION = gql`
 
 function CreateItem() {
   const { inputs, handleChange } = useForm({
-    name: '',
-    description: '',
+    name: 'Nice Shoes',
+    description: 'soo nice',
     image: '',
-    price: 0,
+    price: 500,
   });
 
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
@@ -49,8 +49,6 @@ function CreateItem() {
         // call the mutation
         const res = await createItem();
         // change them to the single item page
-        console.log(res);
-        return;
         Router.push({
           pathname: '/item',
           query: { id: res.data.createItem.id },

@@ -24,7 +24,7 @@
     "@keystonejs/fields-datetime-utc": "^5.0.3",
     "@keystonejs/fields-wysiwyg-tinymce": "^5.0.1",
     "@keystonejs/file-adapters": "^5.1.0",
-    "@keystonejs/keystone": "^5.0.0",
+    "@keystonejs/keystone": "^5.4.0",
     "@keystonejs/list-plugins": "^5.0.0",
     "connect-mongo": "^3.2.0",
     "cors": "^2.8.5",
