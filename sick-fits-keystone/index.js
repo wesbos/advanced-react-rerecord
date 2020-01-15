@@ -69,7 +69,7 @@ keystone.extendGraphQLSchema({
 
 const apps = [
   new GraphQLApp(),
-  new AdminUIApp({ enableDefaultRoute: true, authStrategy }),
+  new AdminUIApp({ authStrategy }),
   // this makes it break
   new NextApp({ dir: '../frontend' }),
 ];
