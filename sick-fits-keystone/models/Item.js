@@ -2,17 +2,17 @@ import {
   Text,
   CloudinaryImage,
   Integer,
-  Relationship,
-} from '@keystonejs/fields';
+  Relationship
+} from "@keystonejs/fields";
 
-import { CloudinaryAdapter } from '@keystonejs/file-adapters';
-import { byTracking, atTracking } from '@keystonejs/list-plugins';
+import { CloudinaryAdapter } from "@keystonejs/file-adapters";
+import { byTracking, atTracking } from "@keystonejs/list-plugins";
 
 const cloudinaryAdapter = new CloudinaryAdapter({
-  cloudName: process.env.CLOUDINARY_CLOUD_NAME,
-  apiKey: process.env.CLOUDINARY_KEY,
-  apiSecret: process.env.CLOUDINARY_SECRET,
-  folder: 'sick-fits-keystone',
+  cloudName: process.env.CLOUDINARY_CLOUD_NAME || "test",
+  apiKey: process.env.CLOUDINARY_KEY || "test",
+  apiSecret: process.env.CLOUDINARY_SECRET || "test",
+  folder: "sick-fits-keystone"
 });
 
 export default {
@@ -24,8 +24,8 @@ export default {
     price: { type: Integer },
     user: {
       type: Relationship,
-      ref: 'User',
-    },
+      ref: "User"
+    }
   },
-  plugins: [atTracking(), byTracking()],
+  plugins: [atTracking(), byTracking()]
 };
