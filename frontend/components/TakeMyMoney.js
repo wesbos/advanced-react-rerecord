@@ -1,7 +1,7 @@
 import React from 'react';
 import NProgress from 'nprogress';
 import StripeCheckout from 'react-stripe-checkout';
-import { Mutation, useMutation } from 'react-apollo';
+import { useMutation } from 'react-apollo';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';

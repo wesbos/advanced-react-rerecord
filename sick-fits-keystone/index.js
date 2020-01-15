@@ -72,7 +72,4 @@ const apps = [
   new AdminUIApp({ enableDefaultRoute: true, authStrategy }),
 ];
 
-const cors = {
-  origin: '*',
-};
 export { keystone, apps };
