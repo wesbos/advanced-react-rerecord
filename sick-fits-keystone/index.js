@@ -6,6 +6,7 @@ import { AdminUIApp } from '@keystonejs/app-admin-ui';
 import { MongooseAdapter as Adapter } from '@keystonejs/adapter-mongoose';
 import expressSession from 'express-session';
 import MongoStoreMaker from 'connect-mongo';
+import { NextApp } from '@keystonejs/app-next';
 import Item from './models/Item';
 import User from './models/User';
 import CartItem from './models/CartItem';
@@ -68,8 +69,9 @@ keystone.extendGraphQLSchema({
 
 const apps = [
   new GraphQLApp(),
-  // To create an initial user you can temporarily remove the authStrategy below
   new AdminUIApp({ enableDefaultRoute: true, authStrategy }),
+  // this makes it break
+  new NextApp({ dir: '../frontend' }),
 ];
 
 export { keystone, apps };

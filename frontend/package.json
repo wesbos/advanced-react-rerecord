@@ -31,7 +31,7 @@
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
     "lodash.debounce": "^4.0.8",
-    "next": "^9.2.0",
+    "next": "^9.1.0",
     "next-with-apollo": "^4.3.0",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
