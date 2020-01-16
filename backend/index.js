@@ -12,7 +12,7 @@ import User from './models/User';
 import CartItem from './models/CartItem';
 import OrderItem from './models/OrderItem';
 import Order from './models/Order';
-import { addToCart, checkout, requestReset, resetPassword } from './mutations';
+import * as mutations from './mutations';
 
 const MongoStore = MongoStoreMaker(expressSession);
 
@@ -49,20 +49,20 @@ keystone.extendGraphQLSchema({
   mutations: [
     {
       schema: 'addToCart(id: ID): CartItem',
-      resolver: addToCart,
+      resolver: mutations.addToCart,
     },
     {
       schema: 'checkout(token: String!): Order',
-      resolver: checkout,
+      resolver: mutations.checkout,
     },
     {
       schema: 'requestReset(email: String!): Message',
-      resolver: requestReset,
+      resolver: mutations.requestReset,
     },
     {
       schema:
         'resetPassword(resetToken: String!, password: String!, confirmPassword: String!): Message',
-      resolver: resetPassword,
+      resolver: mutations.resetPassword,
     },
   ],
 });
