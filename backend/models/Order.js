@@ -16,11 +16,6 @@ export default {
       ref: 'User',
     },
     charge: { type: Text },
-    // TODO: Wait for virtual fields to be published
-    // display_charge: {
-    //   type: Virtual,
-    //   resolver: item => `Charge # ${item.charge}`,
-    // },
     createdAt: {
       type: DateTime,
       format: 'MM/DD/YYYY h:mm A',

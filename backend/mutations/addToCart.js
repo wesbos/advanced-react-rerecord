@@ -44,7 +44,6 @@ export async function addToCart(parent, args, ctx, info, { query }) {
   }
   // 4. If its not, create a fresh CartItem for that user!
   // TODO Can we get highlighting here?
-  // TODO Change this to proper GraphQL variables
   // TODO How do we pass `info.fields` to this query? there needs to be something easy..
   // TODO this breaks if we query the user { id }
   const CREATE_CART_ITEM_MUTATION = `
