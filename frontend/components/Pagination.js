@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
-import { useQuery } from '@apollo/react-hooks';
+import { Query } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import Head from 'next/head';
 import Link from 'next/link';
 import PaginationStyles from './styles/PaginationStyles';

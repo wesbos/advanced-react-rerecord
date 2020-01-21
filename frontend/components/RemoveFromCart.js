@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
 import { CURRENT_USER_QUERY } from './User';

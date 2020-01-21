@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
 
 const CURRENT_USER_QUERY = gql`
@@ -33,6 +33,7 @@ const CURRENT_USER_QUERY = gql`
 function useUser() {
   const { data } = useQuery(CURRENT_USER_QUERY);
   if (data) {
+    console.log(data);
     return data.authenticatedUser;
   }
 }

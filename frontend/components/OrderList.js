@@ -1,10 +1,10 @@
 import React from 'react';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/client';
 import { formatDistance } from 'date-fns';
 import Link from 'next/link';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import Error from './ErrorMessage';
 import formatMoney from '../lib/formatMoney';
 import OrderItemStyles from './styles/OrderItemStyles';

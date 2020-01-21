@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
+import { Mutation, useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
+
 import Dump from '@wesbos/dump';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
@@ -50,6 +50,7 @@ function Signup() {
             placeholder="email"
             value={inputs.email}
             onChange={handleChange}
+            autoComplete="email"
           />
         </label>
         <label htmlFor="name">
@@ -60,6 +61,7 @@ function Signup() {
             placeholder="name"
             value={inputs.name}
             onChange={handleChange}
+            autoComplete="name"
           />
         </label>
         <label htmlFor="password">
@@ -70,6 +72,7 @@ function Signup() {
             placeholder="password"
             value={inputs.password}
             onChange={handleChange}
+            autoComplete="new-password"
           />
         </label>
 

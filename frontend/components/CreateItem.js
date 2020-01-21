@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
-import { useMutation } from '@apollo/react-hooks';
+import { Mutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import useForm from '../lib/useForm';

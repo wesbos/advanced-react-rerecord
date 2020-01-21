@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { useUser } from './User';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';

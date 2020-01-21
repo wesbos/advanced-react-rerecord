@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import { Mutation } from 'react-apollo';
+import { useMutation, Mutation } from '@apollo/client';
+
 import gql from 'graphql-tag';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
@@ -48,6 +48,7 @@ function Signin() {
             placeholder="email"
             value={inputs.email}
             onChange={handleChange}
+            autoComplete="email"
           />
         </label>
         <label htmlFor="password">
@@ -58,6 +59,7 @@ function Signin() {
             placeholder="password"
             value={inputs.password}
             onChange={handleChange}
+            autoComplete="new-password"
           />
         </label>
 

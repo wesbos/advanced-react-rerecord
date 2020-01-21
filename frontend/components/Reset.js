@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
-import { useMutation } from '@apollo/react-hooks';
+import { Mutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import useForm from '../lib/useForm';

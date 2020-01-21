@@ -1,8 +1,8 @@
 import React from 'react';
 import Downshift, { resetIdCounter } from 'downshift';
 import Router from 'next/router';
-import { ApolloConsumer } from 'react-apollo';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { ApolloConsumer } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import debounce from 'lodash.debounce';
 import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';

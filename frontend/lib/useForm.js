@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function useForm(initial = {}) {
-  const [inputs, updateInputs] = useState(initial);
+  const [inputs, setInputs] = useState(initial);
 
   function handleChange(e) {
     let { value, name, type } = e.target;
@@ -11,7 +11,7 @@ export default function useForm(initial = {}) {
     if (type === 'file') {
       [value] = e.target.files;
     }
-    updateInputs({
+    setInputs({
       ...inputs,
       [name]: value,
     });
@@ -19,12 +19,20 @@ export default function useForm(initial = {}) {
   }
 
   function resetForm() {
-    updateInputs(initial);
+    setInputs(initial);
+  }
+
+  function clearForm() {
+    const blankState = Object.fromEntries(
+      Object.entries(inputs).map(([key]) => [key, ''])
+    );
+    setInputs(blankState);
   }
 
   return {
     inputs,
     handleChange,
     resetForm,
+    clearForm,
   };
 }

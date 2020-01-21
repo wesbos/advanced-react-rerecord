@@ -1,4 +1,4 @@
-import { Query, Mutation } from 'react-apollo';
+import { Query, Mutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import Error from './ErrorMessage';
