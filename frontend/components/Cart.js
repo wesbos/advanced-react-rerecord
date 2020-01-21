@@ -8,6 +8,7 @@ import CartItem from './CartItem';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import formatMoney from '../lib/formatMoney';
 import TakeMyMoney from './TakeMyMoney';
+import Checkout from './Checkout';
 
 function Cart() {
   const me = useUser();
@@ -33,9 +34,12 @@ function Cart() {
       <footer>
         <p>{formatMoney(calcTotalPrice(me.cart))}</p>
         {me.cart.length && (
-          <TakeMyMoney>
-            <SickButton>Checkout</SickButton>
-          </TakeMyMoney>
+          <>
+            <Checkout></Checkout>
+            <TakeMyMoney>
+              <SickButton>Checkout</SickButton>
+            </TakeMyMoney>
+          </>
         )}
       </footer>
     </CartStyles>

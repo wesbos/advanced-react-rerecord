@@ -27,12 +27,17 @@ export async function checkout(parent, args, ctx, info, { query }) {
     0
   );
   console.log(`Going to charge for a total of ${amount}`);
-  // 3. Create the stripe charge (turn token into $$$)
-  const charge = await stripe.charges.create({
+
+  // 3. Create the Payment Intent, given the Payment Method ID
+  // by passing confirm: true, We do stripe.paymentIntent.create() and stripe.paymentIntent.confirm() in 1 go.
+  const charge = await stripe.paymentIntents.create({
     amount,
     currency: 'USD',
-    source: args.token,
+    confirm: true,
+    payment_method: args.token,
   });
+  console.log(charge);
+
   // console.log(charge);
   // 4. Convert the CartItems to OrderItems
   const orderItems = User.cart.map(cartItem => {
