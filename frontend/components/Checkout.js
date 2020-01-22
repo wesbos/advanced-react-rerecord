@@ -2,11 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import NProgress from 'nprogress';
 import {
   CardElement,
-  PaymentRequestButtonElement,
+  CardCvcElement,
+  CardNumberElement,
+  CardExpiryElement,
   Elements,
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import Head from 'next/head';
@@ -27,16 +30,28 @@ const CREATE_ORDER_MUTATION = gql`
   }
 `;
 
+const style = {
+  base: {
+    color: '#32325d',
+    border: '5px solid red',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#aab7c4',
+    },
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#ffc600',
+  },
+};
+
 function Checkout() {
-  const stripe =
-    typeof window === 'undefined'
-      ? null
-      : window.Stripe('pk_test_Vtknn6vSdcZWSG2JWvEiWSqC');
+  // We use loadStripe because is load in their lib async
+  const stripe = loadStripe('pk_test_Vtknn6vSdcZWSG2JWvEiWSqC');
   return (
     <>
-      <Head>
-        <script src="https://js.stripe.com/v3/"></script>
-      </Head>
       <Elements stripe={stripe}>
         <CheckoutForm />
       </Elements>
@@ -44,12 +59,10 @@ function Checkout() {
   );
 }
 
-function CheckoutForm() {
-  const elements = useElements();
+function useCheckout() {
   const stripe = useStripe();
-
-  console.log(stripe);
-  if (!stripe) return <p>Loading...</p>;
+  const [error, setError] = useState();
+  const elements = useElements();
 
   const [checkout] = useMutation(CREATE_ORDER_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
@@ -70,6 +83,10 @@ function CheckoutForm() {
 
     console.log({ error, paymentMethod });
 
+    if (error) {
+      return setError(error);
+    }
+
     // 4. Send it to the server and charge it
     const order = await checkout({
       variables: {
@@ -85,9 +102,16 @@ function CheckoutForm() {
     });
   };
 
+  return { error, handleSubmit };
+}
+
+function CheckoutForm() {
+  const { handleSubmit, error } = useCheckout();
   return (
     <form onSubmit={handleSubmit}>
-      <CardElement />
+      {error && <p>{error.message}</p>}
+      {/* <CardElement /> */}
+      <CardCvcElement />
       <button type="submit">Pay</button>
     </form>
   );

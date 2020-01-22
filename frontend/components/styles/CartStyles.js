@@ -9,7 +9,7 @@ const CartStyles = styled.div`
   top: 0;
   right: 0;
   width: 40%;
-  min-width: 500px;
+  min-width: 600px;
   bottom: 0;
   transform: translateX(100%);
   transition: all 0.3s;
@@ -28,7 +28,7 @@ const CartStyles = styled.div`
     margin-top: 2rem;
     padding-top: 2rem;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 100%;
     align-items: center;
     font-size: 3rem;
     font-weight: 900;
