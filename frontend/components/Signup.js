@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Mutation, useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 
-import Dump from '@wesbos/dump';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';

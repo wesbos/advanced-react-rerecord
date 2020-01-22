@@ -114,8 +114,8 @@ function CheckoutForm() {
         Credit Card Number
         {/* <CardNumberElement /> */}
       </label>
-      <CardElement />
-      {/* <CardCvcElement /> */}
+      {/* <CardElement /> */}
+      <CardCvcElement />
       <button type="submit">Pay</button>
     </form>
   );
