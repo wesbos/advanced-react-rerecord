@@ -110,8 +110,12 @@ function CheckoutForm() {
   return (
     <form onSubmit={handleSubmit}>
       {error && <p>{error.message}</p>}
-      {/* <CardElement /> */}
-      <CardCvcElement />
+      <label htmlFor="cardNumber">
+        Credit Card Number
+        {/* <CardNumberElement /> */}
+      </label>
+      <CardElement />
+      {/* <CardCvcElement /> */}
       <button type="submit">Pay</button>
     </form>
   );

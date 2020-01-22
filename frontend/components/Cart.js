@@ -33,7 +33,14 @@ function Cart() {
       </ul>
       <footer>
         <p>{formatMoney(calcTotalPrice(me.cart))}</p>
-        {me.cart.length && <Checkout />}
+        <Checkout />
+        {me.cart.length && (
+          <>
+            <TakeMyMoney>
+              <SickButton>Checkout</SickButton>
+            </TakeMyMoney>
+          </>
+        )}
       </footer>
     </CartStyles>
   );
