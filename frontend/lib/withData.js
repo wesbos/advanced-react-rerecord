@@ -3,9 +3,12 @@ import { ApolloClient, InMemoryCache, ApolloLink } from '@apollo/client';
 // TODO: onError for Apollo 3?
 import { onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
+import { getDataFromTree } from '@apollo/react-ssr';
 import { endpoint, prodEndpoint } from '../config';
 
 function createClient({ headers, initialState }) {
+  console.log('initialState');
+  console.log(initialState);
   return new ApolloClient({
     link: ApolloLink.from([
       onError(({ graphQLErrors, networkError }) => {
@@ -46,5 +49,5 @@ function createClient({ headers, initialState }) {
 //   });
 // }
 
-export default withApollo(createClient);
+export default withApollo(createClient, { getDataFromTree });
 // export default createClient;
