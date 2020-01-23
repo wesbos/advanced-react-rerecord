@@ -67,11 +67,6 @@ keystone.extendGraphQLSchema({
   ],
 });
 
-const apps = [
-  new GraphQLApp(),
-  new AdminUIApp({ authStrategy }),
-  // this makes it break
-  new NextApp({ dir: '../frontend' }),
-];
+const apps = [new GraphQLApp(), new AdminUIApp({ authStrategy })];
 
 export { keystone, apps };
