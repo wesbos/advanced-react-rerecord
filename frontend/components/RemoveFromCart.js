@@ -28,11 +28,21 @@ function updateCart(cache, payload) {
   const data = cache.readQuery({ query: CURRENT_USER_QUERY });
   // 2. remove that item from the cart
   const cartItemId = payload.data.deleteCartItem.id;
-  data.authenticatedUser.cart = data.authenticatedUser.cart.filter(
+  const updatedCart = data.authenticatedUser.cart.filter(
     cartItem => cartItem.id !== cartItemId
   );
   // 3. write it back to the cache
-  cache.writeQuery({ query: CURRENT_USER_QUERY, data });
+  // WE have do do it in this weird way because the readQuery is immutable. We could also do a deep clone with lodash
+  cache.writeQuery({
+    query: CURRENT_USER_QUERY,
+    data: {
+      ...data,
+      authenticatedUser: {
+        ...data.authenticatedUser,
+        cart: updatedCart,
+      },
+    },
+  });
 }
 
 function RemoveFromCart({ id }) {
