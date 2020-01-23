@@ -11,7 +11,6 @@ const fakeItem = () => ({
   image: 'dog-small.jpg',
   title: 'dogs are best',
   description: 'dogs',
-  largeImage: 'dog.jpg',
 });
 
 const fakeUser = () => ({

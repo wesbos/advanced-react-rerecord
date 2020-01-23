@@ -18,9 +18,6 @@ const ALL_ITEMS_QUERY = gql`
       image {
         publicUrlTransformed
       }
-      largeImage {
-        publicUrl
-      }
     }
   }
 `;

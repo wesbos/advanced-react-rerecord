@@ -13,31 +13,33 @@ const DELETE_ITEM_MUTATION = gql`
 
 function update(cache, payload) {
   // TODO Can we use evict() and refetch queries?
-  // cache.evict(`Item:${payload.data.deleteItem.id}`);
-  // return;
-  console.log(payload);
-  // manually update the cache on the client, so it matches the server
-  // 1. Read the cache for the items we want
-  const data = cache.readQuery({ query: ALL_ITEMS_QUERY });
-  console.log(data);
-  // 2. Filter the deleted item out of the page
-  const updatedItems = data.allItems.filter(
-    item => item.id !== payload.data.deleteItem.id
-  );
-  // 3. Put the items back!
-  cache.writeQuery({
-    query: ALL_ITEMS_QUERY,
-    data: {
-      ...data,
-      allItems: updatedItems,
-    },
-  });
+  cache.evict(`Item:${payload.data.deleteItem.id}`);
+  // // return;
+  // console.log(payload);
+  // // manually update the cache on the client, so it matches the server
+  // // 1. Read the cache for the items we want
+  // const data = cache.readQuery({ query: ALL_ITEMS_QUERY });
+  // console.log(data);
+  // // 2. Filter the deleted item out of the page
+  // const updatedItems = data.allItems.filter(
+  //   item => item.id !== payload.data.deleteItem.id
+  // );
+  // // 3. Put the items back!
+  // cache.writeQuery({
+  //   query: ALL_ITEMS_QUERY,
+  //   data: {
+  //     ...data,
+  //     allItems: updatedItems,
+  //   },
+  // });
 }
 
 function DeleteItem({ id, children }) {
   const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION, {
     variables: { id },
     update,
+    awaitRefetchQueries: true,
+    refetchQueries: [{ query: ALL_ITEMS_QUERY }],
   });
   return (
     <button

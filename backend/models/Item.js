@@ -20,7 +20,6 @@ export default {
     name: { type: Text, isRequired: true },
     description: { type: Text, isMultiline: true },
     image: { type: CloudinaryImage, adapter: cloudinaryAdapter },
-    largeImage: { type: CloudinaryImage, adapter: cloudinaryAdapter },
     price: { type: Integer },
     user: {
       type: Relationship,
