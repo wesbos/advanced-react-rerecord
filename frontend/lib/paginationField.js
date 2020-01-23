@@ -10,7 +10,7 @@ export default function paginationField() {
 
       const merged = existing ? existing.slice(0) : [];
       // we do it this way because someone might visit page 2 first, so we need to pad blank spots in the array
-      for (let i = skip; i < skip + first; ++i) {
+      for (let i = skip; i < skip + incoming.length; ++i) {
         merged[i] = incoming[i - skip];
       }
       return merged;
