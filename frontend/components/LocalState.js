@@ -10,8 +10,16 @@ function CartStateProvider({ children }) {
     setCartOpen(!cartOpen);
   }
 
+  function closeCart() {
+    setCartOpen(false);
+  }
+
+  function openCart() {
+    setCartOpen(true);
+  }
+
   return (
-    <LocalStateProvider value={{ cartOpen, toggleCart }}>
+    <LocalStateProvider value={{ cartOpen, toggleCart, openCart, closeCart }}>
       {children}
     </LocalStateProvider>
   );
