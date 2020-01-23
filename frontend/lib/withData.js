@@ -5,6 +5,7 @@ import { onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
 import { getDataFromTree } from '@apollo/react-ssr';
 import { endpoint, prodEndpoint } from '../config';
+import paginationField from './paginationField';
 
 function createClient({ headers, initialState }) {
   console.log('initialState');
@@ -30,24 +31,16 @@ function createClient({ headers, initialState }) {
         headers,
       }),
     ]),
-    cache: new InMemoryCache().restore(initialState || {}),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            allItems: paginationField(),
+          },
+        },
+      },
+    }).restore(initialState || {}),
   });
 }
 
-// function createClient({ headers, initialState }) {
-//   return new ApolloClient({
-//     uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
-//     cache: new InMemoryCache().restore(initialState || {}),
-//     request: operation => {
-//       operation.setContext({
-//         fetchOptions: {
-//           credentials: 'include',
-//         },
-//         headers,
-//       });
-//     },
-//   });
-// }
-
 export default withApollo(createClient, { getDataFromTree });
-// export default createClient;
