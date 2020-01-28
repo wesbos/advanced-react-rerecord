@@ -22,6 +22,18 @@ const keystone = new Keystone({
   adapter: new Adapter(),
   // persist logins when the app restarts
   sessionStore: new MongoStore({ url: process.env.DATABASE_URL }),
+  async onConnect() {
+    if (process.argv.includes('--dummy')) {
+      console.log('--------INSERTING DUMMY DATA ------------');
+      const { items } = await import('./src/dummy.js');
+      const Item = keystone.adapters.MongooseAdapter.mongoose.model('Item');
+      await Item.insertMany(items);
+      console.log(
+        '----- DUMMY DATA ADDED! Please start the process with `npm run dev` ------'
+      );
+      process.exit();
+    }
+  },
 });
 
 keystone.createList('User', User);

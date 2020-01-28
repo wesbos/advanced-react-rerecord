@@ -1,6 +1,5 @@
 const items = [
   {
-    _id: '5dfbed272849d7961377c2c1',
     name: 'Yeti Hondo',
     description: 'soo nice',
     price: 3423,
@@ -40,7 +39,6 @@ const items = [
     __v: 0,
   },
   {
-    _id: '5e2a13f0689b2835ae71d1a6',
     name: 'Airmax 270',
     description: 'Great shoes!',
     price: 5234,
@@ -80,7 +78,6 @@ const items = [
     __v: 0,
   },
   {
-    _id: '5e2a1400689b2835ae71d1a8',
     name: 'KITH Hoodie',
     description: 'Love this hoodie',
     price: 23562,
@@ -120,7 +117,6 @@ const items = [
     __v: 0,
   },
   {
-    _id: '5e2a1416689b2835ae71d1aa',
     name: 'Fanorak',
     description: 'Super hip. Comes in a number of colours',
     price: 252342,
@@ -160,7 +156,6 @@ const items = [
     __v: 0,
   },
   {
-    _id: '5e2a142d689b2835ae71d1ac',
     name: 'Nike Vapormax',
     description: 'Kind of squeaky on some floors',
     price: 83456,
@@ -200,7 +195,6 @@ const items = [
     __v: 0,
   },
   {
-    _id: '5e2a1440689b2835ae71d1ae',
     name: 'Yeti Cooler',
     description: 'Who spends this much on a cooler?!',
     price: 75654,
@@ -240,7 +234,6 @@ const items = [
     __v: 0,
   },
   {
-    _id: '5e2a145f689b2835ae71d1b0',
     name: 'Naked and Famous Denim',
     description: 'Japanese Denim, made in Canada',
     price: 10924,
@@ -280,7 +273,6 @@ const items = [
     __v: 0,
   },
   {
-    _id: '5e2a147d689b2835ae71d1b2',
     name: 'Rimowa Luggage',
     description: 'S T E A L T H',
     price: 47734,
@@ -320,7 +312,6 @@ const items = [
     __v: 0,
   },
   {
-    _id: '5e2a149d689b2835ae71d1b4',
     name: 'Black Hole ',
     description: 'Outdoorsy ',
     price: 4534,
@@ -360,7 +351,6 @@ const items = [
     __v: 0,
   },
   {
-    _id: '5e2a14b2689b2835ae71d1b6',
     name: 'Nudie Belt',
     description: 'Sick design',
     price: 5234,
@@ -400,7 +390,6 @@ const items = [
     __v: 0,
   },
   {
-    _id: '5e2a14c0689b2835ae71d1b8',
     name: 'Goose',
     description: 'Keep warm.',
     price: 74544,
@@ -440,7 +429,6 @@ const items = [
     __v: 0,
   },
   {
-    _id: '5e2a14cd689b2835ae71d1ba',
     name: 'Ultraboost',
     description: 'blacked out',
     price: 6344,
@@ -480,3 +468,5 @@ const items = [
     __v: 0,
   },
 ];
+
+export { items };
