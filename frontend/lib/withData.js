@@ -1,7 +1,6 @@
 import withApollo from 'next-with-apollo';
 import { ApolloClient, InMemoryCache, ApolloLink } from '@apollo/client';
-// TODO: onError for Apollo 3?
-import { onError } from 'apollo-link-error';
+import { onError } from '@apollo/link-error';
 import { createUploadLink } from 'apollo-upload-client';
 import { getDataFromTree } from '@apollo/react-ssr';
 import { endpoint, prodEndpoint } from '../config';
