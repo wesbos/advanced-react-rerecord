@@ -22,7 +22,7 @@ export default function paginationField() {
       console.log(existing);
       // See if we have the items we want
       const items = existing
-        .slice(args.skip, args.skip + args.first)
+        .slice(skip, skip + first)
         // we filter for empty spots because its likely we have padded spots with nothing in them.
         .filter(x => x);
       // If there are items, and they aren't blank spots, return them.

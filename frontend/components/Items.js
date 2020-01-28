@@ -43,7 +43,6 @@ function Items({ page }) {
   return (
     <Center>
       <Pagination page={page} />
-      {/* TODO: What am I doing */}
       {(() => {
         if (loading) return <p>Loading...</p>;
         if (error) return <p>Error: {error.message}</p>;
