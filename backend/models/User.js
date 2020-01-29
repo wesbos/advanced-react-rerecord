@@ -4,12 +4,10 @@ import {
   Password,
   Checkbox,
   Relationship,
-  Integer,
-  DateTime,
 } from '@keystonejs/fields';
 import { byTracking, atTracking } from '@keystonejs/list-plugins';
 import { DateTimeUtc } from '@keystonejs/fields-datetime-utc';
-import { userIsAdminOrOwner, userIsAdmin } from '../utils/access';
+import { userIsAdmin, userCanAccessUsers } from '../utils/access';
 
 export default {
   fields: {
@@ -29,26 +27,20 @@ export default {
     },
     permissions: {
       type: Select,
-      // TODO: Maybe simplify this to ADMIN and USER
-      options: [
-        'ADMIN',
-        'USER',
-        'ITEMCREATE',
-        'ITEMUPDATE',
-        'ITEMDELETE',
-        'PERMISSIONUPDATE',
-      ],
+      defaultValue: 'USER',
+      options: ['ADMIN', 'EDITOR', 'USER'],
     },
     resetToken: { type: Text, unique: true },
     resetTokenExpiry: { type: DateTimeUtc, unique: true },
   },
   // To create an initial user you can temporarily remove access controls
-  // access: {
-  //   read: userIsAdminOrOwner,
-  //   update: userIsAdminOrOwner,
-  //   create: userIsAdmin,
-  //   delete: userIsAdmin,
-  //   auth: true,
-  // },
+  access: {
+    // anyone should be able to create a user (sign up)
+    create: true,
+    // only admins can see the list of users
+    read: userCanAccessUsers,
+    update: userCanAccessUsers,
+    delete: userIsAdmin,
+  },
   plugins: [atTracking(), byTracking()],
 };

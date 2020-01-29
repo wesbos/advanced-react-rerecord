@@ -31,11 +31,11 @@ const CURRENT_USER_QUERY = gql`
 `;
 
 function useUser() {
-  const { data } = useQuery(CURRENT_USER_QUERY);
+  const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
+  console.log({ data, loading, error });
   if (data) {
     return data.authenticatedUser;
   }
 }
 
-export default <p>Hey</p>;
 export { CURRENT_USER_QUERY, useUser };

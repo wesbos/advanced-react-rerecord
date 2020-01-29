@@ -1,6 +1,7 @@
 import { Integer, Relationship } from '@keystonejs/fields';
 import { graphql } from 'graphql';
 import { byTracking, atTracking } from '@keystonejs/list-plugins';
+import { userIsAdminOrOwner } from '../utils/access';
 
 export default {
   // labelResolver: cartItem => `🛒 ${cartItem.item.name}`,
@@ -30,19 +31,12 @@ export default {
       ref: 'User.cart',
       isRequired: true,
     },
-    // hooks: {
-    //   resolveInput: async ({
-    //     operation,
-    //     existingItem,
-    //     originalInput,
-    //     resolvedData,
-    //     context,
-    //     actions,
-    //   }) => {
-    //     // jump in
-    //     return resolvedData;
-    //   },
-    // },
+  },
+  access: {
+    create: userIsAdminOrOwner,
+    read: userIsAdminOrOwner,
+    update: userIsAdminOrOwner,
+    delete: userIsAdminOrOwner,
   },
   plugins: [atTracking(), byTracking()],
 };

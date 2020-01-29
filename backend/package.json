@@ -10,7 +10,7 @@
   },
   "scripts": {
     "//": "TODO: There is no way this works on windows",
-    "dev": "nodemon --verbose --exec cross-env NODE_ENV=development DISABLE_LOGGING=true node -r esm `which keystone` dev",
+    "dev": "nodemon -L --exec cross-env NODE_ENV=development DISABLE_LOGGING=true node -r esm `which keystone` dev",
     "dummy": "npm run dev -- --dummy",
     "build": "cross-env NODE_ENV=production keystone build",
     "start": "cross-env NODE_ENV=production keystone start"
@@ -21,6 +21,7 @@
     "@keystonejs/app-graphql": "^5.0.2",
     "@keystonejs/app-next": "^5.0.1",
     "@keystonejs/auth-password": "^5.0.1",
+    "@keystonejs/build-field-types": "^5.1.4",
     "@keystonejs/fields": "^6.1.0",
     "@keystonejs/fields-datetime-utc": "^5.0.4",
     "@keystonejs/fields-wysiwyg-tinymce": "^5.0.4",
@@ -37,6 +38,7 @@
     "graphql": "^14.5.8",
     "graphql-fields": "^2.0.3",
     "nodemailer": "^6.4.2",
+    "react": "^16.12.0",
     "stripe": "^8.2.0"
   }
 }
