@@ -42,7 +42,7 @@ function CreateItem() {
 
   return (
     <Form
-      data-test="form"
+      data-testid="form"
       onSubmit={async e => {
         // Stop the form from submitting
         e.preventDefault();

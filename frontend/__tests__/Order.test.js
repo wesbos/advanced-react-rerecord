@@ -21,7 +21,7 @@ describe('<Order/>', () => {
     );
     await wait();
     wrapper.update();
-    const order = wrapper.find('div[data-test="order"]');
+    const order = wrapper.find('div[data-testid="order"]');
     expect(toJSON(order)).toMatchSnapshot();
   });
 });

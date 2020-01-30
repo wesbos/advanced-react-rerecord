@@ -23,7 +23,7 @@ describe('<RequestReset/>', () => {
         <RequestReset />
       </MockedProvider>
     );
-    const form = wrapper.find('form[data-test="form"]');
+    const form = wrapper.find('form[data-testid="form"]');
     expect(toJSON(form)).toMatchSnapshot();
   });
 

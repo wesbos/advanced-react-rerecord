@@ -39,7 +39,7 @@ function Order({ id }) {
   if (loading) return <p>Loading...</p>;
   const { Order: order } = data;
   return (
-    <OrderStyles data-test="order">
+    <OrderStyles data-testid="order">
       <Head>
         <title>Sick Fits - Order {order.id}</title>
       </Head>

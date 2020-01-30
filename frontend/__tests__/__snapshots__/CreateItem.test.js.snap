@@ -3,7 +3,7 @@
 exports[`<CreateItem/> renders and matches snapshot 1`] = `
 <form
   className="Form-sc-1xszr8q-0 krRxky"
-  data-test="form"
+  data-testid="form"
   onSubmit={[Function]}
 >
   <DisplayError

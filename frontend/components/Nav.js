@@ -9,7 +9,7 @@ function Nav() {
   const me = useUser();
   const { toggleCart } = useCart();
   return (
-    <NavStyles data-test="nav">
+    <NavStyles data-testid="nav">
       <Link href="/items">
         <a>Shop</a>
       </Link>

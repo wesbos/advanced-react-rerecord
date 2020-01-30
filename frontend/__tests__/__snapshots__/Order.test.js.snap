@@ -3,7 +3,7 @@
 exports[`<Order/> renders the order 1`] = `
 <div
   className="OrderStyles-sc-4oqalm-0 eDzsVm"
-  data-test="order"
+  data-testid="order"
 >
   <SideEffect(Head)>
     <Head />
@@ -66,15 +66,15 @@ exports[`<Order/> renders the order 1`] = `
           soluta non omnis consequatur enim quia autem
         </h2>
         <p>
-          Qty: 
+          Qty:
           1
         </p>
         <p>
-          Each: 
+          Each:
           $42.34
         </p>
         <p>
-          SubTotal: 
+          SubTotal:
           $42.34
         </p>
         <p>
@@ -97,15 +97,15 @@ exports[`<Order/> renders the order 1`] = `
           quia sed exercitationem omnis laborum exercitationem est
         </h2>
         <p>
-          Qty: 
+          Qty:
           1
         </p>
         <p>
-          Each: 
+          Each:
           $42.34
         </p>
         <p>
-          SubTotal: 
+          SubTotal:
           $42.34
         </p>
         <p>

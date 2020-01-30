@@ -2,7 +2,7 @@
 
 exports[`<SingleItem/> Errors with a not found item 1`] = `
 <p
-  data-test="graphql-error"
+  data-testid="graphql-error"
 >
   <strong>
     Shoot!
@@ -13,7 +13,7 @@ exports[`<SingleItem/> Errors with a not found item 1`] = `
 
 exports[`<SingleItem/> renders with proper data 1`] = `
 <h2>
-  Viewing 
+  Viewing
   dogs are best
 </h2>
 `;

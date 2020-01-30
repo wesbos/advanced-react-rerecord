@@ -1,4 +1,5 @@
 // import { mount } from 'enzyme';
+import { render, fireEvent, screen } from '@testing-library/react';
 import wait from 'waait';
 // import toJSON from 'enzyme-to-json';
 import Router from 'next/router';
@@ -16,6 +17,9 @@ function makeMocksFor(length) {
       request: { query: PAGINATION_QUERY },
       result: {
         data: {
+          _allItemsMeta: {
+            count: length,
+          },
           itemsConnection: {
             __typename: 'aggregate',
             aggregate: {
@@ -30,62 +34,57 @@ function makeMocksFor(length) {
 }
 
 describe('<Pagination/>', () => {
-  fit('works', () => {
-    expect(1).toBe(1);
-  });
-  it('displays a loading message', () => {
-    const wrapper = mount(
+  it('displays a loading message', async () => {
+    const { container, queryByText } = render(
       <MockedProvider mocks={makeMocksFor(1)}>
         <Pagination page={1} />
       </MockedProvider>
     );
-    expect(wrapper.text()).toContain('Loading...');
+    expect(queryByText('Loading...')).toBeTruthy();
   });
 
   it('renders pagination for 18 items', async () => {
-    const wrapper = mount(
+    const { container, findByTestId, getByTestId, debug, query } = render(
       <MockedProvider mocks={makeMocksFor(18)}>
         <Pagination page={1} />
       </MockedProvider>
     );
-    await wait();
-    wrapper.update();
-    expect(wrapper.find('.totalPages').text()).toEqual('5');
-    const pagination = wrapper.find('div[data-test="pagination"]');
-    expect(toJSON(pagination)).toMatchSnapshot();
+    // wait for pagination to get past loading
+    await findByTestId('pagination');
+    expect(getByTestId('totalPages')).toHaveTextContent('5');
+    expect(container).toMatchSnapshot();
   });
 
   it('disables prev button on first page', async () => {
-    const wrapper = mount(
+    const { getByText, findByTestId } = render(
       <MockedProvider mocks={makeMocksFor(18)}>
         <Pagination page={1} />
       </MockedProvider>
     );
-    await wait();
-    wrapper.update();
-    expect(wrapper.find('a.prev').prop('aria-disabled')).toEqual(true);
-    expect(wrapper.find('a.next').prop('aria-disabled')).toEqual(false);
+    await findByTestId('pagination');
+    expect(getByText(/Prev/)).toHaveAttribute('aria-disabled', 'true');
+    expect(getByText(/Next/)).toHaveAttribute('aria-disabled', 'false');
   });
+
   it('disables next button on last page', async () => {
-    const wrapper = mount(
+    const { getByText, findByTestId } = render(
       <MockedProvider mocks={makeMocksFor(18)}>
         <Pagination page={5} />
       </MockedProvider>
     );
-    await wait();
-    wrapper.update();
-    expect(wrapper.find('a.prev').prop('aria-disabled')).toEqual(false);
-    expect(wrapper.find('a.next').prop('aria-disabled')).toEqual(true);
+    await findByTestId('pagination');
+    expect(getByText(/Prev/)).toHaveAttribute('aria-disabled', 'false');
+    expect(getByText(/Next/)).toHaveAttribute('aria-disabled', 'true');
   });
+
   it('enables all buttons on a middle page', async () => {
-    const wrapper = mount(
+    const { getByText, findByTestId } = render(
       <MockedProvider mocks={makeMocksFor(18)}>
         <Pagination page={3} />
       </MockedProvider>
     );
-    await wait();
-    wrapper.update();
-    expect(wrapper.find('a.prev').prop('aria-disabled')).toEqual(false);
-    expect(wrapper.find('a.next').prop('aria-disabled')).toEqual(false);
+    await findByTestId('pagination');
+    expect(getByText(/Prev/)).toHaveAttribute('aria-disabled', 'false');
+    expect(getByText(/Next/)).toHaveAttribute('aria-disabled', 'false');
   });
 });

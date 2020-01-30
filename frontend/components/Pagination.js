@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Query } from '@apollo/client';
-import { useQuery } from '@apollo/client';
+import { Query, useQuery } from '@apollo/client';
+
 import Head from 'next/head';
 import Link from 'next/link';
 import PaginationStyles from './styles/PaginationStyles';
@@ -16,15 +16,14 @@ const PAGINATION_QUERY = gql`
   }
 `;
 
-function Pagination(props) {
+function Pagination({ page }) {
   const { error, loading, data } = useQuery(PAGINATION_QUERY);
   if (loading) return <p>Loading...</p>;
   if (error) return <Error error={error} />;
   const { count } = data._allItemsMeta;
   const pages = Math.ceil(count / perPage);
-  const { page } = props;
   return (
-    <PaginationStyles data-test="pagination">
+    <PaginationStyles data-testid="pagination">
       <Head>
         <title>
           Sick Fits! — Page {page} of {pages}
@@ -41,7 +40,10 @@ function Pagination(props) {
         </a>
       </Link>
       <p>
-        Page {props.page} of <span className="totalPages">{pages}</span>
+        Page {page} of{' '}
+        <span className="totalPages" data-testid="totalPages">
+          {pages}
+        </span>
       </p>
       <p>{count} Items Total</p>
       <Link
