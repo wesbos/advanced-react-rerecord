@@ -11,9 +11,9 @@ import Checkout from './Checkout';
 function Cart() {
   const me = useUser();
   const { cartOpen, toggleCart } = useCart();
-  if (!me) return null;
+  if (!me) return <p>not logged in</p>;
   return (
-    <CartStyles open={cartOpen}>
+    <CartStyles open={cartOpen} data-testid="cart">
       <header>
         <CloseButton onClick={toggleCart} title="close">
           &times;

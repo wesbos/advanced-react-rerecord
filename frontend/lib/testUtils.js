@@ -14,7 +14,7 @@ const fakeItem = () => ({
 });
 
 const fakeUser = () => ({
-  __typename: 'User',
+  // __typename: 'User',
   id: '4234',
   name: casual.name,
   email: casual.email,
