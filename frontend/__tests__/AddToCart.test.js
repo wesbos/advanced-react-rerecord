@@ -11,7 +11,7 @@ const mocks = [
     request: { query: CURRENT_USER_QUERY },
     result: {
       data: {
-        me: {
+        authenticatedUser: {
           ...fakeUser(),
           cart: [],
         },
@@ -64,11 +64,11 @@ describe('<AddToCart/>', () => {
         </ApolloConsumer>
       </MockedProvider>
     );
-    await wait(100);
+    await wait(1000);
     debug();
-    const {
-      data: { authenticatedUser: me },
-    } = await apolloClient.query({ query: CURRENT_USER_QUERY });
+    const what = await apolloClient.query({ query: CURRENT_USER_QUERY });
+    console.log(what);
+    return;
     // console.log(me);
     expect(me.cart).toHaveLength(0);
     // add an item to the cart

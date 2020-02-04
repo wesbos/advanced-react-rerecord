@@ -14,7 +14,7 @@ const mocks = [
     request: { query: CURRENT_USER_QUERY },
     result: {
       data: {
-        me: {
+        authenticatedUser: {
           ...fakeUser(),
           cart: [fakeCartItem({ id: 'abc123' })],
         },
