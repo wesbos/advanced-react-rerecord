@@ -62,7 +62,7 @@ describe('<Nav/>', () => {
   });
 
   it('renders the amount of items in the cart', async () => {
-    const { component } = render(
+    render(
       <CartStateProvider>
         <MockedProvider mocks={signedInMocksWithCartItems}>
           <Nav />
