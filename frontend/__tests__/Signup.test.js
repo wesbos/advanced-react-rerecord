@@ -1,17 +1,9 @@
-import { mount } from 'enzyme';
-import wait from 'waait';
-import toJSON from 'enzyme-to-json';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MockedProvider } from '@apollo/react-testing';
-import { ApolloConsumer } from 'react-apollo';
 import Signup, { SIGNUP_MUTATION } from '../components/Signup';
 import { CURRENT_USER_QUERY } from '../components/User';
 import { fakeUser } from '../lib/testUtils';
-
-function type(wrapper, name, value) {
-  wrapper.find(`input[name="${name}"]`).simulate('change', {
-    target: { name, value },
-  });
-}
 
 const me = fakeUser();
 const mocks = [
@@ -27,7 +19,7 @@ const mocks = [
     },
     result: {
       data: {
-        signup: {
+        createUser: {
           __typename: 'User',
           id: 'abc123',
           email: me.email,
@@ -39,42 +31,34 @@ const mocks = [
   // current user query mock
   {
     request: { query: CURRENT_USER_QUERY },
-    result: { data: { me } },
+    result: { data: { authenticatedUser: me } },
   },
 ];
 
 describe('<Signup/>', () => {
   it('renders and matches snapshot', async () => {
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider>
         <Signup />
       </MockedProvider>
     );
-    expect(toJSON(wrapper.find('form'))).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('calls the mutation properly', async () => {
-    let apolloClient;
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={mocks}>
-        <ApolloConsumer>
-          {client => {
-            apolloClient = client;
-            return <Signup />;
-          }}
-        </ApolloConsumer>
+        <Signup />
       </MockedProvider>
     );
-    await wait();
-    wrapper.update();
-    type(wrapper, 'name', me.name);
-    type(wrapper, 'email', me.email);
-    type(wrapper, 'password', 'wes');
-    wrapper.update();
-    wrapper.find('form').simulate('submit');
-    await wait();
-    // query the user out of the apollo client
-    const user = await apolloClient.query({ query: CURRENT_USER_QUERY });
-    expect(user.data.me).toMatchObject(me);
+    await userEvent.type(screen.getByPlaceholderText('name'), me.name);
+    await userEvent.type(screen.getByPlaceholderText('email'), me.email);
+    await userEvent.type(screen.getByPlaceholderText('password'), 'wes');
+    await userEvent.click(screen.getByText('Sign Up!'));
+    screen.debug();
+    // loading state
+    expect(screen.getByTestId('loading')).toHaveAttribute('aria-busy', 'true');
+    expect(screen.getByTestId('loading')).toHaveAttribute('disabled');
+    await screen.findByText(`Signed up with ${me.email} — Please Sign In now`);
   });
 });

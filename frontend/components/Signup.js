@@ -35,7 +35,7 @@ function Signup() {
         await signup();
       }}
     >
-      <fieldset disabled={loading} aria-busy={loading}>
+      <fieldset disabled={loading} aria-busy={loading} data-testid="loading">
         {data && data.createUser && (
           <p>Signed up with {data.createUser.email} — Please Sign In now</p>
         )}

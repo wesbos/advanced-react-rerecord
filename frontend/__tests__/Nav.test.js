@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import wait from 'waait';
 import { MockedProvider } from '@apollo/react-testing';
 import Nav from '../components/Nav';
 import { CURRENT_USER_QUERY } from '../components/User';
