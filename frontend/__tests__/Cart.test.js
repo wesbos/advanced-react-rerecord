@@ -1,10 +1,5 @@
-import {
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/react-testing';
-import wait from 'waait';
 import userEvent from '@testing-library/user-event';
 import Cart from '../components/Cart';
 import { CURRENT_USER_QUERY } from '../components/User';
@@ -24,18 +19,6 @@ const mocks = [
       },
     },
   },
-  // TODO: We might not need this
-  // {
-  //   request: { query: CURRENT_USER_QUERY },
-  //   result: {
-  //     data: {
-  //       authenticatedUser: {
-  //         ...fakeUser(),
-  //         cart: [fakeCartItem(), fakeCartItem({ id: 'abc123' })],
-  //       },
-  //     },
-  //   },
-  // },
   {
     request: { query: REMOVE_FROM_CART_MUTATION, variables: { id: 'omg123' } },
     result: {
