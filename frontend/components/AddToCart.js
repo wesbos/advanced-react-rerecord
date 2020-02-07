@@ -19,7 +19,6 @@ function AddToCart({ id }) {
     },
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   });
-  console.log(addToCart);
   return (
     <button type="button" disabled={loading} onClick={addToCart}>
       Add{loading && 'ing'} To Cart 🛒

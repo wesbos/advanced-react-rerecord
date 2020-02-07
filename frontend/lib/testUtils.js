@@ -47,7 +47,7 @@ const fakeOrder = () => ({
 });
 
 const fakeCartItem = overrides => ({
-  // __typename: 'CartItem',
+  __typename: 'CartItem',
   id: 'omg123',
   quantity: 3,
   item: fakeItem(),

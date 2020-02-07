@@ -63,7 +63,7 @@ function RemoveFromCart({ id }) {
       onClick={() => {
         removeFromCart().catch(err => alert(err.message));
       }}
-      title="Delete Item"
+      title="Remove Item From Cart"
     >
       &times;
     </BigButton>

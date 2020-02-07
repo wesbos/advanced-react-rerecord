@@ -3,7 +3,7 @@
 exports[`<Nav/> renders a minimal nav when signed out 1`] = `
 <div>
   <ul
-    class="NavStyles-sc-11c0d2g-0 hUrzDD"
+    class="NavStyles-sc-11c0d2g-0 eEiNI"
     data-testid="nav"
   >
     <a
