@@ -27,7 +27,7 @@ const mocks = [
 
 describe('<TakeMyMoney/>', () => {
   it('renders and matches snapshot', async () => {
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={mocks}>
         <TakeMyMoney />
       </MockedProvider>
@@ -41,7 +41,7 @@ describe('<TakeMyMoney/>', () => {
     const createOrderMock = jest.fn().mockResolvedValue({
       data: { createOrder: { id: 'xyz789' } },
     });
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={mocks}>
         <TakeMyMoney />
       </MockedProvider>
@@ -54,7 +54,7 @@ describe('<TakeMyMoney/>', () => {
   });
 
   it('turns the progress bar on', async () => {
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={mocks}>
         <TakeMyMoney />
       </MockedProvider>
@@ -72,7 +72,7 @@ describe('<TakeMyMoney/>', () => {
   });
 
   it('routes to the order page when completed', async () => {
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={mocks}>
         <TakeMyMoney />
       </MockedProvider>

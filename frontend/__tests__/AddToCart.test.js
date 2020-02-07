@@ -84,7 +84,7 @@ describe('<AddToCart/>', () => {
   });
 
   it('changes from add to adding when clicked', async () => {
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={mocks}>
         <AddToCart id="abc123" />
       </MockedProvider>

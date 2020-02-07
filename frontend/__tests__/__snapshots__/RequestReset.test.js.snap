@@ -1,39 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<RequestReset/> renders and matches snapshot 1`] = `
-<form
-  className="Form-sc-1xszr8q-0 krRxky"
-  data-testid="form"
-  method="post"
-  onSubmit={[Function]}
->
-  <fieldset
-    aria-busy={false}
-    disabled={false}
+<div>
+  <form
+    class="Form-sc-1xszr8q-0 bMIGic"
+    data-testid="form"
+    method="post"
   >
-    <h2>
-      Request a password reset
-    </h2>
-    <DisplayError
-      error={Object {}}
-    />
-    <label
-      htmlFor="email"
+    <fieldset
+      aria-busy="false"
     >
-      Email
-      <input
-        name="email"
-        onChange={[Function]}
-        placeholder="email"
-        type="email"
-        value=""
-      />
-    </label>
-    <button
-      type="submit"
-    >
-      Request Reset!
-    </button>
-  </fieldset>
-</form>
+      <h2>
+        Request a password reset
+      </h2>
+      <label
+        for="email"
+      >
+        Email
+        <input
+          name="email"
+          placeholder="email"
+          type="email"
+          value=""
+        />
+      </label>
+      <button
+        type="submit"
+      >
+        Request Reset!
+      </button>
+    </fieldset>
+  </form>
+</div>
 `;

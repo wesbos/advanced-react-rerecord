@@ -21,7 +21,7 @@ const signedInMocks = [
 
 describe('<PleaseSignIn/>', () => {
   it('renders the sign in dialog to logged out users', async () => {
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={notSignedInMocks}>
         <PleaseSignIn />
       </MockedProvider>
@@ -35,7 +35,7 @@ describe('<PleaseSignIn/>', () => {
 
   it('renders the child component when the user is signed in', async () => {
     const Hey = () => <p>Hey!</p>;
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={signedInMocks}>
         <PleaseSignIn>
           <Hey />

@@ -19,7 +19,7 @@ describe('<SingleItem/>', () => {
         },
       },
     ];
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={mocks}>
         <SingleItem id="123" />
       </MockedProvider>
@@ -42,7 +42,7 @@ describe('<SingleItem/>', () => {
         },
       },
     ];
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={mocks}>
         <SingleItem id="123" />
       </MockedProvider>

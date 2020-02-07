@@ -14,7 +14,7 @@ const mocks = [
 
 describe('<Order/>', () => {
   it('renders the order', async () => {
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={mocks}>
         <Order id="ord123" />
       </MockedProvider>

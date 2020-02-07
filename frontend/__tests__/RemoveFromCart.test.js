@@ -36,7 +36,7 @@ const mocks = [
 
 describe('<RemoveFromCart/>', () => {
   it('renders and matches snapshot', () => {
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider>
         <RemoveFromCart id="abc123" />
       </MockedProvider>
@@ -46,7 +46,7 @@ describe('<RemoveFromCart/>', () => {
 
   it('removes the item from cart', async () => {
     let apolloClient;
-    const wrapper = mount(
+    const { container } = render(
       <MockedProvider mocks={mocks}>
         <ApolloConsumer>
           {client => {
