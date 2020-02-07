@@ -41,7 +41,9 @@ describe('<Cart/>', () => {
     await screen.findByTestId('cart');
     expect(container).toMatchSnapshot();
   });
+});
 
+describe('<RemoveFromCart/>', () => {
   it('udpates when an item is removed', async () => {
     const { container } = render(
       <CartStateProvider>
