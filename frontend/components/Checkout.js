@@ -15,7 +15,6 @@ import styled from 'styled-components';
 import SickButton from './styles/SickButton';
 import { CURRENT_USER_QUERY, useUser } from './User';
 import { useCart } from './LocalState';
-
 // We use loadStripe because is load in their lib async
 const stripe = loadStripe('pk_test_Vtknn6vSdcZWSG2JWvEiWSqC');
 
@@ -115,14 +114,9 @@ const CheckoutFormStyles = styled.form`
 function CheckoutForm() {
   const { handleSubmit, error } = useCheckout();
   return (
-    <CheckoutFormStyles onSubmit={handleSubmit}>
+    <CheckoutFormStyles onSubmit={handleSubmit} data-testid="checkout">
       {error && <p>{error.message}</p>}
-      <CardElement
-        options={{ style }}
-        onChange={e => {
-          console.log(e);
-        }}
-      />
+      <CardElement options={{ style }} />
       <SickButton type="submit">Pay</SickButton>
     </CheckoutFormStyles>
   );
