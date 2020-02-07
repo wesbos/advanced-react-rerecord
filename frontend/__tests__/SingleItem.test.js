@@ -1,10 +1,10 @@
-import { mount } from 'enzyme';
-import toJSON from 'enzyme-to-json';
-import wait from 'waait';
-import SingleItem, { SINGLE_ITEM_QUERY } from '../components/SingleItem';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MockedProvider } from '@apollo/react-testing';
+import SingleItem, { SINGLE_ITEM_QUERY } from '../components/SingleItem';
 import { fakeItem } from '../lib/testUtils';
 
+const item = fakeItem();
 describe('<SingleItem/>', () => {
   it('renders with proper data', async () => {
     const mocks = [
@@ -14,7 +14,7 @@ describe('<SingleItem/>', () => {
         // return this fake data (mocked data)
         result: {
           data: {
-            item: fakeItem(),
+            Item: item,
           },
         },
       },
@@ -24,13 +24,8 @@ describe('<SingleItem/>', () => {
         <SingleItem id="123" />
       </MockedProvider>
     );
-    expect(wrapper.text()).toContain('Loading...');
-    await wait();
-    wrapper.update();
-    // console.log(wrapper.debug());
-    expect(toJSON(wrapper.find('h2'))).toMatchSnapshot();
-    expect(toJSON(wrapper.find('img'))).toMatchSnapshot();
-    expect(toJSON(wrapper.find('p'))).toMatchSnapshot();
+    await screen.findByTestId('singleItem');
+    expect(container).toMatchSnapshot();
   });
 
   it('Errors with a not found item', async () => {
@@ -47,11 +42,8 @@ describe('<SingleItem/>', () => {
         <SingleItem id="123" />
       </MockedProvider>
     );
-    await wait();
-    wrapper.update();
-    console.log(wrapper.debug());
-    const item = wrapper.find('[data-testid="graphql-error"]');
-    expect(item.text()).toContain('Items Not Found!');
-    expect(toJSON(item)).toMatchSnapshot();
+
+    await screen.findByTestId('graphql-error');
+    expect(container).toHaveTextContent('Items Not Found!');
   });
 });

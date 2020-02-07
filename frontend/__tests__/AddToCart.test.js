@@ -52,7 +52,7 @@ describe('<AddToCart/>', () => {
     expect(container).toMatchSnapshot();
   });
 
-  fit('adds an item to cart when clicked', async () => {
+  it('adds an item to cart when clicked', async () => {
     let apolloClient;
     const { container, debug } = render(
       <MockedProvider mocks={mocks}>

@@ -46,7 +46,7 @@ function SingleItem({ id }) {
   if (!data.Item) return <p>No Item Found for {id}</p>;
   const { Item } = data;
   return (
-    <SingleItemStyles>
+    <SingleItemStyles data-testid="singleItem">
       <Head>
         <title>Sick Fits | {Item.name}</title>
       </Head>

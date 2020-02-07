@@ -1,21 +1,21 @@
-import { mount } from 'enzyme';
-import wait from 'waait';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { MockedProvider } from '@apollo/react-testing';
 import PleaseSignIn from '../components/PleaseSignIn';
 import { CURRENT_USER_QUERY } from '../components/User';
-import { MockedProvider } from '@apollo/react-testing';
 import { fakeUser } from '../lib/testUtils';
 
 const notSignedInMocks = [
   {
     request: { query: CURRENT_USER_QUERY },
-    result: { data: { me: null } },
+    result: { data: { authenticatedUser: null } },
   },
 ];
 
 const signedInMocks = [
   {
     request: { query: CURRENT_USER_QUERY },
-    result: { data: { me: fakeUser() } },
+    result: { data: { authenticatedUser: fakeUser() } },
   },
 ];
 
@@ -26,11 +26,8 @@ describe('<PleaseSignIn/>', () => {
         <PleaseSignIn />
       </MockedProvider>
     );
-    await wait();
-    wrapper.update();
-    expect(wrapper.text()).toContain('Please Sign In before Continuing');
-    const SignIn = wrapper.find('Signin');
-    expect(SignIn.exists()).toBe(true);
+
+    expect(container).toHaveTextContent(/Sign into your/);
   });
 
   it('renders the child component when the user is signed in', async () => {
@@ -42,10 +39,7 @@ describe('<PleaseSignIn/>', () => {
         </PleaseSignIn>
       </MockedProvider>
     );
-
-    await wait();
-    wrapper.update();
-    // expect(wrapper.find('Hey').exists()).toBe(true);
-    expect(wrapper.contains(<Hey />)).toBe(true);
+    await screen.findByText('Hey!');
+    expect(container).toContainHTML('<p>Hey!</p>');
   });
 });

@@ -11,7 +11,7 @@ const fakeItem = {
 };
 
 describe('<Item/>', () => {
-  fit('renders and matches the snapshot', () => {
+  it('renders and matches the snapshot', () => {
     const { container } = render(<ItemComponent item={fakeItem} />);
     expect(container).toMatchSnapshot();
   });
