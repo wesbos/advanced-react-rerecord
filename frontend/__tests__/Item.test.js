@@ -1,41 +1,60 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { MockedProvider } from '@apollo/react-testing';
 import ItemComponent from '../components/Item';
+import { fakeItem } from '../lib/testUtils';
 
-const fakeItem = {
-  id: 'ABC123',
-  title: 'A Cool Item',
-  price: 4000,
-  description: 'This item is really cool!',
-  image: 'dog.jpg',
-  largeImage: 'largedog.jpg',
-};
+const item = fakeItem();
+
+const mocks = {};
 
 describe('<Item/>', () => {
   it('renders and matches the snapshot', () => {
-    const { container } = render(<ItemComponent item={fakeItem} />);
+    const { container } = render(
+      <MockedProvider>
+        <ItemComponent item={item} />
+      </MockedProvider>
+    );
     expect(container).toMatchSnapshot();
   });
 
   it('renders the image properly', () => {
-    const { container } = shallow(<ItemComponent item={fakeItem} />);
-    const img = container.find('img');
-    expect(img.props().src).toBe(fakeItem.image);
-    expect(img.props().alt).toBe(fakeItem.title);
+    render(
+      <MockedProvider>
+        <ItemComponent item={item} />
+      </MockedProvider>
+    );
+    const img = screen.getByAltText(item.name);
+    expect(img).toBeInTheDocument();
   });
 
   it('renders the pricetag and title', () => {
-    const { container } = shallow(<ItemComponent item={fakeItem} />);
-    const PriceTag = container.find('PriceTag');
-    expect(PriceTag.children().text()).toBe('$40');
-    expect(container.find('Title a').text()).toBe(fakeItem.title);
+    const { container } = render(
+      <MockedProvider>
+        <ItemComponent item={item} />
+      </MockedProvider>
+    );
+    expect(screen.getByText('$50')).toBeInTheDocument();
+    const link = container.querySelector('a');
+    expect(link).toHaveAttribute('href', '/item?id=abc123');
+    expect(link).toHaveTextContent(item.name);
   });
 
   it('renders out the buttons properly', () => {
-    const { container } = shallow(<ItemComponent item={fakeItem} />);
-    const buttonList = container.find('.buttonList');
-    expect(buttonList.children()).toHaveLength(3);
-    expect(buttonList.find('Link')).toHaveLength(1);
-    expect(buttonList.find('AddToCart').exists()).toBe(true);
-    expect(buttonList.find('DeleteItem').exists()).toBe(true);
+    const { container } = render(
+      <MockedProvider>
+        <ItemComponent item={item} />
+      </MockedProvider>
+    );
+
+    const edit = screen.getByText(/Edit/i);
+    expect(edit.href).toContain('update?id=abc123');
+
+    const addToCart = screen.getByText(/add to cart/i);
+    expect(addToCart).toHaveProperty('type', 'button');
+    expect(addToCart).toBeInTheDocument();
+
+    const deleteItem = screen.getByText(/delete/i);
+    expect(deleteItem).toHaveProperty('type', 'button');
+    expect(deleteItem).toBeInTheDocument();
   });
 });

@@ -54,7 +54,6 @@ describe('<Nav/>', () => {
       </CartStateProvider>
     );
     await screen.findByText('Account');
-    screen.debug();
     expect(container).toMatchSnapshot();
     expect(container).toHaveTextContent('Sign Out');
     expect(container).toHaveTextContent('My Cart');
