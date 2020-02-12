@@ -9,12 +9,12 @@ import {
 import { loadStripe } from '@stripe/stripe-js';
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import Head from 'next/head';
 import Router from 'next/router';
 import styled from 'styled-components';
 import SickButton from './styles/SickButton';
-import { CURRENT_USER_QUERY, useUser } from './User';
+import { CURRENT_USER_QUERY } from './User';
 import { useCart } from './LocalState';
+
 // We use loadStripe because is load in their lib async
 const stripe = loadStripe('pk_test_Vtknn6vSdcZWSG2JWvEiWSqC');
 
@@ -95,6 +95,8 @@ function useCheckout() {
       query: { id: order.data.checkout.id },
     });
 
+    console.log('Changed page =---------------------');
+
     // 6. Close the cart
     closeCart();
   };
@@ -123,3 +125,4 @@ function CheckoutForm() {
 }
 
 export default Checkout;
+export { CREATE_ORDER_MUTATION };

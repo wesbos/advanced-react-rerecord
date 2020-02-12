@@ -1,8 +1,8 @@
 import React from 'react';
 import Downshift, { resetIdCounter } from 'downshift';
-import Router from 'next/router';
-import { ApolloConsumer } from '@apollo/client';
+import { useRouter } from 'next/router';
 import { useLazyQuery } from '@apollo/client';
+
 import gql from 'graphql-tag';
 import debounce from 'lodash.debounce';
 import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
@@ -27,7 +27,8 @@ const SEARCH_ITEMS_QUERY = gql`
 `;
 
 function routeToItem(item) {
-  Router.push({
+  const router = useRouter();
+  router.push({
     pathname: '/item',
     query: {
       id: item.id,

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Mutation, useMutation } from '@apollo/client';
 
 import gql from 'graphql-tag';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import formatMoney from '../lib/formatMoney';
@@ -49,7 +49,8 @@ function CreateItem() {
         // call the mutation
         const res = await createItem();
         // change them to the single item page
-        Router.push({
+        const router = useRouter();
+        router.push({
           pathname: '/item',
           query: { id: res.data.createItem.id },
         });

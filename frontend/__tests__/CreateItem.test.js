@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { MockedProvider } from '@apollo/react-testing';
 import wait from 'waait';
 import CreateItem, { CREATE_ITEM_MUTATION } from '../components/CreateItem';

@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import wait from 'waait';
 import toJSON from 'enzyme-to-json';
 import NProgress from 'nprogress';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { MockedProvider } from '@apollo/react-testing';
 import { ApolloConsumer } from 'react-apollo';
 import TakeMyMoney, { CREATE_ORDER_MUTATION } from '../components/TakeMyMoney';
