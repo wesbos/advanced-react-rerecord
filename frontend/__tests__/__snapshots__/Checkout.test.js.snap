@@ -2,17 +2,19 @@
 
 exports[`<Checkout /> renders and matches snappy 1`] = `
 <div>
-  <form
-    class="Checkout__CheckoutFormStyles-sc-10mtoy5-0 kwCPUq"
-    data-testid="checkout"
-  >
-    <div />
-    <button
-      class="SickButton-l04z44-0 gWgBOL"
-      type="submit"
+  <div>
+    <form
+      class="Checkout__CheckoutFormStyles-sc-10mtoy5-0 kwCPUq"
+      data-testid="checkout"
     >
-      Pay
-    </button>
-  </form>
+      <div />
+      <button
+        class="SickButton-l04z44-0 gWgBOL"
+        type="submit"
+      >
+        Pay
+      </button>
+    </form>
+  </div>
 </div>
 `;

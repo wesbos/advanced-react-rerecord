@@ -99,6 +99,7 @@ exports[`<Cart/> renders and matches snappy 1`] = `
       </p>
       <form
         class="Checkout__CheckoutFormStyles-sc-10mtoy5-0 kwCPUq"
+        data-testid="checkout"
       >
         <div />
         <button

@@ -1,11 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, wait } from '@testing-library/react';
 import { MockedProvider } from '@apollo/react-testing';
 import userEvent from '@testing-library/user-event';
-import wait from 'waait';
+import { useStripe } from '@stripe/react-stripe-js';
+import Router from 'next/router';
 import Checkout, { CREATE_ORDER_MUTATION } from '../components/Checkout';
 import { CartStateProvider } from '../components/LocalState';
 import { CURRENT_USER_QUERY } from '../components/User';
-
 // Mock the Router
 jest.mock('next/router', () => ({
   push: jest.fn(),
@@ -25,13 +25,6 @@ jest.mock('@stripe/react-stripe-js', () => ({
   }),
 }));
 
-// Mock Stripe create Payment Method
-const mockCreatePaymentMethod = jest.fn();
-
-jest.mock('@stripe/stripe-js', () => ({
-  loadStripe: () => ({ createPaymentMethod: mockCreatePaymentMethod }),
-}));
-
 const mocks = [
   {
     request: { query: CREATE_ORDER_MUTATION },
@@ -48,6 +41,7 @@ const mocks = [
 ];
 
 describe('<Checkout />', () => {
+  // Mock Stripe create Payment Method
   it('renders and matches snappy', async () => {
     const { container } = render(
       <CartStateProvider>
@@ -61,7 +55,7 @@ describe('<Checkout />', () => {
     expect(container).toMatchSnapshot();
   });
 
-  fit('submits the form properly', async () => {
+  it('submits the form properly', async () => {
     const { container } = render(
       <CartStateProvider>
         <MockedProvider mocks={mocks}>
@@ -70,9 +64,21 @@ describe('<Checkout />', () => {
       </CartStateProvider>
     );
     await screen.findByTestId('checkout');
-    userEvent.click(screen.getByText(/Pay/i));
-    await wait(1000);
-    console.log(mockCreatePaymentMethod);
-    expect(mockCreatePaymentMethod).toHaveBeenCalled();
+    await userEvent.click(screen.getByText(/Pay/i));
+    // / wait for checking you out text
+    await screen.findByText(/checking/i);
+    await wait();
+    const stripe = useStripe();
+    expect(stripe.createPaymentMethod).toHaveBeenCalled();
+    expect(stripe.createPaymentMethod).toHaveBeenCalledWith({
+      card: undefined,
+      type: 'card',
+    });
+    expect(Router.push).toHaveBeenCalled();
+    expect(Router.push).toHaveBeenCalledWith({
+      pathname: '/order',
+      query: { id: 'ord123' },
+    });
+    await wait();
   });
 });

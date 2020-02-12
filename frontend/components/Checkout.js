@@ -51,6 +51,7 @@ function Checkout() {
 function useCheckout() {
   const stripe = useStripe();
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
   const elements = useElements();
   const { closeCart } = useCart();
 
@@ -61,6 +62,7 @@ function useCheckout() {
   // manually call the mutation once we have the stripe token
 
   const handleSubmit = async event => {
+    setLoading(true);
     // 1. Stop the form from submitting
     event.preventDefault();
 
@@ -95,13 +97,14 @@ function useCheckout() {
       query: { id: order.data.checkout.id },
     });
 
-    console.log('Changed page =---------------------');
-
     // 6. Close the cart
     closeCart();
+
+    // 7. Turn loader off
+    setLoading(false);
   };
 
-  return { error, handleSubmit };
+  return { error, handleSubmit, loading };
 }
 
 const CheckoutFormStyles = styled.form`
@@ -114,10 +117,11 @@ const CheckoutFormStyles = styled.form`
 `;
 
 function CheckoutForm() {
-  const { handleSubmit, error } = useCheckout();
+  const { handleSubmit, error, loading } = useCheckout();
   return (
     <CheckoutFormStyles onSubmit={handleSubmit} data-testid="checkout">
       {error && <p>{error.message}</p>}
+      {loading && <p>Checking You Out!</p>}
       <CardElement options={{ style }} />
       <SickButton type="submit">Pay</SickButton>
     </CheckoutFormStyles>

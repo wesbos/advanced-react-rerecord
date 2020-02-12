@@ -22,7 +22,11 @@ const SIGNUP_MUTATION = gql`
 `;
 
 function Signup() {
-  const { inputs, handleChange } = useForm();
+  const { inputs, handleChange } = useForm({
+    name: '',
+    email: '',
+    password: '',
+  });
   const [signup, { error, loading, data }] = useMutation(SIGNUP_MUTATION, {
     variables: inputs,
     refetchQueries: [{ query: CURRENT_USER_QUERY }],

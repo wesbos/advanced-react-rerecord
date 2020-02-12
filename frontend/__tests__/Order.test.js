@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import wait from 'waait';
 import { MockedProvider } from '@apollo/react-testing';
 import Order, { SINGLE_ORDER_QUERY } from '../components/Order';
 import { fakeOrder } from '../lib/testUtils';

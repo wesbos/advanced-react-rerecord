@@ -1,8 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, wait } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MockedProvider } from '@apollo/react-testing';
 import { ApolloConsumer } from '@apollo/client';
-import wait from 'waait';
 import AddToCart, { ADD_TO_CART_MUTATION } from '../components/AddToCart';
 import { CURRENT_USER_QUERY } from '../components/User';
 import { fakeUser, fakeCartItem } from '../lib/testUtils';

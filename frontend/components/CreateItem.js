@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-import { Mutation, useMutation } from '@apollo/client';
-
+import React from 'react';
+import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
-import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
 
 const CREATE_ITEM_MUTATION = gql`
@@ -35,7 +33,6 @@ function CreateItem() {
     image: '',
     price: 500,
   });
-
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
     variables: inputs,
   });
@@ -49,8 +46,7 @@ function CreateItem() {
         // call the mutation
         const res = await createItem();
         // change them to the single item page
-        const router = useRouter();
-        router.push({
+        Router.push({
           pathname: '/item',
           query: { id: res.data.createItem.id },
         });

@@ -1,10 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, wait } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useRouter } from 'next/router';
 import { MockedProvider } from '@apollo/react-testing';
-import wait from 'waait';
+import Router from 'next/router';
 import CreateItem, { CREATE_ITEM_MUTATION } from '../components/CreateItem';
 import { fakeItem } from '../lib/testUtils';
+
+jest.mock('next/router', () => ({
+  push: jest.fn(),
+}));
 
 const item = fakeItem();
 describe('<CreateItem/>', () => {
@@ -18,7 +21,7 @@ describe('<CreateItem/>', () => {
   });
 
   it('handles state updating', async () => {
-    const { container } = render(
+    render(
       <MockedProvider>
         <CreateItem />
       </MockedProvider>
@@ -37,6 +40,7 @@ describe('<CreateItem/>', () => {
     expect(screen.getByDisplayValue(item.name)).toBeInTheDocument();
     expect(screen.getByDisplayValue(item.price.toString())).toBeInTheDocument();
     expect(screen.getByDisplayValue(item.description)).toBeInTheDocument();
+    await wait();
   });
   it('creates an item when the form is submitted', async () => {
     const mocks = [
@@ -77,11 +81,10 @@ describe('<CreateItem/>', () => {
       item.description
     );
     // mock the router
-    Router.router = { push: jest.fn() };
     await userEvent.click(screen.getByText('Submit'));
-    await wait(500);
-    expect(Router.router.push).toHaveBeenCalled();
-    expect(Router.router.push).toHaveBeenCalledWith({
+    await wait();
+    expect(Router.push).toHaveBeenCalled();
+    expect(Router.push).toHaveBeenCalledWith({
       pathname: '/item',
       query: { id: 'abc123' },
     });

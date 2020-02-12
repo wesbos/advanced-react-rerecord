@@ -55,7 +55,6 @@ describe('<Signup/>', () => {
     await userEvent.type(screen.getByPlaceholderText('email'), me.email);
     await userEvent.type(screen.getByPlaceholderText('password'), 'wes');
     await userEvent.click(screen.getByText('Sign Up!'));
-    screen.debug();
     // loading state
     expect(screen.getByTestId('loading')).toHaveAttribute('aria-busy', 'true');
     expect(screen.getByTestId('loading')).toHaveAttribute('disabled');
