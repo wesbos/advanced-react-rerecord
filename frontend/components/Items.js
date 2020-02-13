@@ -34,7 +34,7 @@ const ItemsList = styled.div`
   margin: 0 auto;
 `;
 
-function Items({ page }) {
+function Items({ page, count }) {
   const { data, error, loading } = useQuery(ALL_ITEMS_QUERY, {
     variables: {
       skip: page * perPage - perPage,

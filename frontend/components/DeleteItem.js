@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import { ALL_ITEMS_QUERY } from './Items';
+import { PAGINATION_QUERY } from './Pagination';
 
 const DELETE_ITEM_MUTATION = gql`
   mutation DELETE_ITEM_MUTATION($id: ID!) {
@@ -12,26 +13,13 @@ const DELETE_ITEM_MUTATION = gql`
 `;
 
 function update(cache, payload) {
-  // TODO Can we use evict() and refetch queries?
-  cache.evict(`Item:${payload.data.deleteItem.id}`);
-  // // return;
-  // console.log(payload);
-  // // manually update the cache on the client, so it matches the server
-  // // 1. Read the cache for the items we want
-  // const data = cache.readQuery({ query: ALL_ITEMS_QUERY });
-  // console.log(data);
-  // // 2. Filter the deleted item out of the page
-  // const updatedItems = data.allItems.filter(
-  //   item => item.id !== payload.data.deleteItem.id
-  // );
-  // // 3. Put the items back!
-  // cache.writeQuery({
-  //   query: ALL_ITEMS_QUERY,
-  //   data: {
-  //     ...data,
-  //     allItems: updatedItems,
-  //   },
-  // });
+  cache.modify('ROOT_QUERY', {
+    allItems(items, { readField }) {
+      return items.filter(
+        item => readField('id', item) !== payload.data.deleteItem.id
+      );
+    },
+  });
 }
 
 function DeleteItem({ id, children }) {
@@ -39,7 +27,7 @@ function DeleteItem({ id, children }) {
     variables: { id },
     update,
     awaitRefetchQueries: true,
-    refetchQueries: [{ query: ALL_ITEMS_QUERY }],
+    refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
   });
   return (
     <button
