@@ -80,4 +80,11 @@ keystone.extendGraphQLSchema({
 
 const apps = [new GraphQLApp(), new AdminUIApp({ authStrategy })];
 
-export { keystone, apps };
+const keystoneconfig = {
+  secureCookies: false,
+};
+const configureExpress = app => {
+  app.set('trust proxy', 1);
+};
+
+export { keystone, apps, keystoneconfig, configureExpress };

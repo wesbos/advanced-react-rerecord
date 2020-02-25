@@ -33,15 +33,53 @@ cd backend
 6. Enter in details, or paste in
 7. `esc`, then type `:wq`
 
-## Prep Application
-1. run `npm install` on each side
+## Prep + Run Application
+1. run `npm install` on each folder
 
-## Kill the existing Process
-`pm2
+1. in `backend`
+1. `npm run build`
+1. `pm2 start npm --name "backend" -- start`
 
-## Cheat Sheet:
+1. in `frontend`
+1. `npm install`
+1. `npm run build`
+1. `pm2 start npm --name "frontend" -- start`
 
-pm2 ls - lists scripts runing
+## Configure nginx
+
+At this point we can't access port 7777 because nginx only opens up port 80 (http) and port 443 (https).
+
+1. go to `/etc/nginx/sites-available`
+1. Make a new file with `touch backend`
+1. edit it:
+
+```nginx
+
+        location /backend {
+            proxy_pass http://localhost:3000;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+        }
+
+        location / {
+            proxy_pass http://localhost:7777;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+        }
+```
+
+Remove the default:
+`rm default`
+`rm sites-enabled/default`
+
+Then restart nginx:
+`sudo nginx -s reload`
 
 ## Upload your files to your droplet
 
