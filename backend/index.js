@@ -20,6 +20,7 @@ const PROJECT_NAME = 'sick-fits-keystone';
 const keystone = new Keystone({
   name: PROJECT_NAME,
   adapter: new Adapter(),
+  secureCookies: false,
   // persist logins when the app restarts
   sessionStore: new MongoStore({ url: process.env.DATABASE_URL }),
   async onConnect() {
@@ -80,11 +81,8 @@ keystone.extendGraphQLSchema({
 
 const apps = [new GraphQLApp(), new AdminUIApp({ authStrategy })];
 
-const keystoneconfig = {
-  secureCookies: false,
-};
 const configureExpress = app => {
   app.set('trust proxy', 1);
 };
 
-export { keystone, apps, keystoneconfig, configureExpress };
+export { keystone, apps configureExpress };
