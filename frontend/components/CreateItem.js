@@ -5,6 +5,8 @@ import Router from 'next/router';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
+import { ALL_ITEMS_QUERY } from './Items';
+import { PAGINATION_QUERY } from './Pagination';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -22,9 +24,23 @@ const CREATE_ITEM_MUTATION = gql`
       }
     ) {
       id
+      name
+      price
+      description
+      image {
+        publicUrlTransformed
+      }
     }
   }
 `;
+
+function update(cache, payload) {
+  cache.modify('ROOT_QUERY', {
+    allItems(items, { readField }) {
+      return [payload.data.createItem, ...items];
+    },
+  });
+}
 
 function CreateItem() {
   const { inputs, handleChange } = useForm({
@@ -35,6 +51,8 @@ function CreateItem() {
   });
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
     variables: inputs,
+    update,
+    refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
   });
 
   return (

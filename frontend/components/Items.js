@@ -10,7 +10,7 @@ import { perPage } from '../config';
 // TODO:  orderBy: "createdAt_DESC"
 const ALL_ITEMS_QUERY = gql`
   query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    allItems(first: $first, skip: $skip) {
+    allItems(first: $first, skip: $skip, orderBy: "createdAt_DESC") {
       id
       name
       price

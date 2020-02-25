@@ -3,7 +3,9 @@ import PleaseSignIn from '../components/PleaseSignIn';
 
 const Sell = props => (
   <div>
-    <PleaseSignIn>{() => <CreateItem />}</PleaseSignIn>
+    <PleaseSignIn>
+      <CreateItem />
+    </PleaseSignIn>
   </div>
 );
 
