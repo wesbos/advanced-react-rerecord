@@ -85,4 +85,4 @@ const configureExpress = app => {
   app.set('trust proxy', 1);
 };
 
-export { keystone, apps configureExpress };
+export { keystone, apps, configureExpress };
