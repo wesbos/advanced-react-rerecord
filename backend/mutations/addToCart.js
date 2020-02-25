@@ -43,9 +43,6 @@ export async function addToCart(parent, args, ctx, info, { query }) {
     return res.data.updateCartItem;
   }
   // 4. If its not, create a fresh CartItem for that user!
-  // TODO Can we get highlighting here?
-  // TODO How do we pass `info.fields` to this query? there needs to be something easy..
-  // TODO this breaks if we query the user { id }
   const CREATE_CART_ITEM_MUTATION = `
     mutation {
       createCartItem(data: {

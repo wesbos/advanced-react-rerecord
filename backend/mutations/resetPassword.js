@@ -44,8 +44,6 @@ export async function resetPassword(parent, args, ctx, info, { query }) {
     }
   `);
   const { errors, data } = updatedUserResponse;
-  // TODO: Is this okay? I'd like to throw just the error if possible
-  // this shows me things like "[password:minLength:User:password] Value must be at least 8 characters long. \n\nGraphQL request:3:7\n2 |     mutation {\n3 |       updateUser(\n  |       ^\n4 |         id: \"5de9a29642ca551f24c596ba\
   if (errors) {
     throw new Error(errors);
   }

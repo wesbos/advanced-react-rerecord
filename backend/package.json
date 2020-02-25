@@ -9,11 +9,10 @@
     "node": ">=8.4.0"
   },
   "scripts": {
-    "//": "TODO: There is no way this works on windows",
-    "dev": "nodemon -L --exec cross-env NODE_ENV=development DISABLE_LOGGING=true node -r esm `which keystone` dev",
+    "dev": "nodemon -L --exec cross-env NODE_ENV=development DISABLE_LOGGING=true node -r esm ./node_modules/.bin/keystone dev",
     "dummy": "npm run dev -- --dummy",
-    "build": "cross-env NODE_ENV=production keystone build",
-    "start": "cross-env NODE_ENV=production keystone start"
+    "build": "cross-env NODE_ENV=production node -r esm ./node_modules/.bin/keystone build",
+    "start": "cross-env NODE_ENV=production node -r esm ./node_modules/.bin/keystone start"
   },
   "dependencies": {
     "@keystonejs/adapter-mongoose": "^5.2.0",

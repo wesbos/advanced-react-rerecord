@@ -7,3 +7,5 @@ haters/
 layout.md
 variables.env
 .env
+.yarn/
+dist/

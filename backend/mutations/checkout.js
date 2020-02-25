@@ -44,7 +44,6 @@ export async function checkout(parent, args, ctx, info, { query }) {
     const orderItem = {
       ...cartItem.item,
       quantity: cartItem.quantity,
-      // TODO is this line needed?
       user: { connect: { id: userId } },
       image: cartItem.item.image.publicUrlTransformed,
     };
