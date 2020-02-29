@@ -24,7 +24,7 @@ export async function addToCart(parent, args, ctx, info, { query }) {
   // 3. Check if that item is already in their cart and increment by 1 if it is
   if (existingCartItem) {
     console.log(
-      `There are already ${existingCartItem.quantity} if these items in their cart`
+      `There are already ${existingCartItem.quantity} of these items in their cart`
     );
     const res = await query(
       `
