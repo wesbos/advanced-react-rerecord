@@ -10,6 +10,12 @@ export default function useForm(initial = {}) {
     }
     if (type === 'file') {
       [value] = e.target.files;
+      if (!value) {
+				null;
+			}
+			if (value) {
+				value = value[0];
+			}
     }
     setInputs({
       ...inputs,
