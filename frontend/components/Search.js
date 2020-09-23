@@ -9,7 +9,7 @@ import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
 
 const SEARCH_ITEMS_QUERY = gql`
   query SEARCH_ITEMS_QUERY($searchTerm: String!) {
-    allItems(
+    search: allItems(
       where: {
         OR: [
           { name_contains_i: $searchTerm }
@@ -26,17 +26,8 @@ const SEARCH_ITEMS_QUERY = gql`
   }
 `;
 
-function routeToItem(item) {
-  const router = useRouter();
-  router.push({
-    pathname: '/item',
-    query: {
-      id: item.id,
-    },
-  });
-}
-
 function AutoComplete(props) {
+  const router = useRouter();
   const [findItems, { loading, data }] = useLazyQuery(SEARCH_ITEMS_QUERY);
   const items = data ? data.allItems : [];
   const findItemsButChill = debounce(findItems, 350);
@@ -44,7 +35,14 @@ function AutoComplete(props) {
   return (
     <SearchStyles>
       <Downshift
-        onChange={routeToItem}
+        onChange={item =>
+          router.push({
+            pathname: '/item',
+            query: {
+              id: item.id,
+            },
+          })
+        }
         itemToString={item => (item === null ? '' : item.name)}
       >
         {({

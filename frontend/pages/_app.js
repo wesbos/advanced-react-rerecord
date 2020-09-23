@@ -4,30 +4,26 @@ import Page from '../components/Page';
 import withData from '../lib/withData';
 import { CartStateProvider } from '../components/LocalState';
 
-class MyApp extends App {
-  static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
-    // this exposes the query to the user
-    pageProps.query = ctx.query;
-    return { pageProps };
-  }
-
-  render() {
-    const { Component, apollo, pageProps } = this.props;
-
-    return (
-      <ApolloProvider client={apollo}>
-        <CartStateProvider>
-          <Page>
-            <Component {...pageProps} />
-          </Page>
-        </CartStateProvider>
-      </ApolloProvider>
-    );
-  }
+function MyApp({ Component, apollo, pageProps }) {
+  return (
+    <ApolloProvider client={apollo}>
+      <CartStateProvider>
+        <Page>
+          <Component {...pageProps} />
+        </Page>
+      </CartStateProvider>
+    </ApolloProvider>
+  );
 }
+
+MyApp.getInitialProps = async function({ Component, ctx }) {
+  let pageProps = {};
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+  // this exposes the url params to the page component so we can use things like item ID in our queries
+  pageProps.query = ctx.query;
+  return { pageProps };
+};
 
 export default withData(MyApp);

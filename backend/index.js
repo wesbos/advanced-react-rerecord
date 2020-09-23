@@ -12,6 +12,7 @@ import CartItem from './models/CartItem';
 import OrderItem from './models/OrderItem';
 import Order from './models/Order';
 import * as mutations from './mutations';
+import { search } from './queries/search';
 
 const MongoStore = MongoStoreMaker(expressSession);
 
@@ -51,12 +52,10 @@ const authStrategy = keystone.createAuthStrategy({
 keystone.extendGraphQLSchema({
   types: [{ type: 'type Message { message: String }' }],
   queries: [
-    // {
-    //   schema: 'me: User',
-    //   resolver(parent, args, ctx, info) {
-    //     return ctx.authedItem;
-    //   },
-    // },
+    {
+      schema: 'search(where: ItemWhereInput): [Item]',
+      resolver: search,
+    },
   ],
   mutations: [
     {
