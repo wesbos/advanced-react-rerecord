@@ -1,0 +1,112 @@
+{
+  "name": "sick-fits-frontend",
+  "version": "1.0.0",
+  "description": "Sick Fits! An example React, GraphQL, Next and Apollo",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next -p 7777",
+    "build": "next build",
+    "start": "next start -p 7777",
+    "test": "NODE_ENV=test jest --watch",
+    "heroku-postbuild": "next build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/client": "^3.0.0-beta.37",
+    "@apollo/link-error": "^2.0.0-beta.3",
+    "@apollo/react-ssr": "^4.0.0-beta.1",
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.4.0",
+    "apollo-upload-client": "^13.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-plugin-styled-components": "^1.10.7",
+    "date-fns": "^2.12.0",
+    "downshift": "^5.2.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "graphql": "^15.0.0",
+    "graphql-tag": "^2.10.3",
+    "lodash.debounce": "^4.0.8",
+    "next": "^9.3.5",
+    "next-with-apollo": "^5.0.1",
+    "nprogress": "^0.2.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-transition-group": "^4.3.0",
+    "styled-components": "^5.1.0",
+    "waait": "^1.0.5"
+  },
+  "devDependencies": {
+    "@apollo/react-testing": "^4.0.0-beta.1",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.3",
+    "@testing-library/user-event": "^10.1.0",
+    "babel-jest": "^25.4.0",
+    "casual": "^1.6.2",
+    "jest": "^25.4.0",
+    "react-test-renderer": "^16.13.1"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ]
+  },
+  "//": "This is our babel config, I prefer this over a .babelrc file",
+  "babel": {
+    "env": {
+      "development": {
+        "presets": [
+          "next/babel"
+        ],
+        "plugins": [
+          [
+            "styled-components",
+            {
+              "ssr": true,
+              "displayName": true
+            }
+          ]
+        ]
+      },
+      "production": {
+        "presets": [
+          "next/babel"
+        ],
+        "plugins": [
+          [
+            "styled-components",
+            {
+              "ssr": true,
+              "displayName": true
+            }
+          ]
+        ]
+      },
+      "test": {
+        "presets": [
+          [
+            "next/babel",
+            {
+              "preset-env": {
+                "modules": "commonjs"
+              }
+            }
+          ]
+        ],
+        "plugins": [
+          [
+            "styled-components",
+            {
+              "ssr": true,
+              "displayName": true
+            }
+          ]
+        ]
+      }
+    }
+  }
+}
