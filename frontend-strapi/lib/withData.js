@@ -7,6 +7,11 @@ import { endpoint, prodEndpoint } from '../config';
 import paginationField from './paginationField';
 
 function createClient({ headers, initialState }) {
+  let jwt;
+  if (typeof localStorage === 'object') {
+    jwt = localStorage.getItem('jwt');
+
+  }
   return new ApolloClient({
     link: ApolloLink.from([
       onError(({ graphQLErrors, networkError }) => {
@@ -28,7 +33,10 @@ function createClient({ headers, initialState }) {
           credentials: 'include',
         },
         // pass the headers along from this request. This enables SSR with logged in state
-        headers,
+        headers: {
+          ...headers,
+          "Authorization": `Bearer ${jwt}`
+        },
       }),
     ]),
     cache: new InMemoryCache({

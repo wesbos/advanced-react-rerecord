@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import formatMoney from '../lib/formatMoney';
 import RemoveFromCart from './RemoveFromCart';
+import { backend } from '../config';
 
 const CartItemStyles = styled.li`
   padding: 1rem 0;
@@ -32,11 +33,12 @@ const CartItem = ({ cartItem }) => {
     <CartItemStyles>
       <img
         width="100"
-        src={cartItem.item.image.publicUrlTransformed}
+        src={`${backend}${cartItem.item.photos[0].url}`}
         alt={cartItem.item.name}
       />
       <div className="cart-item-details">
         <h3>{cartItem.item.name}</h3>
+  <p>xxx{cartItem.id}</p>
         <p>
           {formatMoney(cartItem.item.price * cartItem.quantity)}
           {' - '}

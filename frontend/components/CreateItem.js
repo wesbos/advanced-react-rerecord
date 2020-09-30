@@ -35,10 +35,13 @@ const CREATE_ITEM_MUTATION = gql`
 `;
 
 function update(cache, payload) {
-  cache.modify('ROOT_QUERY', {
-    allItems(items, { readField }) {
-      return [payload.data.createItem, ...items];
-    },
+  cache.modify({
+    id: cache.identify(payload.data.createItem),
+    fields: {
+      allItems(items, { readField }) {
+        return [payload.data.createItem, ...items];
+      },
+    }
   });
 }
 
@@ -51,7 +54,7 @@ function CreateItem() {
   });
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
     variables: inputs,
-    update,
+    // update,
     refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
   });
 
@@ -63,6 +66,7 @@ function CreateItem() {
         e.preventDefault();
         // call the mutation
         const res = await createItem();
+        console.log(res);
         // change them to the single item page
         Router.push({
           pathname: '/item',

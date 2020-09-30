@@ -28,10 +28,11 @@ const SEARCH_ITEMS_QUERY = gql`
 
 function AutoComplete(props) {
   const router = useRouter();
-  const [findItems, { loading, data }] = useLazyQuery(SEARCH_ITEMS_QUERY);
-  const items = data ? data.allItems : [];
+  const [findItems, { loading, data, error }] = useLazyQuery(SEARCH_ITEMS_QUERY);
+  const items = data ? data.search : [];
   const findItemsButChill = debounce(findItems, 350);
   resetIdCounter();
+  console.log('Results: ', data, loading, error);
   return (
     <SearchStyles>
       <Downshift

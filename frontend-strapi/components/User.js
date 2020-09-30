@@ -5,24 +5,10 @@ import { useState, useEffect } from 'react';
 
 const CURRENT_USER_QUERY = gql`
   query {
-    authenticatedUser {
+    me {
       id
       email
-      name
-      permissions
-      cart {
-        id
-        quantity
-        item {
-          id
-          price
-          image {
-            publicUrlTransformed
-          }
-          name
-          description
-        }
-      }
+      username
     }
   }
 `;
@@ -30,7 +16,10 @@ const CURRENT_USER_QUERY = gql`
 function useUser() {
   const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
   if (data) {
-    return data.authenticatedUser;
+    return data.me;
+  }
+  if(error) {
+    console.log(error)
   }
 }
 

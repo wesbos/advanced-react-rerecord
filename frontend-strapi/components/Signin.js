@@ -9,20 +9,18 @@ import { CURRENT_USER_QUERY } from './User';
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {
-    authenticateUserWithPassword(email: $email, password: $password) {
-      item {
-        id
-        email
-        name
-      }
+    login(input: {
+      identifier: $email, password: $password
+    }) {
+      jwt
     }
   }
 `;
 
 function Signin() {
   const { inputs, handleChange, resetForm } = useForm({
-    email: '',
-    password: '',
+    email: 'wesbos@gmail.com',
+    password: 'wesbos',
   });
   const [signin, { error, loading }] = useMutation(SIGNIN_MUTATION, {
     variables: inputs,
@@ -34,7 +32,8 @@ function Signin() {
       onSubmit={async e => {
         e.preventDefault();
         const res = await signin();
-        console.log(res);
+        console.log(res.data.login.jwt);
+        localStorage.setItem('jwt', res.data.login.jwt);
         resetForm();
       }}
     >

@@ -6,7 +6,7 @@ import {
   Relationship,
 } from '@keystonejs/fields';
 import { byTracking, atTracking } from '@keystonejs/list-plugins';
-import { DateTimeUtc } from '@keystonejs/fields-datetime-utc';
+import { DateTimeUtc } from '@keystonejs/fields';
 import { userIsAdmin, userCanAccessUsers } from '../utils/access';
 
 export default {

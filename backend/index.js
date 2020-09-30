@@ -22,6 +22,7 @@ const keystone = new Keystone({
   name: PROJECT_NAME,
   adapter: new Adapter(),
   secureCookies: false,
+  cookieSecret: 'OMG123',
   // persist logins when the app restarts
   sessionStore: new MongoStore({ url: process.env.DATABASE_URL }),
   async onConnect() {

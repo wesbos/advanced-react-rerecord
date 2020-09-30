@@ -13,21 +13,15 @@ const DELETE_ITEM_MUTATION = gql`
 `;
 
 function update(cache, payload) {
-  cache.modify('ROOT_QUERY', {
-    allItems(items, { readField }) {
-      return items.filter(
-        item => readField('id', item) !== payload.data.deleteItem.id
-      );
-    },
-  });
+  cache.evict(cache.identify(payload.data.deleteItem));
 }
 
 function DeleteItem({ id, children }) {
   const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION, {
     variables: { id },
     update,
-    awaitRefetchQueries: true,
-    refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
+    // awaitRefetchQueries: true,
+    // refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
   });
   return (
     <button

@@ -1,9 +1,10 @@
 import {
   Text,
-  CloudinaryImage,
   Integer,
   Relationship,
 } from '@keystonejs/fields';
+
+const { CloudinaryImage } = require('@keystonejs/fields-cloudinary-image');
 
 import { CloudinaryAdapter } from '@keystonejs/file-adapters';
 import { byTracking, atTracking } from '@keystonejs/list-plugins';

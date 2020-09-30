@@ -7,7 +7,7 @@ import Signout from './Signout';
 
 function Nav() {
   const me = useUser();
-  const { toggleCart } = useCart();
+  const { toggleCart, cart } = useCart();
   return (
     <NavStyles data-testid="nav">
       <Link href="/items">
@@ -29,7 +29,7 @@ function Nav() {
           <button type="button" onClick={toggleCart}>
             My Cart
             <CartCount
-              count={me.cart.reduce(
+              count={cart.reduce(
                 (tally, cartItem) => tally + cartItem.quantity,
                 0
               )}

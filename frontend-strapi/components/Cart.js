@@ -10,7 +10,7 @@ import Checkout from './Checkout';
 
 function Cart() {
   const me = useUser();
-  const { cartOpen, toggleCart } = useCart();
+  const { cartOpen, toggleCart, cart } = useCart();
   if (!me) return <p>not logged in</p>;
   return (
     <CartStyles open={cartOpen} data-testid="cart">
@@ -18,20 +18,20 @@ function Cart() {
         <CloseButton onClick={toggleCart} title="close">
           &times;
         </CloseButton>
-        <Supreme>{me.name}'s Cart</Supreme>
+        <Supreme>{me.username}'s Cart</Supreme>
         <p>
-          You Have {me.cart.length} Item{me.cart.length === 1 ? '' : 's'} in
+          You Have {cart.length} Item{cart.length === 1 ? '' : 's'} in
           your cart.
         </p>
       </header>
       <ul>
-        {me.cart.map(cartItem => (
+        {cart.map(cartItem => (
           <CartItem key={cartItem.id} cartItem={cartItem} />
         ))}
       </ul>
-      {me.cart.length > 0 && (
+      {cart.length > 0 && (
         <footer>
-          <p>{formatMoney(calcTotalPrice(me.cart))}</p>
+          <p>{formatMoney(calcTotalPrice(cart))}</p>
           <Checkout />
         </footer>
       )}

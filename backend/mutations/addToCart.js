@@ -1,14 +1,15 @@
-export async function addToCart(parent, args, ctx, info, { query }) {
+const { gql } = require('apollo-server-express');
+
+export async function addToCart(parent, args, ctx, info) {
   // 1. Make sure they are signed in
   const { id: userId } = ctx.authedItem;
   if (!userId) {
     throw new Error('You must be signed in soooon');
   }
-  // 2. Query the users current cart
-  const {
-    data: { allCartItems },
-  } = await query(`
-    query {
+  // 2. Query the users current cart, to see if they already have that item
+  const { data: { allCartItems }, errors } = await ctx.executeGraphQL({
+    context: ctx,
+    query: gql`query {
       allCartItems(where: {
           user: { id: "${userId}" },
           item: { id: "${args.id}" },
@@ -16,8 +17,22 @@ export async function addToCart(parent, args, ctx, info, { query }) {
         id
         quantity
       }
-    }
-  `);
+    }`
+  });
+
+  // const {
+  //   data: { allCartItems },
+  // } = await query(`
+  //   query {
+  //     allCartItems(where: {
+  //         user: { id: "${userId}" },
+  //         item: { id: "${args.id}" },
+  //     }) {
+  //       id
+  //       quantity
+  //     }
+  //   }
+  // `);
 
   const [existingCartItem] = allCartItems;
 
@@ -26,8 +41,9 @@ export async function addToCart(parent, args, ctx, info, { query }) {
     console.log(
       `There are already ${existingCartItem.quantity} of these items in their cart`
     );
-    const res = await query(
-      `
+    const res = await ctx.executeGraphQL({
+      context: ctx,
+      query: gql`
       mutation {
         updateCartItem(
           id: "${existingCartItem.id}",
@@ -37,13 +53,12 @@ export async function addToCart(parent, args, ctx, info, { query }) {
           quantity
         }
       }
-    `,
-      { context: ctx }
-    );
+    `
+    });
     return res.data.updateCartItem;
   }
   // 4. If its not, create a fresh CartItem for that user!
-  const CREATE_CART_ITEM_MUTATION = `
+  const CREATE_CART_ITEM_MUTATION = gql`
     mutation {
       createCartItem(data: {
         item: { connect: { id: "${args.id}" }},
@@ -54,8 +69,9 @@ export async function addToCart(parent, args, ctx, info, { query }) {
       }
     }
   `;
-  const res = await query(CREATE_CART_ITEM_MUTATION, {
-    context: ctx,
+  const res = await ctx.executeGraphQL({
+    query: CREATE_CART_ITEM_MUTATION,
+    context: ctx
   });
   return res.data.createCartItem;
 }

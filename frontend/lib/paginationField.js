@@ -1,5 +1,7 @@
 // Buckle up folks
 
+import gql from "graphql-tag";
+
 // We're gonna write one hell of a pagination logic
 
 export default function paginationField() {
@@ -11,9 +13,19 @@ export default function paginationField() {
     // skip = how many items to offset
 
     // 2. When we fire off a query, Apollo will check the cache first. Normally Apollo handles this, but we now control that with a read method
-    read(existing = [], { args, readField }) {
+    read(existing = [], { field, args, readField, cache }) {
+      if(field.alias) {
+        // it's search
+        console.log('ITS A SEARCH')
+        console.log(existing);
+        return; // always bypass the first read, so it hits the network
+      }
       const { skip, first } = args;
-      const { count } = readField('_allItemsMeta');
+
+      // Read the number of items, so we can make pagination. For some reason when deleting an item, this is null the first time adn then runs two more times with the correct data?? ??!?!? ? ?? ? ? ? ? ?!?!?
+      const data = cache.readQuery({ query: gql`query { _allItemsMeta { count }}`});
+      const count = data?._allItemsMeta?.count;
+
       const page = skip / first + 1;
       const pages = Math.ceil(count / first);
       console.log('reading...', { args });
@@ -50,7 +62,11 @@ export default function paginationField() {
     },
 
     // 8. When items come back from the network, we need to merge them into our cache. We get the existing cache and the new incoming items. It's our job to merge them
-    merge(existing, incoming, { args }) {
+    merge(existing, incoming, { args, field }) {
+      if(field.alias) {
+        console.log('ITS A SEARCH MERGE:');
+        return existing;
+      }
       const { skip, first } = args;
       console.log('merging items from network...');
       // 9. Take a copy of the existing array, or make a new empty one
