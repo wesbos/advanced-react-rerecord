@@ -10,6 +10,7 @@ import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
 const SEARCH_ITEMS_QUERY = gql`
   query SEARCH_ITEMS_QUERY($searchTerm: String!) {
     search: allItems(
+      # raw: true, # Raw isn't a keystone arg,it's for Apollo, so we can intercept the request and always hit the network. This avoids any issues with pagination and caching
       where: {
         OR: [
           { name_contains_i: $searchTerm }
@@ -32,7 +33,7 @@ function AutoComplete(props) {
   const items = data ? data.search : [];
   const findItemsButChill = debounce(findItems, 350);
   resetIdCounter();
-  console.log('Results: ', data, loading, error);
+  console.log('DATA', data)
   return (
     <SearchStyles>
       <Downshift
