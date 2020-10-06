@@ -39,7 +39,9 @@ function UpdateItem({ id }) {
       id,
     },
   });
-  const { inputs, handleChange } = useForm(data.Item);
+  console.log(data, loading)
+  const { inputs, handleChange } = useForm(data.Item || { name:'', price:'', description: ''});
+  console.log(inputs)
   const [updateItem, { loading: updating, error }] = useMutation(
     UPDATE_ITEM_MUTATION,
     {
@@ -54,12 +56,13 @@ function UpdateItem({ id }) {
 
   return (
     <Form
-      onSubmit={async e => {
-        e.preventDefault();
-        const res = await updateItem();
-        console.log(res);
+    onSubmit={async e => {
+      e.preventDefault();
+      const res = await updateItem();
+      console.log(res);
       }}
-    >
+      >
+      <p>{data.Item.name}</p>
       <Error error={error} />
       <fieldset disabled={updating} aria-busy={updating}>
         <label htmlFor="name">

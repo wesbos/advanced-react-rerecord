@@ -35,7 +35,6 @@ function AutoComplete(props) {
   const items = data ? data.search : [];
   const findItemsButChill = debounce(findItems, 350);
   resetIdCounter();
-  !loading && console.log(`Found ${items.length}`);
   return (
     <SearchStyles>
       <Downshift
