@@ -23,7 +23,7 @@ export async function resetPassword(parent, args, ctx, info, { query }) {
   console.info('check if expired');
   const now = Date.now();
   const expiry = new Date(user.resetTokenExpiry).getTime();
-  if (now - expiry > 3600000) {
+  if (now >= expiry) {
     throw new Error('This token is expired');
   }
   // 4. Save the new password to the user and remove old resetToken fields
