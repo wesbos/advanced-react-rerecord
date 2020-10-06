@@ -3,19 +3,10 @@
 import gql from "graphql-tag";
 
 // We're gonna write one hell of a pagination logic
+// TODO: Convert to https://github.com/apollographql/apollo-client/blob/master/src/utilities/policies/pagination.ts#L25
 export default function paginationField() {
   return {
-    // keyArgs: false, // take full control of this field
-    keyArgs(args, { field }) {
-      if(field.alias?.value === 'search') {
-        console.log(`it's a search, so we change the key?`)
-        return [];
-      }
-      return false;
-      // if(args && args.raw) return ["raw"];
-      // console.log(args);
-      // return false;
-    },
+    keyArgs: false, // take full control of this field
 
     // 1. We write custom functions to merge and read based on the 'first' and 'skip' args
     // first = 4 items per page
@@ -23,14 +14,6 @@ export default function paginationField() {
 
     // 2. When we fire off a query, Apollo will check the cache first. Normally Apollo handles this, but we now control that with a read method
     read(existing = [], { field, args, readField, cache }) {
-      if(field.alias?.value === 'search') {
-        // it's search
-        console.log('SEARCH READ EXISTING: ', existing)
-        if(existing.length) {
-          return existing;
-        }
-        return; // always bypass the first read, so it hits the network
-      }
       const { skip, first } = args;
 
       // Read the number of items, so we can make pagination. For some reason when deleting an item, this is null the first time adn then runs two more times with the correct data?? ??!?!? ? ?? ? ? ? ? ?!?!?
@@ -73,10 +56,6 @@ export default function paginationField() {
 
     // 8. When items come back from the network, we need to merge them into our cache. We get the existing cache and the new incoming items. It's our job to merge them
     merge(existing, incoming, { args, field }) {
-      if(field.alias?.value === 'search') {
-        console.log('MERGE SEARCH', incoming);
-        return incoming;
-      }
       const { skip, first } = args;
       console.log('merging items from network...');
       // 9. Take a copy of the existing array, or make a new empty one

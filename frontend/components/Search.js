@@ -29,11 +29,13 @@ const SEARCH_ITEMS_QUERY = gql`
 
 function AutoComplete(props) {
   const router = useRouter();
-  const [findItems, { loading, data, error }] = useLazyQuery(SEARCH_ITEMS_QUERY);
+  const [findItems, { loading, data, error }] = useLazyQuery(SEARCH_ITEMS_QUERY, {
+    fetchPolicy: 'no-cache'
+  });
   const items = data ? data.search : [];
   const findItemsButChill = debounce(findItems, 350);
   resetIdCounter();
-  console.log('DATA', data)
+  !loading && console.log(`Found ${items.length}`);
   return (
     <SearchStyles>
       <Downshift
@@ -63,6 +65,7 @@ function AutoComplete(props) {
                 className: loading ? 'loading' : '',
                 onChange: e => {
                   e.persist();
+                  if(!e.target.value) return; // if it's empty, don't search
                   findItemsButChill({
                     variables: { searchTerm: e.target.value },
                   });
@@ -70,7 +73,7 @@ function AutoComplete(props) {
               })}
             />
 
-            {isOpen && (
+              {isOpen && inputValue && (
               <DropDown>
                 {items.map((item, index) => (
                   <DropDownItem
@@ -97,87 +100,5 @@ function AutoComplete(props) {
     </SearchStyles>
   );
 }
-
-// class AutoCompleteOld extends React.Component {
-//   state = {
-//     items: [],
-//     loading: false,
-//   };
-
-//   onChange = debounce(async (e, client) => {
-//     console.log('Searching...');
-//     // turn loading on
-//     this.setState({ loading: true });
-//     // Manually query apollo client
-//     const res = await client.query({
-//       query: SEARCH_ITEMS_QUERY,
-//       variables: { searchTerm: e.target.value },
-//     });
-//     console.log(res);
-//     this.setState({
-//       items: res.data.allItems,
-//       loading: false,
-//     });
-//   }, 350);
-
-//   render() {
-//     resetIdCounter();
-//     const [findItems, { error, loading }] = useLazyQuery(SEARCH_ITEMS_QUERY);
-//     return (
-//       <SearchStyles>
-//         <Downshift
-//           onChange={routeToItem}
-//           itemToString={item => (item === null ? '' : item.name)}
-//         >
-//           {({
-//             getInputProps,
-//             getItemProps,
-//             isOpen,
-//             inputValue,
-//             highlightedIndex,
-//           }) => (
-//             <div>
-//               <input
-//                 {...getInputProps({
-//                   type: 'search',
-//                   placeholder: 'Search For An Item',
-//                   id: 'search',
-//                   className: loading ? 'loading' : '',
-//                   onChange: e => {
-//                     e.persist();
-//                     console.log(e);
-//                     // this.onChange(e, client);
-//                   },
-//                 })}
-//               />
-
-//               {isOpen && (
-//                 <DropDown>
-//                   {this.state.items.map((item, index) => (
-//                     <DropDownItem
-//                       {...getItemProps({ item })}
-//                       key={item.id}
-//                       highlighted={index === highlightedIndex}
-//                     >
-//                       <img
-//                         width="50"
-//                         src={item.image.publicUrlTransformed}
-//                         alt={item.name}
-//                       />
-//                       {item.name}
-//                     </DropDownItem>
-//                   ))}
-//                   {!this.state.items.length && !this.state.loading && (
-//                     <DropDownItem> Nothing Found {inputValue}</DropDownItem>
-//                   )}
-//                 </DropDown>
-//               )}
-//             </div>
-//           )}
-//         </Downshift>
-//       </SearchStyles>
-//     );
-//   }
-// }
 
 export default AutoComplete;
