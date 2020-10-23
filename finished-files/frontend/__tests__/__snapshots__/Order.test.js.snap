@@ -3,7 +3,7 @@
 exports[`<Order/> renders the order 1`] = `
 <div>
   <div
-    class="OrderStyles-sc-4oqalm-0 gjnIaU"
+    class="OrderStyles-sc-4oqalm-0 cIzrBn"
     data-testid="order"
   >
     <p>

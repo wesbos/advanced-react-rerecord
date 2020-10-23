@@ -44,7 +44,7 @@ describe('<Cart/>', () => {
 });
 
 describe('<RemoveFromCart/>', () => {
-  it('udpates when an item is removed', async () => {
+  it('updates when an item is removed', async () => {
     const { container } = render(
       <CartStateProvider>
         <MockedProvider mocks={mocks}>
