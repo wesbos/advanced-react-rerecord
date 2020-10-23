@@ -8,7 +8,7 @@ services:
     deploy_on_push: true
   source_dir: finished-files/frontend
   routes:
-  - path: /frontend
+  - path: /
   build_command: npm run build
   run_command: npm start
 - name: backend
@@ -18,7 +18,7 @@ services:
     deploy_on_push: true
   source_dir: finished-files/backend
   routes:
-  - path: /backend
+  - path: /admin
   http_port: 8888
   build_command: npm run build
   run_command: npm start

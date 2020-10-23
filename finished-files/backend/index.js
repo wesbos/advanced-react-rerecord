@@ -17,8 +17,8 @@ import { search } from './queries/search';
 const MongoStore = MongoStoreMaker(expressSession);
 
 const PROJECT_NAME = 'sick-fits-keystone';
-
 console.log('TRYING TO CONNECT TO THE DB', process.env.DATABASE_URL);
+
 
 const keystone = new Keystone({
   name: PROJECT_NAME,
@@ -26,8 +26,10 @@ const keystone = new Keystone({
   secureCookies: false,
   cookieSecret: 'OMG123',
   // persist logins when the app restarts
-  // sessionStore: new MongoStore({ url: process.env.DATABASE_URL }),
+  sessionStore: new MongoStore({ url: process.env.DATABASE_URL }),
   async onConnect() {
+    console.log('Connected??', process.env.DATABASE_URL);
+
     if (process.argv.includes('--dummy')) {
       console.log('--------INSERTING DUMMY DATA ------------');
       const { items } = await import('./src/dummy.js');
