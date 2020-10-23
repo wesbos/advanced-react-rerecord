@@ -87,20 +87,20 @@ const configureExpress = app => {
 
 
 // Serverless Start
-const setup = keystone.prepare({
-    apps,
-    dev: process.env.NODE_ENV !== 'production',
-    configureExpress
-});
+// const setup = keystone.prepare({
+//     apps,
+//     dev: process.env.NODE_ENV !== 'production',
+//     configureExpress
+// });
 
 
-module.exports.keystone = keystone;
+// module.exports.keystone = keystone;
 
 // This code here is to make it serverless
 // https://www.keystonejs.com/guides/custom-server#custom-server-as-a-lambda
-module.exports.handler = async (event, context) => {
-  const handler = await setup;
-  return handler(event, context);
-};
+// module.exports.handler = async (event, context) => {
+//   const handler = await setup;
+//   return handler(event, context);
+// };
 
-// export { keystone, apps, configureExpress };
+export { keystone, apps, configureExpress };
