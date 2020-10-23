@@ -1,6 +1,22 @@
 name: sick-fits
 
 services:
+- name: backend
+  github:
+    repo: wesbos/advanced-react-rerecord
+    branch: master
+    deploy_on_push: true
+  source_dir: finished-files/backend
+  routes:
+  - path: /backend
+  http_port: 8888
+  build_command: npm run build
+  run_command: npm start
+  envs:
+  - key: DATABASE_URL
+    scope: RUN_AND_BUILD_TIME
+    type: SECRET
+    value: EV[1:lj5y1VLD6SezfxpPeOL/AjhI0bwmlUfH:NQjHl5nNrCJ/uZ51rVu2/DKNItTPGW6PaK+cuSCWfXKey/WBCN6e80gqtDdviSWJtsp5Tec7GWiCaHa4vbzlCkuerU69jmyPdBbw/uWkhYzAEyu6PaGfPAuk25ISe1OB3QXmLjn0mJcvKmBqtIoS]
 - name: frontend
   github:
     repo: wesbos/advanced-react-rerecord
@@ -11,14 +27,4 @@ services:
   - path: /
   build_command: npm run build
   run_command: npm start
-- name: backend
-  github:
-    repo: wesbos/advanced-react-rerecord
-    branch: master
-    deploy_on_push: true
-  source_dir: finished-files/backend
-  routes:
-  - path: /admin
-  http_port: 8888
-  build_command: npm run build
-  run_command: npm start
+
