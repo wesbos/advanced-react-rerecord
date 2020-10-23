@@ -1,0 +1,20 @@
+name: sick-fits
+
+services:
+- name: frontend
+  github:
+    repo: wesbos/advanced-react-rerecord
+    branch: master
+    deploy_on_push: true
+  source_dir: finished-files/frontend
+  routes:
+  - path: /frontend
+
+- name: backend
+  github:
+    repo: wesbos/advanced-react-rerecord
+    branch: master
+    deploy_on_push: true
+  source_dir: finished-files/backend
+  routes:
+  - path: /backend
