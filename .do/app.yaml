@@ -20,3 +20,4 @@ services:
   source_dir: finished-files/backend
   routes:
   - path: /backend
+  http_port: 8888
