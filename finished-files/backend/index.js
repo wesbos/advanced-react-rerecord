@@ -18,7 +18,6 @@ const MongoStore = MongoStoreMaker(expressSession);
 
 const PROJECT_NAME = 'sick-fits-keystone';
 
-
 console.log('TRYING TO CONNECT TO THE DB', process.env.DATABASE_URL);
 
 const keystone = new Keystone({
