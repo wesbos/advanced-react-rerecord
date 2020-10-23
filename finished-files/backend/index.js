@@ -24,7 +24,7 @@ const keystone = new Keystone({
   secureCookies: false,
   cookieSecret: 'OMG123',
   // persist logins when the app restarts
-  sessionStore: new MongoStore({ url: process.env.DATABASE_URL }),
+  // sessionStore: new MongoStore({ url: process.env.DATABASE_URL }),
   async onConnect() {
     if (process.argv.includes('--dummy')) {
       console.log('--------INSERTING DUMMY DATA ------------');
