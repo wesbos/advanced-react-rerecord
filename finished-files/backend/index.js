@@ -86,7 +86,10 @@ keystone.extendGraphQLSchema({
 const apps = [new GraphQLApp({
   apiPath: "/backend/admin/api",
   graphiqlPath: "/backend/admin/graphiql",
-}), new AdminUIApp({ authStrategy, adminPath: "/backend/admin" })];
+}), new AdminUIApp({
+  authStrategy,
+  adminPath: "/admin"
+})];
 
 const configureExpress = app => {
   app.set('trust proxy', 1);
