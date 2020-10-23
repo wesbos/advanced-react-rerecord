@@ -6,7 +6,7 @@
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
   "engines": {
-    "node": ">=8.4.0"
+    "node": "14.13.1"
   },
   "scripts": {
     "dev": "nodemon -L --exec cross-env NODE_ENV=development DISABLE_LOGGING=true NODE_OPTIONS='-r esm' keystone dev",
