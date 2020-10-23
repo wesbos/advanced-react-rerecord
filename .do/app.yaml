@@ -10,11 +10,11 @@ services:
   routes:
   - path: /frontend
 
-- name: backend
-  github:
-    repo: wesbos/advanced-react-rerecord
-    branch: master
-    deploy_on_push: true
-  source_dir: finished-files/backend
-  routes:
-  - path: /backend
+# - name: backend
+#   github:
+#     repo: wesbos/advanced-react-rerecord
+#     branch: master
+#     deploy_on_push: true
+#   source_dir: finished-files/backend
+#   routes:
+#   - path: /backend
