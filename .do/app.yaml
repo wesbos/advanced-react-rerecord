@@ -9,6 +9,8 @@ services:
   source_dir: finished-files/frontend
   routes:
   - path: /frontend
+  build_command: npm run build
+  run_command: npm start
 
 # - name: backend
 #   github:
