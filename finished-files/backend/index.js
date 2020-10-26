@@ -84,8 +84,8 @@ keystone.extendGraphQLSchema({
 });
 
 const apps = [new GraphQLApp({
-  apiPath: "/backend/admin/api",
-  graphiqlPath: "/backend/admin/graphiql",
+  // apiPath: "/backend/admin/api",
+  // graphiqlPath: "/backend/admin/graphiql",
 }), new AdminUIApp({
   authStrategy,
   adminPath: "/admin"
