@@ -10,3 +10,4 @@ variables.env
 .yarn/
 dist/
 notes/
+.keystone/
