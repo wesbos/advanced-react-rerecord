@@ -4,8 +4,12 @@ export type AccessArgs = {
     listKey?: string;
     data?: {
       name?: string;
-      isAdmin: boolean;
+      permissions: 'USER' | 'EDITOR' | 'ADMIN';
     };
   };
   item?: any;
+};
+
+export type AccessControl = {
+  [key: string]: (args: AccessArgs) => any;
 };

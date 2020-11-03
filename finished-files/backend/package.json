@@ -12,6 +12,13 @@
     "dev": "DISABLE_LOGGING=true keystone-next --port 2222",
     "-preinstall": "npx npm-force-resolutions"
   },
+  "prettier": {
+    "proseWrap": "preserve",
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "printWidth": 80,
+    "arrowParens": "avoid"
+  },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.1",

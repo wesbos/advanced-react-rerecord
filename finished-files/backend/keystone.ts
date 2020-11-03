@@ -1,33 +1,38 @@
-import { config } from "@keystone-next/keystone/schema";
+import { config } from '@keystone-next/keystone/schema';
 import {
   statelessSessions,
   withItemData,
-} from "@keystone-next/keystone/session";
-import { createAuth } from "@keystone-next/auth";
+} from '@keystone-next/keystone/session';
+import { createAuth } from '@keystone-next/auth';
 
-import { lists, extendGraphqlSchema } from "./schema";
+import { lists /*, extendGraphqlSchema */ } from './schema';
 
-let sessionSecret = "-- DEV COOKIE SECRET; CHANGE ME --";
+let sessionSecret = '-- DEV COOKIE SECRET; CHANGE ME --';
 let sessionMaxAge = 60 * 60 * 24 * 30; // 30 days
 
+/*
+  TODO
+    - [ ] configure send password
+    - [ ] Demo seeding data
+*/
 const auth = createAuth({
-  listKey: "User",
-  identityField: "email",
-  secretField: "password",
+  listKey: 'User',
+  identityField: 'email',
+  secretField: 'password',
   initFirstItem: {
-    fields: ["name", "email", "password"],
+    fields: ['name', 'email', 'password'],
     itemData: {
-      isAdmin: true,
+      permissions: 'ADMIN',
     },
   },
 });
 
 export default auth.withAuth(
   config({
-    name: "Sick Fits",
+    name: 'Sick Fits',
     db: {
-      adapter: "mongoose",
-      url: "mongodb://localhost/sick-fits",
+      adapter: 'mongoose',
+      url: 'mongodb://localhost/sick-fits',
     },
     graphql: {
       /* TOOD: Path */
@@ -37,13 +42,13 @@ export default auth.withAuth(
       // isAccessAllowed,
     },
     lists,
-    extendGraphqlSchema,
+    // extendGraphqlSchema,
     session: withItemData(
       statelessSessions({
         maxAge: sessionMaxAge,
         secret: sessionSecret,
       }),
-      { User: "name isAdmin" }
+      { User: 'name permissions' }
     ),
   })
 );
