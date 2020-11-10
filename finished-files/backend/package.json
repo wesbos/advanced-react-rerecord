@@ -20,25 +20,25 @@
     "arrowParens": "avoid"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.1",
+    "@babel/runtime": "^7.12.5",
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
-    "@babel/preset-react": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
     "@babel/preset-typescript": "^7.12.1",
     "@graphql-tools/merge": "^6.2.5",
-    "@keystone-next/admin-ui": "^1.0.0",
-    "@keystone-next/auth": "^1.0.0",
-    "@keystone-next/fields": "^1.0.0",
-    "@keystone-next/keystone": "^1.0.0",
-    "@keystone-next/types": "^1.0.0",
+    "@keystone-next/admin-ui": "^2.0.1",
+    "@keystone-next/auth": "^2.0.1",
+    "@keystone-next/fields": "^2.0.1",
+    "@keystone-next/keystone": "^2.0.0",
+    "@keystone-next/types": "^2.0.0",
     "@preconstruct/next": "^2.0.0",
-    "@types/react": "^16.9.55",
+    "@types/react": "^16.9.56",
     "apollo-server-micro": "^2.19.0",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
-    "next": "^10.0.0",
-    "nodemailer": "^6.4.14",
-    "stripe": "^8.115.0"
+    "next": "^10.0.1",
+    "nodemailer": "^6.4.15",
+    "stripe": "^8.121.0"
   },
   "devDependencies": {
     "typescript": "^4.0.5"

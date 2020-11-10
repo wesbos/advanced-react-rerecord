@@ -35,10 +35,10 @@ export default auth.withAuth(
       url: 'mongodb://localhost/sick-fits',
     },
     graphql: {
-      /* TOOD: Path */
+      /* TODO: Path */
     },
     ui: {
-      /* TOOD: Path */
+      /* TODO: Path */
       // isAccessAllowed,
     },
     lists,
