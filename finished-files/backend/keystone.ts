@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { config } from '@keystone-next/keystone/schema';
 import {
   statelessSessions,

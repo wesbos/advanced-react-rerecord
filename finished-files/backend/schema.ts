@@ -2,13 +2,12 @@ import { createSchema, list } from '@keystone-next/keystone/schema';
 import {
   text,
   relationship,
-  checkbox,
   password,
-  timestamp,
   select,
   virtual,
   integer,
 } from '@keystone-next/fields';
+import { cloudinaryImage } from '@keystone-next/cloudinary';
 import { KeystoneCrudAPI } from '@keystone-next/types';
 import type { KeystoneListsTypeInfo } from './.keystone/schema-types';
 import formatMoney from './utils/formatMoney';
@@ -21,11 +20,10 @@ import type { AccessControl } from './types';
     - [x] User: could create an isAdmin user?
     - [x] CartItem: labelResolver -> virtual field
     - [x] Item: price integer field missing defaultValue, isRequired
-    - [ ] Item: image field (need cloudinaryImage?)
-    - [ ] Item: what does the `user` field do? -- permissions
-    - [ ] OrderItem: should image be text()? or cloudinaryImage? (needs direct saving)
+    - [x] Item: image field (need cloudinaryImage?)
     - [x] OrderItem: quantity integer field missing isRequired
     
+    - [ ] Item / OrderItem: change image to relationship
     - [ ] Item: relationship fields don't support isRequired?
 */
 
@@ -48,10 +46,17 @@ export const access: AccessControl = {
     access.userOwnsItem,
 };
 
+const cloudinary = {
+  cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+  apiKey: process.env.CLOUDINARY_KEY,
+  apiSecret: process.env.CLOUDINARY_SECRET,
+};
+
 const itemFields = {
   name: text({ isRequired: true }),
   description: text({ ui: { displayMode: 'textarea' } }),
   price: integer(),
+  image: cloudinaryImage({ cloudinary }),
   user: relationship({ ref: 'User' }),
 };
 
@@ -87,9 +92,10 @@ export const lists = createSchema({
           update: access.userIsAdmin,
         },
       }),
-      resetToken: text({ isUnique: true }),
-      resetTokenExpiry: timestamp({ isUnique: true }),
     },
+  }),
+  Item: list({
+    fields: itemFields,
   }),
   CartItem: list({
     fields: {
@@ -117,9 +123,6 @@ export const lists = createSchema({
       item: relationship({ ref: 'Item' /* , isRequired: true */ }),
       user: relationship({ ref: 'User.cart' /* , isRequired: true */ }),
     },
-  }),
-  Item: list({
-    fields: itemFields,
   }),
   Order: list({
     ui: {
