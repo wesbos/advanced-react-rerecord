@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { config } from '@keystone-next/keystone/schema';
 import {
   statelessSessions,
@@ -35,10 +36,10 @@ export default auth.withAuth(
       url: 'mongodb://localhost/sick-fits',
     },
     graphql: {
-      /* TOOD: Path */
+      /* TODO: Path */
     },
     ui: {
-      /* TOOD: Path */
+      /* TODO: Path */
       // isAccessAllowed,
     },
     lists,
