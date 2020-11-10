@@ -87,9 +87,15 @@ export const lists = createSchema({
           { label: 'Admin', value: 'ADMIN' },
         ],
         access: {
+          // only admins can create or change the permissions field
           create: access.userIsAdmin,
-          read: access.userIsAdmin,
           update: access.userIsAdmin,
+        },
+        ui: {
+          itemView: {
+            // show the fieldMode as read-only if the user is not an admin
+            fieldMode: args => (access.userIsAdmin(args) ? 'edit' : 'read'),
+          },
         },
       }),
     },
