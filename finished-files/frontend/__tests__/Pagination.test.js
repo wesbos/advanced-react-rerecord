@@ -8,7 +8,7 @@ function makeMocksFor(length) {
       request: { query: PAGINATION_QUERY },
       result: {
         data: {
-          _allItemsMeta: {
+          _allProductsMeta: {
             count: length,
           },
           itemsConnection: {

@@ -31,7 +31,7 @@ const mocks = [
   // current user query mock
   {
     request: { query: CURRENT_USER_QUERY },
-    result: { data: { authenticatedUser: me } },
+    result: { data: { authenticatedItem: me } },
   },
 ];
 

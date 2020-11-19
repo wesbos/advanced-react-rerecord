@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<CreateItem/> renders and matches snapshot 1`] = `
+exports[`<CreateProduct/> renders and matches snapshot 1`] = `
 <div>
   <form
     class="Form-sc-1xszr8q-0 bMIGic"

@@ -2,7 +2,7 @@ import { render, screen, wait } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MockedProvider } from '@apollo/react-testing';
 import Router from 'next/router';
-import CreateItem, { CREATE_ITEM_MUTATION } from '../components/CreateItem';
+import CreateProduct, { CREATE_PRODUCT_MUTATION } from '../components/CreateProduct';
 import { fakeItem } from '../lib/testUtils';
 
 jest.mock('next/router', () => ({
@@ -10,11 +10,11 @@ jest.mock('next/router', () => ({
 }));
 
 const item = fakeItem();
-describe('<CreateItem/>', () => {
+describe('<CreateProduct/>', () => {
   it('renders and matches snapshot', async () => {
     const { container } = render(
       <MockedProvider>
-        <CreateItem />
+        <CreateProduct />
       </MockedProvider>
     );
     expect(container).toMatchSnapshot();
@@ -23,7 +23,7 @@ describe('<CreateItem/>', () => {
   it('handles state updating', async () => {
     render(
       <MockedProvider>
-        <CreateItem />
+        <CreateProduct />
       </MockedProvider>
     );
 
@@ -46,7 +46,7 @@ describe('<CreateItem/>', () => {
     const mocks = [
       {
         request: {
-          query: CREATE_ITEM_MUTATION,
+          query: CREATE_PRODUCT_MUTATION,
           variables: {
             name: item.name,
             description: item.description,
@@ -56,7 +56,7 @@ describe('<CreateItem/>', () => {
         },
         result: {
           data: {
-            createItem: {
+            createProduct: {
               ...item,
               id: 'abc123',
               __typename: 'Item',
@@ -68,7 +68,7 @@ describe('<CreateItem/>', () => {
 
     const { container } = render(
       <MockedProvider mocks={mocks}>
-        <CreateItem />
+        <CreateProduct />
       </MockedProvider>
     );
     await userEvent.type(screen.getByPlaceholderText('Name'), item.name);

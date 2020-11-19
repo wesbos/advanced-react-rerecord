@@ -10,7 +10,7 @@ import Error from './ErrorMessage';
 
 const PAGINATION_QUERY = gql`
   query PAGINATION_QUERY {
-    _allItemsMeta {
+    _allProductsMeta {
       count
     }
   }
@@ -20,7 +20,7 @@ function Pagination({ page }) {
   const { error, loading, data } = useQuery(PAGINATION_QUERY);
   if (loading) return <p>Loading...</p>;
   if (error) return <Error error={error} />;
-  const { count } = data._allItemsMeta;
+  const { count } = data._allProductsMeta;
   const pages = Math.ceil(count / perPage);
   return (
     <PaginationStyles data-testid="pagination">
@@ -31,8 +31,7 @@ function Pagination({ page }) {
       </Head>
       <Link
         href={{
-          pathname: 'items',
-          query: { page: page - 1 },
+          pathname: `/products/${page - 1}`
         }}
       >
         <a className="prev" aria-disabled={page <= 1}>
@@ -48,8 +47,7 @@ function Pagination({ page }) {
       <p>{count} Items Total</p>
       <Link
         href={{
-          pathname: 'items',
-          query: { page: page + 1 },
+          pathname: `/products/${page + 1}`
         }}
       >
         <a className="next" aria-disabled={page >= pages}>

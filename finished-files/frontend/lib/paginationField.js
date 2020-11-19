@@ -17,8 +17,8 @@ export default function paginationField() {
       const { skip, first } = args;
 
       // Read the number of items, so we can make pagination. For some reason when deleting an item, this is null the first time adn then runs two more times with the correct data?? ??!?!? ? ?? ? ? ? ? ?!?!?
-      const data = cache.readQuery({ query: gql`query { _allItemsMeta { count }}`});
-      const count = data?._allItemsMeta?.count;
+      const data = cache.readQuery({ query: gql`query { _allProductsMeta { count }}`});
+      const count = data?._allProductsMeta?.count;
 
       const page = skip / first + 1;
       const pages = Math.ceil(count / first);

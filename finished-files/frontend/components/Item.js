@@ -8,37 +8,36 @@ import formatMoney from '../lib/formatMoney';
 import DeleteItem from './DeleteItem';
 import AddToCart from './AddToCart';
 
-export default function Item({ item }) {
+export default function Item({ item: product }) {
   return (
     <ItemStyles>
-      {item.image && (
-        <img src={item.image.publicUrlTransformed} alt={item.name} />
+      {product.photo?.image?.publicUrlTransformed && (
+        <img src={product.photo.image.publicUrlTransformed} alt={product.name} />
       )}
 
       <Title>
         <Link
           href={{
-            pathname: '/item',
-            query: { id: item.id },
+            pathname: `/product/${product.id}`
           }}
         >
-          <a>{item.name}</a>
+          <a>{product.name}</a>
         </Link>
       </Title>
-      <PriceTag>{formatMoney(item.price)}</PriceTag>
-      <p>{item.description}</p>
+      <PriceTag>{formatMoney(product.price)}</PriceTag>
+      <p>{product.description}</p>
 
       <div className="buttonList">
         <Link
           href={{
             pathname: 'update',
-            query: { id: item.id },
+            query: { id: product.id },
           }}
         >
           <a>Edit ✏️</a>
         </Link>
-        <AddToCart id={item.id} />
-        <DeleteItem id={item.id}>Delete This Item</DeleteItem>
+        <AddToCart id={product.id} />
+        <DeleteItem id={product.id}>Delete This Item</DeleteItem>
       </div>
     </ItemStyles>
   );

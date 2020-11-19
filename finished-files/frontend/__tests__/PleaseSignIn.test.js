@@ -8,14 +8,14 @@ import { fakeUser } from '../lib/testUtils';
 const notSignedInMocks = [
   {
     request: { query: CURRENT_USER_QUERY },
-    result: { data: { authenticatedUser: null } },
+    result: { data: { authenticatedItem: null } },
   },
 ];
 
 const signedInMocks = [
   {
     request: { query: CURRENT_USER_QUERY },
-    result: { data: { authenticatedUser: fakeUser() } },
+    result: { data: { authenticatedItem: fakeUser() } },
   },
 ];
 

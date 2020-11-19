@@ -8,8 +8,10 @@ const fakeItem = () => ({
   id: 'abc123',
   price: 5000,
   user: null,
-  image: {
-    publicUrlTransformed: 'dog.jpg',
+  photo: {
+    image: {
+      publicUrlTransformed: 'dog.jpg',
+    },
   },
   name: 'dogs are best',
   description: 'dogs',

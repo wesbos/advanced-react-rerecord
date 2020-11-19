@@ -5,30 +5,37 @@ import Router from 'next/router';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
-import { ALL_ITEMS_QUERY } from './Items';
+import { ALL_PRODUCTS_QUERY } from './Products';
 import { PAGINATION_QUERY } from './Pagination';
 
-const CREATE_ITEM_MUTATION = gql`
-  mutation CREATE_ITEM_MUTATION(
+const CREATE_PRODUCT_MUTATION = gql`
+  mutation CREATE_PRODUCT_MUTATION(
     $name: String!
     $description: String!
     $price: Int!
     $image: Upload
   ) {
-    createItem(
+    createProduct(
       data: {
         name: $name
         description: $description
         price: $price
-        image: $image
+        photo: {
+          create: {
+            image: $image
+            altText: $description
+          }
+        }
       }
     ) {
       id
       name
       price
       description
-      image {
-        publicUrlTransformed
+      photo {
+        image {
+          publicUrlTransformed
+        }
       }
     }
   }
@@ -36,26 +43,26 @@ const CREATE_ITEM_MUTATION = gql`
 
 function update(cache, payload) {
   cache.modify({
-    id: cache.identify(payload.data.createItem),
+    id: cache.identify(payload.data.createProduct),
     fields: {
-      allItems(items, { readField }) {
-        return [payload.data.createItem, ...items];
+      allProducts(products, { readField }) {
+        return [payload.data.createProduct, ...products];
       },
     }
   });
 }
 
-function CreateItem() {
+function CreateProduct() {
   const { inputs, handleChange } = useForm({
     name: 'Nice Shoes',
     description: 'soo nice',
     image: '',
     price: 500,
   });
-  const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
+  const [createProduct, { loading, error }] = useMutation(CREATE_PRODUCT_MUTATION, {
     variables: inputs,
     // update,
-    refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
+    refetchQueries: [{ query: ALL_PRODUCTS_QUERY }, { query: PAGINATION_QUERY }],
   });
 
   return (
@@ -65,12 +72,11 @@ function CreateItem() {
         // Stop the form from submitting
         e.preventDefault();
         // call the mutation
-        const res = await createItem();
+        const res = await createProduct();
         console.log(res);
         // change them to the single item page
         Router.push({
-          pathname: '/item',
-          query: { id: res.data.createItem.id },
+          pathname: `/product/${res.data.createProduct.id}`
         });
       }}
     >
@@ -131,5 +137,5 @@ function CreateItem() {
   );
 }
 
-export default CreateItem;
-export { CREATE_ITEM_MUTATION };
+export default CreateProduct;
+export { CREATE_PRODUCT_MUTATION };

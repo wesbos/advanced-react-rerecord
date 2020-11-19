@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SingleItem/> renders with proper data 1`] = `
+exports[`<SingleProduct/> renders with proper data 1`] = `
 <div>
   <div
-    class="SingleItem__SingleItemStyles-mflgtv-0 AQPQe"
-    data-testid="singleItem"
+    class="SingleProduct__SingleProductStyles-mflgtv-0 AQPQe"
+    data-testid="singleProduct"
   >
     <img
       alt="dogs are best"
@@ -14,7 +14,7 @@ exports[`<SingleItem/> renders with proper data 1`] = `
       class="details"
     >
       <h2>
-        Viewing 
+        Viewing
         dogs are best
       </h2>
       <p>

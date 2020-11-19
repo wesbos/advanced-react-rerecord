@@ -1,1 +1,1 @@
-console.log(ALL_ITEMS_QUERY);
+console.log(ALL_PRODUCTS_QUERY);

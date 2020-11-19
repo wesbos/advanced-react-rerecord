@@ -5,8 +5,8 @@ import Form from './styles/Form';
 import Error from './ErrorMessage';
 import useForm from '../lib/useForm';
 
-const SINGLE_ITEM_QUERY = gql`
-  query SINGLE_ITEM_QUERY($id: ID!) {
+const SINGLE_PRODUCT_QUERY = gql`
+  query SINGLE_PRODUCT_QUERY($id: ID!) {
     Item(where: { id: $id }) {
       id
       name
@@ -34,7 +34,7 @@ const UPDATE_ITEM_MUTATION = gql`
   }
 `;
 function UpdateItem({ id }) {
-  const { data = {}, loading } = useQuery(SINGLE_ITEM_QUERY, {
+  const { data = {}, loading } = useQuery(SINGLE_PRODUCT_QUERY, {
     variables: {
       id,
     },

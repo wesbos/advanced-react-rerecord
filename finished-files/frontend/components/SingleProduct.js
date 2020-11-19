@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Head from 'next/head';
 import Error from './ErrorMessage';
 
-const SingleItemStyles = styled.div`
+const SingleProductStyles = styled.div`
   max-width: 1200px;
   margin: 2rem auto;
   box-shadow: ${props => props.theme.bs};
@@ -24,40 +24,42 @@ const SingleItemStyles = styled.div`
   }
 `;
 
-const SINGLE_ITEM_QUERY = gql`
-  query SINGLE_ITEM_QUERY($id: ID!) {
-    Item(where: { id: $id }) {
+const SINGLE_PRODUCT_QUERY = gql`
+  query SINGLE_PRODUCT_QUERY($id: ID!) {
+    Product(where: { id: $id }) {
       id
       name
       description
-      image {
-        publicUrlTransformed
+      photo {
+        image {
+          publicUrlTransformed
+        }
       }
     }
   }
 `;
 
-function SingleItem({ id }) {
-  const { loading, error, data } = useQuery(SINGLE_ITEM_QUERY, {
+function SingleProduct({ id }) {
+  const { loading, error, data } = useQuery(SINGLE_PRODUCT_QUERY, {
     variables: { id },
   });
   if (error) return <Error error={error} />;
   if (loading) return <p>Loading...</p>;
-  if (!data.Item) return <p>No Item Found for {id}</p>;
-  const { Item } = data;
+  if (!data?.Product) return <p>No Item Found for {id}</p>;
+  const { Product } = data;
   return (
-    <SingleItemStyles data-testid="singleItem">
+    <SingleProductStyles data-testid="singleProduct">
       <Head>
-        <title>Sick Fits | {Item.name}</title>
+        <title>Sick Fits | {Product.name}</title>
       </Head>
-      <img src={Item.image.publicUrlTransformed} alt={Item.name} />
+      <img src={Product.photo.image.publicUrlTransformed} alt={Product.name} />
       <div className="details">
-        <h2>Viewing {Item.name}</h2>
-        <p>{Item.description}</p>
+        <h2>Viewing {Product.name}</h2>
+        <p>{Product.description}</p>
       </div>
-    </SingleItemStyles>
+    </SingleProductStyles>
   );
 }
 
-export default SingleItem;
-export { SINGLE_ITEM_QUERY };
+export default SingleProduct;
+export { SINGLE_PRODUCT_QUERY };

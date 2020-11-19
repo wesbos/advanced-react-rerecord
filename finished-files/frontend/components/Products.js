@@ -8,15 +8,17 @@ import Pagination from './Pagination';
 import { perPage } from '../config';
 
 // TODO:  orderBy: "createdAt_DESC"
-const ALL_ITEMS_QUERY = gql`
-  query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    allItems(first: $first, skip: $skip, orderBy: "createdAt_DESC") {
+const ALL_PRODUCTS_QUERY = gql`
+  query ALL_PRODUCTS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
+    allProducts(first: $first, skip: $skip) {
       id
       name
       price
       description
-      image {
-        publicUrlTransformed
+      photo {
+        image {
+          publicUrlTransformed
+        }
       }
     }
   }
@@ -35,7 +37,7 @@ const ItemsList = styled.div`
 `;
 
 function Items({ page, count }) {
-  const { data, error, loading } = useQuery(ALL_ITEMS_QUERY, {
+  const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY, {
     variables: {
       skip: page * perPage - perPage,
     },
@@ -49,7 +51,7 @@ function Items({ page, count }) {
         if (!data) return <p>No items here!</p>;
         return (
           <ItemsList>
-            {data.allItems.map(item => (
+            {data.allProducts.map(item => (
               <Item item={item} key={item.id} />
             ))}
           </ItemsList>
@@ -65,4 +67,4 @@ Items.propTypes = {
 };
 
 export default Items;
-export { ALL_ITEMS_QUERY };
+export { ALL_PRODUCTS_QUERY };

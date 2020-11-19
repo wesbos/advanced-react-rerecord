@@ -10,10 +10,12 @@ import { CURRENT_USER_QUERY } from './User';
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {
     authenticateUserWithPassword(email: $email, password: $password) {
-      item {
-        id
-        email
-        name
+      ... on UserAuthenticationWithPasswordSuccess {
+        item {
+          id
+          email
+          name
+        }
       }
     }
   }

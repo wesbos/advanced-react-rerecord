@@ -15,7 +15,7 @@ const notSignedInMocks = [
 const signedInMocks = [
   {
     request: { query: CURRENT_USER_QUERY },
-    result: { data: { authenticatedUser: fakeUser() } },
+    result: { data: { authenticatedItem: fakeUser() } },
   },
 ];
 
@@ -24,7 +24,7 @@ const signedInMocksWithCartItems = [
     request: { query: CURRENT_USER_QUERY },
     result: {
       data: {
-        authenticatedUser: {
+        authenticatedItem: {
           ...fakeUser(),
           cart: [fakeCartItem()],
         },

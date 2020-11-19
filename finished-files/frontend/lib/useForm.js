@@ -4,9 +4,11 @@ export default function useForm(initial = {}) {
   const [inputs, setInputs] = useState(initial);
 
   // because apollo queries initially give us undefined (during loading state) and we can't early return from a component with hooks underneath, we use an effect to "watch" the initial state. When it finally does come in, we update it
-  useEffect(() => {
-    setInputs(initial)
-  }, [initial])
+  // Note: This doesn't seem to be needed anymore??
+  // useEffect(() => {
+  //   console.log('Rerunning', initial)
+  //   setInputs(initial)
+  // }, [initial])
 
   function handleChange(e) {
     let { value, name, type } = e.target;

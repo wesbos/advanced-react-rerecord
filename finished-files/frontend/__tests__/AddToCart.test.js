@@ -11,7 +11,7 @@ const mocks = [
     request: { query: CURRENT_USER_QUERY },
     result: {
       data: {
-        authenticatedUser: {
+        authenticatedItem: {
           ...fakeUser(),
           cart: [],
         },
@@ -22,7 +22,7 @@ const mocks = [
     request: { query: CURRENT_USER_QUERY },
     result: {
       data: {
-        authenticatedUser: {
+        authenticatedItem: {
           ...fakeUser(),
           cart: [fakeCartItem()],
         },
@@ -67,7 +67,7 @@ describe('<AddToCart/>', () => {
     );
     // check that the cart is empty to start
     const {
-      data: { authenticatedUser: me },
+      data: { authenticatedItem: me },
     } = await apolloClient.query({ query: CURRENT_USER_QUERY });
     expect(me.cart).toHaveLength(0);
     // Click the button
@@ -79,7 +79,7 @@ describe('<AddToCart/>', () => {
     await wait(); // wait for next tick, weird apollo event loop thing
     // check if the item is in the cart
     const {
-      data: { authenticatedUser: me2 },
+      data: { authenticatedItem: me2 },
     } = await apolloClient.query({ query: CURRENT_USER_QUERY });
     expect(me2.cart).toHaveLength(1);
     expect(me2.cart[0].id).toBe('omg123');

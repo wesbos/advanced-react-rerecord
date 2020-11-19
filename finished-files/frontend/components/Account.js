@@ -20,9 +20,8 @@ const UPDATE_USER_MUTATION = gql`
 function Account() {
   const me = useUser();
   const { inputs, handleChange } = useForm({
-    name: me.name,
+    name: me.name.toString(),
   });
-  console.log(me);
   const [updateUser, { data, error, loading }] = useMutation(
     UPDATE_USER_MUTATION,
     {
@@ -37,7 +36,6 @@ function Account() {
       onSubmit={async e => {
         e.preventDefault();
         await updateUser();
-        console.log(data);
       }}
     >
       <fieldset disabled={loading}>

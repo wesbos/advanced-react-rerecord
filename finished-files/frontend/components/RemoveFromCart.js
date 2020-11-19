@@ -28,7 +28,7 @@ function updateCart(cache, payload) {
   const data = cache.readQuery({ query: CURRENT_USER_QUERY });
   // 2. remove that item from the cart
   const cartItemId = payload.data.deleteCartItem.id;
-  const updatedCart = data.authenticatedUser.cart.filter(
+  const updatedCart = data.authenticatedItem.cart.filter(
     cartItem => cartItem.id !== cartItemId
   );
   // 3. write it back to the cache
@@ -37,8 +37,8 @@ function updateCart(cache, payload) {
     query: CURRENT_USER_QUERY,
     data: {
       ...data,
-      authenticatedUser: {
-        ...data.authenticatedUser,
+      authenticatedItem: {
+        ...data.authenticatedItem,
         cart: updatedCart,
       },
     },

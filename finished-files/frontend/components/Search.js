@@ -7,9 +7,9 @@ import gql from 'graphql-tag';
 import debounce from 'lodash.debounce';
 import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
 
-const SEARCH_ITEMS_QUERY = gql`
-  query SEARCH_ITEMS_QUERY($searchTerm: String!) {
-    search: allItems(
+const SEARCH_PRODUCTS_QUERY = gql`
+  query SEARCH_PRODUCTS_QUERY($searchTerm: String!) {
+    search: allProducts(
       # raw: true, # Raw isn't a keystone arg,it's for Apollo, so we can intercept the request and always hit the network. This avoids any issues with pagination and caching
       where: {
         OR: [
@@ -19,8 +19,10 @@ const SEARCH_ITEMS_QUERY = gql`
       }
     ) {
       id
-      image {
-        publicUrlTransformed
+      photo {
+        image {
+          publicUrlTransformed
+        }
       }
       name
     }
@@ -29,7 +31,7 @@ const SEARCH_ITEMS_QUERY = gql`
 
 function AutoComplete(props) {
   const router = useRouter();
-  const [findItems, { loading, data, error }] = useLazyQuery(SEARCH_ITEMS_QUERY, {
+  const [findItems, { loading, data, error }] = useLazyQuery(SEARCH_PRODUCTS_QUERY, {
     fetchPolicy: 'no-cache'
   });
   const items = data ? data.search : [];
@@ -82,7 +84,7 @@ function AutoComplete(props) {
                   >
                     <img
                       width="50"
-                      src={item.image.publicUrlTransformed}
+                      src={item.photo.image.publicUrlTransformed}
                       alt={item.name}
                     />
                     {item.name}

@@ -19,9 +19,10 @@ const CartItemStyles = styled.li`
   }
 `;
 
-const CartItem = ({ cartItem }) => {
+function CartItem({ cartItem }) {
+  const product = cartItem.product;
   // first check if that item exists
-  if (!cartItem.item)
+  if (!product)
     return (
       <CartItemStyles>
         <p>This Item has been removed</p>
@@ -32,16 +33,16 @@ const CartItem = ({ cartItem }) => {
     <CartItemStyles>
       <img
         width="100"
-        src={cartItem.item.image.publicUrlTransformed}
-        alt={cartItem.item.name}
+        src={product.photo.image.publicUrlTransformed}
+        alt={product.name}
       />
       <div className="cart-item-details">
-        <h3>{cartItem.item.name}</h3>
+        <h3>{product.name}</h3>
         <p>
-          {formatMoney(cartItem.item.price * cartItem.quantity)}
+          {formatMoney(product.price * cartItem.quantity)}
           {' - '}
           <em>
-            {cartItem.quantity} &times; {formatMoney(cartItem.item.price)} each
+            {cartItem.quantity} &times; {formatMoney(product.price)} each
           </em>
         </p>
       </div>
