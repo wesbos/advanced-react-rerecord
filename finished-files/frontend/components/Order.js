@@ -15,7 +15,7 @@ const SINGLE_ORDER_QUERY = gql`
       id
       charge
       total
-      createdAt
+      # createdAt
       user {
         id
       }
@@ -24,7 +24,11 @@ const SINGLE_ORDER_QUERY = gql`
         name
         description
         price
-        image
+        image {
+          image {
+            publicUrlTransformed
+          }
+        }
         quantity
       }
     }
@@ -53,11 +57,11 @@ function Order({ id }) {
       </p>
       <p>
         <span>Date</span>
-        <span>
+        {/* <span>
           {format(new Date(order.createdAt), 'MMMM d, yyyy h:mm a', {
             awareOfUnicodeTokens: true,
           })}
-        </span>
+        </span> */}
       </p>
       <p>
         <span>Order Total</span>
@@ -70,7 +74,7 @@ function Order({ id }) {
       <div className="items">
         {order.items.map(item => (
           <div className="order-item" key={item.id}>
-            <img src={item.image} alt={item.title} />
+            <img src={item.image.image.publicUrlTransformed} alt={item.title} />
             <div className="item-details">
               <h2>{item.name}</h2>
               <p>Qty: {item.quantity}</p>

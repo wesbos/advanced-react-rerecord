@@ -11,17 +11,21 @@ import OrderItemStyles from './styles/OrderItemStyles';
 
 const USER_ORDERS_QUERY = gql`
   query {
-    allOrders(orderBy: "createdAt_DESC") {
+    allOrders {
       id
       total
-      createdAt
+      # createdAt
       items {
         id
         name
         price
         description
         quantity
-        image
+        image {
+          image {
+            publicUrlTransformed
+          }
+        }
       }
     }
   }
@@ -46,21 +50,19 @@ function OrderList() {
         {allOrders.map(order => (
           <OrderItemStyles key={order.id}>
             <Link
-              href={{
-                pathname: '/order',
-                query: { id: order.id },
-              }}
+              href={`/orders/${order.id}`}
             >
               <a>
                 <div className="order-meta">
                   <p>{order.items.reduce((a, b) => a + b.quantity, 0)} Items</p>
                   <p>{order.items.length} Products</p>
-                  <p>{formatDistance(new Date(order.createdAt), new Date())}</p>
+                  {/* <p>{formatDistance(new Date(order.createdAt), new Date())}</p> */}
                   <p>{formatMoney(order.total)}</p>
                 </div>
                 <div className="images">
                   {order.items.map(item => (
-                    <img key={item.id} src={item.image} alt={item.title} />
+                    <img key={item.id} src={item.image?.image?.
+                      publicUrlTransformed} alt={item.title} />
                   ))}
                 </div>
               </a>

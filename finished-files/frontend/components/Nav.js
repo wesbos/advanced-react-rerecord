@@ -10,7 +10,7 @@ function Nav() {
   const { toggleCart } = useCart();
   return (
     <NavStyles data-testid="nav">
-      <Link href="/items">
+      <Link href="/products">
         <a>Shop</a>
       </Link>
       {me && (
