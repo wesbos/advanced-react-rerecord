@@ -1,13 +1,20 @@
-# KeystoneJS Starter Template
+# Keystone-Next eCommerce Example
 
-You've created a KeystoneJS project! This project contains a simple list of users and an admin application (`localhost:3000/admin`) with basic authentication.
+👋🏻 This is an example eCommerce backend implementation using KeystoneJS.
 
-## Running the Project.
+It is based on the [sick-fits backend](https://github.com/wesbos/advanced-react-rerecord) by [Wes Bos](https://twitter.com/wesbos), built as part of his [Advanced React Course](http://advancedreact.com)
 
-To run this project first run `npm install`. Note: If you generated this project via the Keystone cli step this has been done for you \\o/.
+Implementation and docs are WIP.
 
-Once running, the Keystone Admin UI is reachable via `localhost:3000/admin`.
+## Running the example
 
-## Next steps
+> **NOTE** you'll Cloudinary, Stripe, and SMTP credentials set up in your `.env` file or environment variables to run this example. See the `sample.env` file for required fields.
 
-This example has no front-end application but you can build your own using the GraphQL API (`http://localhost:3000/admin/graphiql`).
+To run the project locally:
+
+- Clone this repo
+- Run `yarn` in the root (this repo is a monorepo and uses yarn workspaces, so that will install everything you'll need)
+- Make sure you have a local mongo server up and running on the default port
+- Open this folder in your terminal and run `yarn dev`
+
+If everything works 🤞🏻 the GraphQL Server and Admin UI will start on [localhost:3000](http://localhost:3000)
