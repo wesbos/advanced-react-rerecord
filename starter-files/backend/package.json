@@ -1,46 +1,34 @@
 {
-  "name": "sick-fits-keystone",
-  "description": "Sick fits backend, in keystone.",
+  "name": "@keystone-next/example-ecommerce",
+  "version": "0.2.1",
   "private": true,
-  "version": "5.0.0",
+  "author": "Wes Bos & Jed Watson",
   "license": "MIT",
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "scripts": {
-    "dev": "nodemon -L --exec cross-env NODE_ENV=development DISABLE_LOGGING=true NODE_OPTIONS='-r esm' keystone dev",
-    "dummy": "npm run dev -- --dummy",
-    "build": "cross-env NODE_ENV=production NODE_OPTIONS='-r esm' keystone build",
-    "start": "cross-env NODE_ENV=production NODE_OPTIONS='-r esm' keystone start",
-    "preinstall": "npx npm-force-resolutions"
-  },
-  "resolutions": {
-    "graphql-upload": "^11.0.0"
+    "dev": "keystone-next",
+    "seed-data": "keystone-next --seed-data"
   },
   "dependencies": {
-    "@keystonejs/adapter-mongoose": "^10.0.0",
-    "@keystonejs/app-admin-ui": "^7.3.8",
-    "@keystonejs/app-graphql": "^6.1.3",
-    "@keystonejs/app-next": "^5.2.3",
-    "@keystonejs/auth-password": "^5.1.16",
-    "@keystonejs/build-field-types": "^5.2.11",
-    "@keystonejs/fields": "^19.1.1",
-    "@keystonejs/fields-cloudinary-image": "^2.0.1",
-    "@keystonejs/fields-wysiwyg-tinymce": "^5.3.12",
-    "@keystonejs/file-adapters": "^7.0.8",
-    "@keystonejs/keystone": "^17.1.0",
-    "@keystonejs/list-plugins": "^7.1.3",
-    "connect-mongo": "^3.2.0",
-    "cors": "^2.8.5",
-    "cross-env": "^7.0.2",
+    "@keystone-next/admin-ui": "^3.1.0",
+    "@keystone-next/auth": "^5.0.0",
+    "@keystone-next/cloudinary": "^2.0.1",
+    "@keystone-next/fields": "^3.1.0",
+    "@keystone-next/keystone": "^4.1.0",
+    "@keystone-next/types": "^4.1.0",
+    "@keystonejs/server-side-graphql-client": "^1.1.2",
+    "@types/nodemailer": "^6.4.0",
     "dotenv": "^8.2.0",
-    "esm": "^3.2.25",
-    "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "graphql": "^15.4.0",
-    "graphql-fields": "^2.0.3",
-    "nodemailer": "^6.4.14",
-    "react": "^17.0.1",
-    "stripe": "^8.118.0"
-  }
+    "next": "^9.5.5",
+    "nodemailer": "^6.4.16",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "stripe": "^8.125.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "repository": "https://github.com/keystonejs/keystone/tree/master/examples-next/ecommerce"
 }
