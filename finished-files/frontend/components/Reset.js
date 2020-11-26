@@ -6,39 +6,48 @@ import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';
+import Signin from './Signin';
 
 const RESET_MUTATION = gql`
   mutation RESET_MUTATION(
-    $resetToken: String!
+    $token: String!
     $password: String!
-    $confirmPassword: String!
+    $email: String!
   ) {
-    resetPassword(
-      resetToken: $resetToken
+    redeemUserPasswordResetToken(
+      token: $token
       password: $password
-      confirmPassword: $confirmPassword
+      email: $email
     ) {
       message
     }
   }
 `;
 
-function Reset({ resetToken }) {
+function Reset({ token }) {
   const { inputs, handleChange, resetForm } = useForm({
     password: '',
-    confirmPassword: '',
+    email: '',
   });
   const [resetPassword, { error, loading, data }] = useMutation(
     RESET_MUTATION,
     {
       variables: {
-        resetToken,
+        token,
         password: inputs.password,
-        confirmPassword: inputs.confirmPassword,
+        email: inputs.email,
       },
       refetchQueries: [{ query: CURRENT_USER_QUERY }],
     }
   );
+
+  const successfulReset = data?.redeemUserPasswordResetToken === null;
+  if (successfulReset) {
+    return <div>
+      <h2>Success! Please Sign In</h2>
+      <Signin/>
+    </div>
+  }
   return (
     <Form
       method="post"
@@ -52,8 +61,20 @@ function Reset({ resetToken }) {
     >
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>Reset Your Password</h2>
-        {data && data.resetPassword && data.resetPassword.message}
-        <Error error={error} />
+        <Error error={data?.redeemUserPasswordResetToken} />
+
+        <label htmlFor="email">
+          Email Address
+          <input
+            type="email"
+            name="email"
+            placeholder="email"
+            value={inputs.email}
+            onChange={handleChange}
+            required
+          />
+        </label>
+
         <label htmlFor="password">
           Password
           <input
@@ -66,26 +87,11 @@ function Reset({ resetToken }) {
           />
         </label>
 
-        <label htmlFor="confirmPassword">
-          Confirm Your Password
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="confirmPassword"
-            value={inputs.confirmPassword}
-            onChange={handleChange}
-            required
-          />
-        </label>
 
         <button type="submit">Reset Your Password!</button>
       </fieldset>
     </Form>
   );
 }
-
-Reset.propTypes = {
-  resetToken: PropTypes.string.isRequired,
-};
 
 export default Reset;

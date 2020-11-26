@@ -7,15 +7,15 @@ import useForm from '../lib/useForm';
 
 const REQUEST_RESET_MUTATION = gql`
   mutation REQUEST_RESET_MUTATION($email: String!) {
-    requestReset(email: $email) {
-      message
+    sendUserPasswordResetLink(email: $email) {
+      code
     }
   }
 `;
 
 function RequestReset() {
   const { inputs, handleChange, clearForm } = useForm({ email: '' });
-  const [reset, { error, loading, called }] = useMutation(
+  const [reset, { data, error, loading, called }] = useMutation(
     REQUEST_RESET_MUTATION,
     {
       variables: {
@@ -29,16 +29,18 @@ function RequestReset() {
       data-testid="form"
       onSubmit={async e => {
         e.preventDefault();
-        await reset();
+        const res = await reset();
+        console.log(res);
         clearForm();
       }}
     >
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>Request a password reset</h2>
-        <Error error={error} />
-        {!error && !loading && called && (
+        <Error error={data?.sendUserPasswordResetLink} />
+        {data?.sendUserPasswordResetLink === null && (
           <p>Success! Check your email for a reset link!</p>
         )}
+
         <label htmlFor="email">
           Email
           <input
