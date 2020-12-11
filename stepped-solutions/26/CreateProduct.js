@@ -1,15 +1,13 @@
-import React from 'react';
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import Router from 'next/router';
 import useForm from '../lib/useForm';
-import Form from './styles/Form';
-import Error from './ErrorMessage';
+import DisplayError from './ErrorMessage';
 import { ALL_PRODUCTS_QUERY } from './Products';
-import { PAGINATION_QUERY } from './Pagination';
+import Form from './styles/Form';
 
 const CREATE_PRODUCT_MUTATION = gql`
   mutation CREATE_PRODUCT_MUTATION(
+    # Which variables are getting passed in? And What types are they
     $name: String!
     $description: String!
     $price: Int!
@@ -20,81 +18,54 @@ const CREATE_PRODUCT_MUTATION = gql`
         name: $name
         description: $description
         price: $price
-        photo: { create: { image: $image, altText: $description } }
+        status: "AVAILABLE"
+        photo: { create: { image: $image, altText: $name } }
       }
     ) {
       id
-      name
       price
       description
-      photo {
-        image {
-          publicUrlTransformed
-        }
-      }
+      name
     }
   }
 `;
 
-function update(cache, payload) {
-  cache.modify({
-    id: cache.identify(payload.data.createProduct),
-    fields: {
-      allProducts(products, { readField }) {
-        return [payload.data.createProduct, ...products];
-      },
-    },
-  });
-}
-
-function CreateProduct() {
-  const { inputs, handleChange } = useForm({
-    name: 'Nice Shoes',
-    description: 'soo nice',
+export default function CreateProduct() {
+  const { inputs, handleChange, clearForm, resetForm } = useForm({
     image: '',
-    price: 500,
+    name: 'Nice Shoes',
+    price: 34234,
+    description: 'These are the best shoes!',
   });
-  const [createProduct, { loading, error }] = useMutation(
+  const [createProduct, { loading, error, data }] = useMutation(
     CREATE_PRODUCT_MUTATION,
     {
       variables: inputs,
-      // update,
-      refetchQueries: [
-        { query: ALL_PRODUCTS_QUERY },
-        { query: PAGINATION_QUERY },
-      ],
+      refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
     }
   );
-
   return (
     <Form
-      data-testid="form"
       onSubmit={async (e) => {
-        // Stop the form from submitting
         e.preventDefault();
-        // call the mutation
-        const res = await createProduct();
-        console.log(res);
-        // change them to the single item page
-        Router.push({
-          pathname: `/product/${res.data.createProduct.id}`,
-        });
+        console.log(inputs);
+        // Submit the inputfields to the backend:
+        await createProduct();
+        clearForm();
       }}
     >
-      <Error error={error} />
+      <DisplayError error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
-        <label htmlFor="file">
+        <label htmlFor="image">
           Image
           <input
-            type="file"
-            id="file"
-            name="image"
-            placeholder="Upload an image"
             required
+            type="file"
+            id="image"
+            name="image"
             onChange={handleChange}
           />
         </label>
-
         <label htmlFor="name">
           Name
           <input
@@ -102,41 +73,34 @@ function CreateProduct() {
             id="name"
             name="name"
             placeholder="Name"
-            required
             value={inputs.name}
             onChange={handleChange}
           />
         </label>
-
         <label htmlFor="price">
           Price
           <input
             type="number"
             id="price"
             name="price"
-            placeholder="Price"
-            required
+            placeholder="price"
             value={inputs.price}
             onChange={handleChange}
           />
         </label>
-
         <label htmlFor="description">
           Description
           <textarea
             id="description"
             name="description"
             placeholder="Description"
-            required
             value={inputs.description}
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Submit</button>
+
+        <button type="submit">+ Add Product</button>
       </fieldset>
     </Form>
   );
 }
-
-export default CreateProduct;
-export { CREATE_PRODUCT_MUTATION };
