@@ -1,4 +1,6 @@
-export default async function addToCart(root: any, { productId }: { productId: string }, context: any) {
+import { KeystoneContext } from "@keystone-next/types";
+
+export default async function addToCart(root: any, { productId }: { productId: string }, context: KeystoneContext) {
   const { session } = context;
   console.log('adding to cart...');
   // 1. Make sure they are signed in

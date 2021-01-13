@@ -30,10 +30,9 @@ function Nav() {
             My Cart
             <CartCount
               count={me.cart.reduce(
-                (tally, cartItem) => tally + cartItem.quantity,
-                0
+                (tally, cartItem) => tally + cartItem.quantity
               )}
-            ></CartCount>
+            />
           </button>
         </>
       )}

@@ -1,6 +1,6 @@
 // Buckle up folks
 
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 // We're gonna write one hell of a pagination logic
 // TODO: Convert to https://github.com/apollographql/apollo-client/blob/master/src/utilities/policies/pagination.ts#L25
@@ -17,7 +17,15 @@ export default function paginationField() {
       const { skip, first } = args;
 
       // Read the number of items, so we can make pagination. For some reason when deleting an item, this is null the first time adn then runs two more times with the correct data?? ??!?!? ? ?? ? ? ? ? ?!?!?
-      const data = cache.readQuery({ query: gql`query { _allProductsMeta { count }}`});
+      const data = cache.readQuery({
+        query: gql`
+          query {
+            _allProductsMeta {
+              count
+            }
+          }
+        `,
+      });
       const count = data?._allProductsMeta?.count;
 
       const page = skip / first + 1;
@@ -26,7 +34,7 @@ export default function paginationField() {
       const items = existing
         .slice(skip, skip + first)
         // we filter for empty spots because its likely we have padded spots with nothing in them. IE Someone visits page 3 directly, spots 1-8 will be empty
-        .filter(x => x);
+        .filter((x) => x);
       // 4. Account for the last page, where there is incomplete data but we dont have any more so we just send it
       if (items.length && items.length !== args.first && page === pages) {
         console.log(
