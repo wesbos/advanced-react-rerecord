@@ -31,16 +31,19 @@ const SEARCH_PRODUCTS_QUERY = gql`
 
 function AutoComplete(props) {
   const router = useRouter();
-  const [findItems, { loading, data, error }] = useLazyQuery(SEARCH_PRODUCTS_QUERY, {
-    fetchPolicy: 'no-cache'
-  });
+  const [findItems, { loading, data, error }] = useLazyQuery(
+    SEARCH_PRODUCTS_QUERY,
+    {
+      fetchPolicy: 'no-cache',
+    }
+  );
   const items = data ? data.search : [];
   const findItemsButChill = debounce(findItems, 350);
   resetIdCounter();
   return (
     <SearchStyles>
       <Downshift
-        onChange={item =>
+        onChange={(item) =>
           router.push({
             pathname: '/item',
             query: {
@@ -48,7 +51,7 @@ function AutoComplete(props) {
             },
           })
         }
-        itemToString={item => (item === null ? '' : item.name)}
+        itemToString={(item) => (item === null ? '' : item.name)}
       >
         {({
           getInputProps,
@@ -64,9 +67,9 @@ function AutoComplete(props) {
                 placeholder: 'Search For An Item',
                 id: 'search',
                 className: loading ? 'loading' : '',
-                onChange: e => {
+                onChange: (e) => {
                   e.persist();
-                  if(!e.target.value) return; // if it's empty, don't search
+                  if (!e.target.value) return; // if it's empty, don't search
                   findItemsButChill({
                     variables: { searchTerm: e.target.value },
                   });
@@ -74,7 +77,7 @@ function AutoComplete(props) {
               })}
             />
 
-              {isOpen && inputValue && (
+            {isOpen && inputValue && (
               <DropDown>
                 {items.map((item, index) => (
                   <DropDownItem

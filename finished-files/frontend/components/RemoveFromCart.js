@@ -17,7 +17,7 @@ const BigButton = styled.button`
   background: none;
   border: 0;
   &:hover {
-    color: ${props => props.theme.red};
+    color: ${(props) => props.theme.red};
     cursor: pointer;
   }
 `;
@@ -29,7 +29,7 @@ function updateCart(cache, payload) {
   // 2. remove that item from the cart
   const cartItemId = payload.data.deleteCartItem.id;
   const updatedCart = data.authenticatedItem.cart.filter(
-    cartItem => cartItem.id !== cartItemId
+    (cartItem) => cartItem.id !== cartItemId
   );
   // 3. write it back to the cache
   // WE have do do it in this weird way because the readQuery is immutable. We could also do a deep clone with lodash
@@ -43,6 +43,11 @@ function updateCart(cache, payload) {
       },
     },
   });
+}
+
+function update(cache, payload) {
+  console.log(payload);
+  cache.evict(cache.identify(payload.data.deleteCartItem));
 }
 
 function RemoveFromCart({ id }) {
@@ -61,7 +66,7 @@ function RemoveFromCart({ id }) {
     <BigButton
       disabled={loading}
       onClick={() => {
-        removeFromCart().catch(err => alert(err.message));
+        removeFromCart().catch((err) => alert(err.message));
       }}
       title="Remove Item From Cart"
     >

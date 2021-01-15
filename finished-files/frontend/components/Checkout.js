@@ -61,13 +61,12 @@ function useCheckout() {
 
   // manually call the mutation once we have the stripe token
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
+    // 1. Stop the form from submitting and turn on loading state
     setLoading(true);
-    // 1. Stop the form from submitting
     event.preventDefault();
 
     // 2. Start the page transition so show the user something is happening
-
     NProgress.start();
 
     // 3. Create the payment method
@@ -76,18 +75,19 @@ function useCheckout() {
       card: elements.getElement(CardElement),
     });
 
-    // 4. Handle any errors
+    // 4. Handle any errors from stripe
     if (error) {
+      // TODO: Put this in if there is an error! also return!
       NProgress.done();
       return setError(error);
     }
 
-    // 5. Send it to the server and charge it
+    // 5. Send it to the server and charge it via a custom mutation
     const order = await checkout({
       variables: {
         token: paymentMethod.id,
       },
-    }).catch(err => {
+    }).catch((err) => {
       alert(err.message);
     });
 
