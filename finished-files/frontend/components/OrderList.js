@@ -1,10 +1,10 @@
 import React from 'react';
-import { Query } from '@apollo/client';
+import { Query, useQuery } from '@apollo/client';
 import { formatDistance } from 'date-fns';
 import Link from 'next/link';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/client';
+
 import Error from './ErrorMessage';
 import formatMoney from '../lib/formatMoney';
 import OrderItemStyles from './styles/OrderItemStyles';
@@ -47,11 +47,9 @@ function OrderList() {
     <div>
       <h2>You have {allOrders.length} orders</h2>
       <OrderUl>
-        {allOrders.map(order => (
+        {allOrders.map((order) => (
           <OrderItemStyles key={order.id}>
-            <Link
-              href={`/orders/${order.id}`}
-            >
+            <Link href={`/orders/${order.id}`}>
               <a>
                 <div className="order-meta">
                   <p>{order.items.reduce((a, b) => a + b.quantity, 0)} Items</p>
@@ -60,9 +58,12 @@ function OrderList() {
                   <p>{formatMoney(order.total)}</p>
                 </div>
                 <div className="images">
-                  {order.items.map(item => (
-                    <img key={item.id} src={item.image?.image?.
-                      publicUrlTransformed} alt={item.title} />
+                  {order.items.map((item) => (
+                    <img
+                      key={item.id}
+                      src={item.image?.image?.publicUrlTransformed}
+                      alt={item.title}
+                    />
                   ))}
                 </div>
               </a>

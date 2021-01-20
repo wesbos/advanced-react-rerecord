@@ -1,3 +1,4 @@
+import { CartItemListFn, CartItemListTypeInfo } from './../.keystone/schema-types';
 // @ts-ignore
 import { getItem, deleteItems } from '@keystonejs/server-side-graphql-client';
 import stripe from '../lib/stripe';
@@ -60,7 +61,7 @@ export default async function checkout(root: any, { token }: { token: string }, 
 
   // 4. Convert the CartItems to OrderItems
   // TODO Type CartItem and OrderItem. Can they be generated?
-  const orderItems = User.cart.map((cartItem: any) => {
+  const orderItems = User.cart.map((cartItem) => {
     const orderItem = {
       name: cartItem.product.name,
       description: cartItem.product.description,
