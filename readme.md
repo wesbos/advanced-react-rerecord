@@ -1,4 +1,6 @@
-brew install doctl
+## You probably want [github.com/wesbos/advanced-react](https://github.com/wesbos/advanced-react)
+
+<!-- brew install doctl
 
 doctl apps create --spec .do/app.yaml
 
@@ -8,4 +10,4 @@ to update:
 `doctl apps list` to grab the ID
 
 doctl apps update IDGOESHERE --spec .do/app.yaml
-
+ -->
