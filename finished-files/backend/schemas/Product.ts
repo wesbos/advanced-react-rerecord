@@ -40,6 +40,3 @@ export const Product = list({
     listView: { initialColumns: ['name', 'status'] },
   }
 });
-
-
-defaultValue: ({ context: { session } }) => ({ connect: { id: session.itemId } }),
